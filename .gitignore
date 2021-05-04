@@ -105,3 +105,6 @@ dist
 
 # VisualStudio
 .vscode/
+
+# tools
+tools/*.csv

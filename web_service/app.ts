@@ -6,8 +6,8 @@ sandwich();
 async function sandwich() {
   const starService = new StarService();
   const result = await starService.makeStarSandiwch({
-    latitude: 0.0,
-    longitude: 0.0,
+    latitude: -10.39725,
+    longitude: 14.43625,
   });
   console.log(result);
 }

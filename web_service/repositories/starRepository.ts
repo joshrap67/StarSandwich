@@ -2,7 +2,6 @@ import mongoose from "mongoose";
 import { Star } from "../models/star";
 
 const DB_URL = "";
-
 const mong = mongoose
   .connect(DB_URL)
   .then((result) => console.log("connected"))
@@ -14,10 +13,10 @@ export default class StarRepository {
     try {
       var results = await Star.find({
         rightAscension: {
-          $gte: coords[0] - 0.1,
-          $lte: coords[0] + 0.1,
+          $gte: coords[0] - 0.25,
+          $lte: coords[0] + 0.25,
         },
-        declination: { $gte: coords[1] - 1.0, $lte: coords[1] + 1.0 },
+        declination: { $gte: coords[1] - 2.5, $lte: coords[1] + 2.5 },
       });
       results.map((result) => resultList.push(result));
     } catch (e) {
