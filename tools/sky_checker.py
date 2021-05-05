@@ -4,7 +4,7 @@ import math
 import os
 
 RA_OFFSET = (0.25) * 2  # in hours
-DEC_OFFSET = (2.5124) * 2  # in degrees
+DEC_OFFSET = (2.5) * 2  # in degrees
 DEC_ORIGIN = -90
 MAX_RA_BIN = math.ceil(24.0 / RA_OFFSET)  # starting from bin = 0 of course
 MAX_DEC_BIN = math.ceil(180.0 / DEC_OFFSET)  # starting from bin = 0 of course

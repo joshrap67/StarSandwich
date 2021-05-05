@@ -108,3 +108,4 @@ dist
 
 # tools
 tools/*.csv
+web_service/config.ts
