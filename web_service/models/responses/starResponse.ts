@@ -1,17 +1,17 @@
-export interface Star {
-	_id: string;
+export interface StarResponse {
+	id: string;
 	hipId: string;
 	hdId: string;
 	hrId: string;
 	glId: string;
-	bfDesignation: string;
 	properName: string;
+	constellation: string;
+	bfDesignation: string;
 	rightAscension: number;
 	declination: number;
-	distance: number;
-	magnitude: number;
-	absMagnitude: number;
-	constellation: string;
 	numStars: number;
+	magnitude: number;
+	distance: number;
+	absMagnitude: number;
 	luminosity: number;
 }

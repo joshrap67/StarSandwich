@@ -9,7 +9,7 @@ async function sandwich() {
 	const result = await starService.makeStarSandwich({
 		coordinates: {
 			latitude: -10.39725,
-			longitude: 14.43625,
+			longitude: 14.43625
 		}
 	});
 	console.log(result);
@@ -18,14 +18,22 @@ async function sandwich() {
 export const lambdaHandler = async (event: APIGatewayProxyEvent): Promise<APIGatewayProxyResult> => {
 	const route = event.path;
 	let response = null;
-	if (route === "makeStarSandwich") {
-		const starService = new StarService();
-		const request = JSON.parse(event.body) as MakeStarSandwichModel;
-		response = await starService.makeStarSandwich(request);
+	try {
+		if (route === "makeStarSandwich") {
+			const starService = new StarService();
+			const request = JSON.parse(event.body) as MakeStarSandwichModel;
+			response = await starService.makeStarSandwich(request);
+		}
+
+		return {
+			statusCode: 200,
+			body: JSON.stringify(response)
+		};
+	} catch (e) {
+		return {
+			statusCode: 400,
+			body: JSON.stringify(response) // todo handle errors
+		};
 	}
 
-	return {
-		statusCode: 200,
-		body: JSON.stringify(response),
-	};
 };

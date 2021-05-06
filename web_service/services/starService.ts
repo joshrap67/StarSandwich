@@ -1,24 +1,33 @@
 import StarRepository from "../repositories/starRepository";
 import MakeStarSandwichModel from "../models/requests/makeStarSandwichModel";
 import OptimalStarService from "./optimalStarService";
+import {StarSandwichResponse} from "../models/responses/starSandwichResponse";
+import {starToResponse} from "../models/maps/starMaps";
 
 export default class StarService {
-	async makeStarSandwich(model: MakeStarSandwichModel): Promise<any[]> {
+	async makeStarSandwich(model: MakeStarSandwichModel): Promise<StarSandwichResponse> {
 		const repo = new StarRepository();
-		const RA = this.getRightAscension(model.coordinates.longitude);
+		const RA = this.getRightAscensionInHours(model.coordinates.longitude);
 
-		// const topStarCandidates = repo.findStars([RA, model.coordinates.latitude]);
-		// const bottomStarCandidates = repo.findStars([RA, -model.coordinates.latitude]);
+		const topStarCandidates = await repo.findStars([RA, model.coordinates.latitude]);
+		const bottomStarCandidates = await repo.findStars([RA, -model.coordinates.latitude]);
 
+		const optimalService = new OptimalStarService();
+		const starAbove = topStarCandidates.length > 0
+			? optimalService.findOptimalStar(RA, model.coordinates.latitude, topStarCandidates)
+			: null;
+		const starBelow = bottomStarCandidates.length > 0
+			? optimalService.findOptimalStar(RA, model.coordinates.latitude, bottomStarCandidates)
+			: null;
 		// todo constellation lookup
 
-		const result = await repo.findStars([RA, model.coordinates.latitude]);
-		const optimalService = new OptimalStarService();
-		optimalService.findOptimalStar(result)
-		return result;
+		return {
+			starAbove: starToResponse(starAbove),
+			starBelow: starToResponse(starBelow)
+		};
 	}
 
-	getRightAscension(longitude: number): number {
+	getRightAscensionInHours(longitude: number): number {
 		const LST = this.getLocalSiderealTimeInDegrees();
 		return (longitude + LST) / 15; // hrs
 	}
