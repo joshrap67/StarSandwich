@@ -18,20 +18,20 @@ export interface IStar extends mongoose.Document {
 }
 
 export const starScheme = new mongoose.Schema({
-  hipId: String,
-  hdId: String,
-  hrId: String,
-  glId: String,
-  bfDesignation: String,
-  properName: String,
-  rightAscension: Number,
-  declination: Number,
-  distance: Number,
-  magnitude: Number,
-  absMagnitude: Number,
-  constellation: String,
-  numStars: Number,
-  luminosity: Number,
+	hipId: String,
+	hdId: String,
+	hrId: String,
+	glId: String,
+	bfDesignation: String,
+	properName: String,
+	rightAscension: Number,
+	declination: Number,
+	distance: Number,
+	magnitude: Number,
+	absMagnitude: Number,
+	constellation: String,
+	numStars: Number,
+	luminosity: Number
 });
 
 const Star = mongoose.model<IStar>("star", starScheme);

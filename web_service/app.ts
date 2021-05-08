@@ -1,28 +1,39 @@
 import {APIGatewayProxyEvent, APIGatewayProxyResult} from "aws-lambda";
 import StarService from "./services/starService";
 import MakeStarSandwichModel from "./models/requests/makeStarSandwichModel";
+import mongoose from "mongoose";
+import {ErrorResponse} from "./models/responses/errorResponse";
 
-sandwich();
+const dbURL = process.env.StarSandwichDbURL;
+let mongooseConnection = null;
 
-async function sandwich() {
-	const starService = new StarService();
-	const result = await starService.makeStarSandwich({
-		coordinates: {
-			latitude: -10.39725,
-			longitude: 14.43625
-		}
-	});
-	console.log(result);
-}
+const acceptedActions = ["makeStarSandwich"];
 
 export const lambdaHandler = async (event: APIGatewayProxyEvent): Promise<APIGatewayProxyResult> => {
-	const route = event.path;
+	const route = event.path.split("/")[1];
+	if (!acceptedActions.includes(route)) {
+		return {
+			statusCode: 404,
+			body: JSON.stringify({
+				message: "Invalid route"
+			})
+		};
+	}
 	let response = null;
+	if (mongooseConnection == null) {
+		mongooseConnection = mongoose.connect(dbURL, {
+			bufferCommands: false,
+			bufferMaxEntries: 0,
+			useNewUrlParser: true,
+			useUnifiedTopology: true
+		});
+		await mongooseConnection;
+	}
+
 	try {
 		if (route === "makeStarSandwich") {
-			const starService = new StarService();
 			const request = JSON.parse(event.body) as MakeStarSandwichModel;
-			response = await starService.makeStarSandwich(request);
+			response = await StarService.makeStarSandwich(request);
 		}
 
 		return {
@@ -30,10 +41,10 @@ export const lambdaHandler = async (event: APIGatewayProxyEvent): Promise<APIGat
 			body: JSON.stringify(response)
 		};
 	} catch (e) {
+		console.log(e);
 		return {
 			statusCode: 400,
-			body: JSON.stringify(response) // todo handle errors
+			body: JSON.stringify({message: e.message} as ErrorResponse)
 		};
 	}
-
-};
+}

@@ -1,14 +1,7 @@
-import mongoose from "mongoose";
-import {DB_URL} from "../config";
 import Star from "../models/documents/star";
 
-const mongooseConnection = mongoose
-	.connect(DB_URL)
-	.then(() => console.log("MongoDB connection active"))
-	.catch(() => console.log(console.error()));
-
-export default class StarRepository {
-	async findStars(coords: number[]) {
+export class StarRepository {
+	static async findStars(coords: number[]) {
 		const resultList = [];
 		try {
 			const results = await Star.find({

@@ -1,38 +1,43 @@
-import StarRepository from "../repositories/starRepository";
+import {StarRepository} from "../repositories/starRepository";
 import MakeStarSandwichModel from "../models/requests/makeStarSandwichModel";
-import OptimalStarService from "./optimalStarService";
+import {OptimalStarService} from "./optimalStarService";
 import {StarSandwichResponse} from "../models/responses/starSandwichResponse";
 import {starToResponse} from "../models/maps/starMaps";
 
 export default class StarService {
-	async makeStarSandwich(model: MakeStarSandwichModel): Promise<StarSandwichResponse> {
-		const repo = new StarRepository();
-		const RA = this.getRightAscensionInHours(model.coordinates.longitude);
+	static async makeStarSandwich(model: MakeStarSandwichModel): Promise<StarSandwichResponse> {
+		const rightAscensionTop = this.getRightAscensionInHours(model.coordinates.longitude);
+		let antipodeLongitude = model.coordinates.longitude;
+		if (model.coordinates.longitude > 0) {
+			antipodeLongitude -= 180;
+		} else if (model.coordinates.longitude <= 0) {
+			antipodeLongitude += 180;
+		}
 
-		const topStarCandidates = await repo.findStars([RA, model.coordinates.latitude]);
-		const bottomStarCandidates = await repo.findStars([RA, -model.coordinates.latitude]);
+		const rightAscensionBottom = this.getRightAscensionInHours(antipodeLongitude);
 
-		const optimalService = new OptimalStarService();
+		const topStarCandidates = await StarRepository.findStars([rightAscensionTop, model.coordinates.latitude]);
+		const bottomStarCandidates = await StarRepository.findStars([rightAscensionBottom, -model.coordinates.latitude]);
+
 		const starAbove = topStarCandidates.length > 0
-			? optimalService.findOptimalStar(RA, model.coordinates.latitude, topStarCandidates)
+			? OptimalStarService.findOptimalStar(rightAscensionTop, model.coordinates.latitude, topStarCandidates)
 			: null;
 		const starBelow = bottomStarCandidates.length > 0
-			? optimalService.findOptimalStar(RA, model.coordinates.latitude, bottomStarCandidates)
+			? OptimalStarService.findOptimalStar(rightAscensionTop, model.coordinates.latitude, bottomStarCandidates)
 			: null;
-		// todo constellation lookup
 
 		return {
-			starAbove: starToResponse(starAbove),
-			starBelow: starToResponse(starBelow)
+			starAbove: starAbove != null ? starToResponse(starAbove) : null,
+			starBelow: starBelow != null ? starToResponse(starBelow) : null
 		};
 	}
 
-	getRightAscensionInHours(longitude: number): number {
+	private static getRightAscensionInHours(longitude: number): number {
 		const LST = this.getLocalSiderealTimeInDegrees();
 		return (longitude + LST) / 15; // hrs
 	}
 
-	getLocalSiderealTimeInDegrees(): number {
+	private static getLocalSiderealTimeInDegrees(): number {
 		const now = new Date();
 		const julianDays = this.getJulianDays(now);
 
@@ -46,7 +51,7 @@ export default class StarService {
 		return greenwichSiderealAngle % 360;
 	}
 
-	getJulianDays(timestamp: Date) {
+	private static getJulianDays(timestamp: Date) {
 		return timestamp.getTime() / 86400000 + 2440587.5;
 	}
 }
