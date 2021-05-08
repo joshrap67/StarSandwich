@@ -156,3 +156,5 @@ app.*.map.json
 /android/app/profile
 /android/app/release
 
+# Any zip files ignore
+*zip

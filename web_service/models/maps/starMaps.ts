@@ -22,15 +22,14 @@ export function starToResponse(star: IStar): StarResponse {
 }
 
 const constellationsMap = new Map([
-	['IAU', 'FullName'],
 	['And', 'Andromeda'],
 	['Ant', 'Antila'],
 	['Aps', 'Apus'],
 	['Aqr', 'Aquarius'],
 	['Aql', 'Aquila'],
 	['Ara', 'Ara'],
-	['Aries', 'Ari'],
-	['Auriga', 'Aur'],
+	['Ari', 'Aries'],
+	['Aur', 'Auriga'],
 	['Boo', 'Bootes'],
 	['Cae', 'Caelum'],
 	['Cam', 'Camelopardalis'],
