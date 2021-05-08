@@ -6,7 +6,6 @@ import {starToResponse} from "../models/maps/starMaps";
 
 export default class StarService {
 	static async makeStarSandwich(model: MakeStarSandwichModel): Promise<StarSandwichResponse> {
-		const rightAscensionTop = this.getRightAscensionInHours(model.coordinates.longitude);
 		let antipodeLongitude = model.coordinates.longitude;
 		if (model.coordinates.longitude > 0) {
 			antipodeLongitude -= 180;
@@ -14,6 +13,7 @@ export default class StarService {
 			antipodeLongitude += 180;
 		}
 
+		const rightAscensionTop = this.getRightAscensionInHours(model.coordinates.longitude);
 		const rightAscensionBottom = this.getRightAscensionInHours(antipodeLongitude);
 
 		const topStarCandidates = await StarRepository.findStars([rightAscensionTop, model.coordinates.latitude]);
@@ -46,7 +46,7 @@ export default class StarService {
 			280.46061837 +
 			360.98564736629 * (julianDays - 2451545.0) +
 			0.000387933 * Math.pow(T, 2) -
-			Math.pow(T, 3) / 38710000.0;
+			(Math.pow(T, 3) * Math.pow(2.6, -8));
 
 		return greenwichSiderealAngle % 360;
 	}
