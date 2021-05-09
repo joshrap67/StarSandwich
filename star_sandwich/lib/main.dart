@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:sphere/sphere.dart';
+import 'package:location/location.dart';
+import 'package:star_sandwich/models/responses/starResponse.dart';
+import 'package:star_sandwich/services/star_service.dart';
 
 void main() {
   runApp(MyApp());
@@ -27,41 +30,91 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  double longitude;
-  double latitude;
+  double _longitude;
+  double _latitude;
+  LocationData _currentPosition;
+  Location _location;
+  StarResponse _topStar;
+  StarResponse _bottomStar;
+  bool _loading;
 
   @override
   void initState() {
-    longitude = -14.137293;
-    latitude = 27.95309;
+    _longitude = -14.137293;
+    _latitude = 77.95309;
+    _location = Location();
+    _loading = false;
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Center(
+      body: SafeArea(
         child: Column(children: [
-          IgnorePointer(
-            child: Container(
-              height: 500,
-              child: Sphere(
-                surface: 'assets/images/8081_earthmap4k.jpg',
+          if (_topStar != null) Text("Top star ${_topStar.constellation}"),
+          Container(
+            height: 500,
+            child: Sphere(
+              surface: 'assets/images/8081_earthmap4k.jpg',
 //            surface: 'assets/images/earthspec1k.jpg',
-                radius: 100,
-                latitude: latitude,
-                longitude: longitude,
-                alignment: Alignment.center,
-              ),
+              radius: 100,
+              latitude: _latitude,
+              longitude: _longitude,
+              alignment: Alignment.center,
             ),
           ),
-          ElevatedButton(onPressed: () {
-            latitude = 10;
-            longitude = 34;
-            setState(() {});
-          })
+          if (_bottomStar != null)
+            Text("Bottom star ${_bottomStar.constellation}"),
+          ElevatedButton(
+              child: Text("Make me a star sandwich"),
+              onPressed: () {
+                getStars();
+              }),
+          if (_loading) CircularProgressIndicator()
         ]),
       ),
     );
+  }
+
+  getStars() async {
+    _loading = true;
+    setState(() {});
+    bool locationReceived = await getLoc();
+    if (locationReceived) {
+      var result = await StarService.makeStarSandwich(
+          _currentPosition.latitude, _currentPosition.longitude);
+
+      if (result.success) {
+        _topStar = result.data.starAbove;
+        _bottomStar = result.data.starBelow;
+      }
+    }
+    _loading = false;
+    setState(() {});
+  }
+
+  Future<bool> getLoc() async {
+    bool _serviceEnabled;
+    PermissionStatus _permissionGranted;
+
+    _serviceEnabled = await _location.serviceEnabled();
+    if (!_serviceEnabled) {
+      _serviceEnabled = await _location.requestService();
+      if (!_serviceEnabled) {
+        return false;
+      }
+    }
+
+    _permissionGranted = await _location.hasPermission();
+    if (_permissionGranted == PermissionStatus.denied) {
+      _permissionGranted = await _location.requestPermission();
+      if (_permissionGranted != PermissionStatus.granted) {
+        return false;
+      }
+    }
+
+    _currentPosition = await _location.getLocation();
+    return true;
   }
 }
