@@ -33,11 +33,18 @@ export default class StarService {
 	}
 
 	private static getRightAscensionInHours(longitude: number): number {
-		const LST = this.getLocalSiderealTimeInDegrees();
-		return (longitude + LST) / 15; // hrs
+		const greenwichSiderealTimeDegrees = this.getMeanGreenwichSiderealTimeDegrees();
+		const localSiderealTime = (longitude + greenwichSiderealTimeDegrees) / 15;
+
+		let rightAscension = localSiderealTime;
+		if (localSiderealTime < 0) {
+			// this is such a hack and would love to find an astronomer to help me understand XD
+			rightAscension = 24 - (Math.abs(localSiderealTime));
+		}
+		return rightAscension; // hrs
 	}
 
-	private static getLocalSiderealTimeInDegrees(): number {
+	private static getMeanGreenwichSiderealTimeDegrees(): number {
 		const now = new Date();
 		const julianDays = this.getJulianDays(now);
 
