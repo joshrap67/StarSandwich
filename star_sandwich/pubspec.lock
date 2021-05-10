@@ -161,13 +161,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.8.0"
-  sphere:
-    dependency: "direct main"
-    description:
-      name: sphere
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "0.0.4"
   stack_trace:
     dependency: transitive
     description:

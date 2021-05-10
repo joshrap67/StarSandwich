@@ -27,10 +27,10 @@ class StarResponse {
     rightAscension = json["rightAscension"];
     declination = json["declination"];
     numStars = json["numStars"];
-    magnitude = json["magnitude"];
-    distance = json["distance"];
-    absMagnitude = json["absMagnitude"];
-    luminosity = json["luminosity"];
+    magnitude = json["magnitude"].toDouble();
+    distance = json["distance"].toDouble();
+    absMagnitude = json["absMagnitude"].toDouble();
+    luminosity = json["luminosity"].toDouble();
   }
 
   @override
