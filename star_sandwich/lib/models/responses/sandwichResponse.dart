@@ -5,6 +5,7 @@ class SandwichResponse {
   StarResponse starBelow;
 
   SandwichResponse.fromJson(Map<String, dynamic> json) {
+    // todo handle nulls
     starAbove = new StarResponse.fromJson(json["starAbove"]);
     starBelow = new StarResponse.fromJson(json["starBelow"]);
   }

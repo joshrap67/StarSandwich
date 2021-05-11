@@ -16,8 +16,6 @@
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>
 	<string>$(FLUTTER_BUILD_NAME)</string>
-	<key>NSLocationAlwaysUsageDescription</key>
-	<string>This app needs you permission to access location when in the background</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
     <string>This app needs you permission to access location when in use</string>
 	<key>CFBundleSignature</key>

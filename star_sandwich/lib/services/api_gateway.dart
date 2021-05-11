@@ -13,8 +13,8 @@ Future<ResultStatus<String>> makeApiRequest(
       new ResultStatus(success: false, networkError: false);
 
   try {
-    http.Response response = await http.post(
-        Config.apiRootUrl + requestContent[RequestKeys.action],
+    var url = Uri.parse(Config.apiRootUrl + requestContent[RequestKeys.action]);
+    http.Response response = await http.post(url,
         body: json.encode(requestContent[RequestKeys.body]));
     if (response.statusCode == 200) {
       retVal.success = true;

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:location/location.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:star_sandwich/models/responses/starResponse.dart';
 import 'package:star_sandwich/services/star_service.dart';
 
@@ -8,14 +8,9 @@ class SandwichScreen extends StatefulWidget {
   final double longitude;
   final StarResponse topStar;
   final StarResponse bottomStar;
-  final Location location;
 
   SandwichScreen(
-      {this.latitude,
-      this.longitude,
-      this.topStar,
-      this.bottomStar,
-      this.location});
+      {this.latitude, this.longitude, this.topStar, this.bottomStar});
 
   @override
   _SandwichScreenState createState() => _SandwichScreenState();
@@ -24,8 +19,6 @@ class SandwichScreen extends StatefulWidget {
 class _SandwichScreenState extends State<SandwichScreen> {
   double _longitude;
   double _latitude;
-  LocationData _currentPosition;
-  Location _location;
   StarResponse _topStar;
   StarResponse _bottomStar;
   bool _loading;
@@ -37,7 +30,6 @@ class _SandwichScreenState extends State<SandwichScreen> {
     _longitude = widget.longitude;
     _topStar = widget.topStar;
     _bottomStar = widget.bottomStar;
-    _location = widget.location;
     super.initState();
   }
 
@@ -119,33 +111,73 @@ class _SandwichScreenState extends State<SandwichScreen> {
     );
   }
 
-  getStars() async {
-    _loading = true;
-    setState(() {});
-    bool locationReceived = await getLoc();
-    if (locationReceived) {
-      var pos = await _location.getLocation();
+  Future<void> getStars() async {
+    setState(() {
+      _loading = true;
+    });
 
-      var result =
-          await StarService.makeStarSandwich(pos.latitude, pos.longitude);
-
-      if (result.success) {
-        _topStar = result.data.starAbove;
-        _bottomStar = result.data.starBelow;
-      }
+    Position currentPosition = await getLocFromGPS();
+    if (currentPosition == null) {
+      setState(() {
+        _loading = false;
+      });
+      return;
     }
-    _loading = false;
-    setState(() {});
+    _latitude = currentPosition.latitude;
+    _longitude = currentPosition.longitude;
+
+    var result = await StarService.makeStarSandwich(_latitude, _longitude);
+
+    if (result.success) {
+      _topStar = result.data.starAbove;
+      _bottomStar = result.data.starBelow;
+    } else {
+      final snackBar = SnackBar(content: Text('Error making sandwich.'));
+      ScaffoldMessenger.of(context).showSnackBar(snackBar);
+    }
+    setState(() {
+      _loading = false;
+    });
   }
 
-  Future<bool> getLoc() async {
-    // todo handle if user did manual here
-    _currentPosition = await _location.getLocation();
-    return true;
+  Future<Position> getLocFromGPS() async {
+    bool serviceEnabled;
+    LocationPermission permission;
+
+    serviceEnabled = await Geolocator.isLocationServiceEnabled();
+    if (!serviceEnabled) {
+      showSnackbar("You must turn on locational services to continue.");
+      return null;
+    }
+
+    permission = await Geolocator.checkPermission();
+    if (permission == LocationPermission.denied) {
+      permission = await Geolocator.requestPermission();
+      if (permission == LocationPermission.denied) {
+        showSnackbar("Locational services must be turned on to use GPS mode.");
+        return null;
+      }
+    }
+
+    if (permission == LocationPermission.deniedForever) {
+      showSnackbar(
+          "Location permissions are permanently denied, you cannot use GPS mode.");
+      return null;
+    }
+
+    Position currentPosition = await Geolocator.getCurrentPosition();
+    return currentPosition;
+  }
+
+  void showSnackbar(String message) {
+    ScaffoldMessenger.of(context).removeCurrentSnackBar();
+    final snackBar = SnackBar(content: Text(message));
+    ScaffoldMessenger.of(context).showSnackBar(snackBar);
   }
 
   String getStarDisplay(StarResponse star) {
     if (star.properName.isNotEmpty) {
+      // todo make this a big deal
       return star.properName;
     }
     if (star.bfDesignation.isNotEmpty) {

@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:location/location.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:star_sandwich/models/responses/starResponse.dart';
 import 'package:star_sandwich/screens/sandwich_screen.dart';
 import 'package:star_sandwich/services/star_service.dart';
@@ -14,8 +14,6 @@ enum LocationMode { gpsMode, manual }
 
 class _LandingScreenState extends State<LandingScreen> {
   LocationMode _locationMode;
-  LocationData _currentPosition;
-  Location _location;
   bool _loading;
   StarResponse _topStar;
   StarResponse _bottomStar;
@@ -24,7 +22,6 @@ class _LandingScreenState extends State<LandingScreen> {
   void initState() {
     _locationMode = LocationMode.gpsMode;
     _loading = false;
-    _location = Location();
     super.initState();
   }
 
@@ -91,7 +88,7 @@ class _LandingScreenState extends State<LandingScreen> {
                           size: 75,
                         ),
                       ),
-                      onPressed: sandwichButtonPressed,
+                      onPressed: getStars,
                     ),
             ),
             Padding(padding: const EdgeInsets.all(50.0)),
@@ -147,70 +144,74 @@ class _LandingScreenState extends State<LandingScreen> {
     );
   }
 
-  getStars() async {
-    _loading = true;
-    setState(() {});
-    bool locationReceived = await getLoc();
-    if (locationReceived) {
-      var result = await StarService.makeStarSandwich(
-          _currentPosition.latitude, _currentPosition.longitude);
+  Future<void> getStars() async {
+    setState(() {
+      _loading = true;
+    });
 
-      if (result.success) {
-        _topStar = result.data.starAbove;
-        _bottomStar = result.data.starBelow;
-      }
-    }
-    // todo try catch to handle errors and stop loading
-    _loading = false;
-    setState(() {});
-  }
-
-  void sandwichButtonPressed() async {
-    if (_locationMode == LocationMode.gpsMode) {
+    Position currentPosition = await getLocFromGPS();
+    if (currentPosition == null) {
       setState(() {
-        _loading = true;
+        _loading = false;
       });
-
-      bool locationReceived = await getLoc();
-      await getStars();
-
-      if (locationReceived) {
-        Navigator.push(context, MaterialPageRoute(builder: (_) {
-          return SandwichScreen(
-            latitude: _currentPosition.latitude,
-            longitude: _currentPosition.longitude,
-            bottomStar: _bottomStar,
-            topStar: _topStar,
-            location: _location,
-          );
-        }));
-      }
-    } else if (_locationMode == LocationMode.manual) {
-      // todo prompt user to enter an address
+      return;
     }
+
+    var result = await StarService.makeStarSandwich(
+        currentPosition.latitude, currentPosition.longitude);
+
+    if (result.success) {
+      _topStar = result.data.starAbove;
+      _bottomStar = result.data.starBelow;
+
+      Navigator.push(context, MaterialPageRoute(builder: (_) {
+        return SandwichScreen(
+            latitude: currentPosition.latitude,
+            longitude: currentPosition.longitude,
+            bottomStar: _bottomStar,
+            topStar: _topStar);
+      }));
+    } else {
+      final snackBar = SnackBar(content: Text('Error making sandwich.'));
+      ScaffoldMessenger.of(context).showSnackBar(snackBar);
+    }
+    setState(() {
+      _loading = false;
+    });
   }
 
-  Future<bool> getLoc() async {
-    bool _serviceEnabled;
-    PermissionStatus _permissionGranted;
+  Future<Position> getLocFromGPS() async {
+    bool serviceEnabled;
+    LocationPermission permission;
 
-    _serviceEnabled = await _location.serviceEnabled();
-    if (!_serviceEnabled) {
-      _serviceEnabled = await _location.requestService();
-      if (!_serviceEnabled) {
-        return false;
+    serviceEnabled = await Geolocator.isLocationServiceEnabled();
+    if (!serviceEnabled) {
+      showSnackbar("You must turn on locational services to continue.");
+      return null;
+    }
+
+    permission = await Geolocator.checkPermission();
+    if (permission == LocationPermission.denied) {
+      permission = await Geolocator.requestPermission();
+      if (permission == LocationPermission.denied) {
+        showSnackbar("Locational services must be turned on to use GPS mode.");
+        return null;
       }
     }
 
-    _permissionGranted = await _location.hasPermission();
-    if (_permissionGranted == PermissionStatus.denied) {
-      _permissionGranted = await _location.requestPermission();
-      if (_permissionGranted != PermissionStatus.granted) {
-        return false;
-      }
+    if (permission == LocationPermission.deniedForever) {
+      showSnackbar(
+          "Location permissions are permanently denied, you cannot use GPS mode.");
+      return null;
     }
 
-    _currentPosition = await _location.getLocation();
-    return true;
+    Position currentPosition = await Geolocator.getCurrentPosition();
+    return currentPosition;
+  }
+
+  void showSnackbar(String message) {
+    ScaffoldMessenger.of(context).removeCurrentSnackBar();
+    final snackBar = SnackBar(content: Text(message));
+    ScaffoldMessenger.of(context).showSnackBar(snackBar);
   }
 }

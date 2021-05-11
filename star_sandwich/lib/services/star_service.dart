@@ -22,16 +22,21 @@ class StarService {
             coordinates:
                 new Coordinates(latitude: latitude, longitude: longitude)));
 
-    ResultStatus<String> response = await makeApiRequest(jsonBody);
-    if (response.success) {
-      Map<String, dynamic> rawResponse = jsonDecode(response.data);
-      retVal.success = true;
-      retVal.data = new SandwichResponse.fromJson(rawResponse);
-    } else if (response.networkError) {
-      retVal.errorMessage = "Network error.Check internet connection.";
-    } else {
-      retVal.errorMessage = "Unable to get sandwich.";
+    try {
+      ResultStatus<String> response = await makeApiRequest(jsonBody);
+      if (response.success) {
+        Map<String, dynamic> rawResponse = jsonDecode(response.data);
+        retVal.success = true;
+        retVal.data = new SandwichResponse.fromJson(rawResponse);
+      } else if (response.networkError) {
+        retVal.errorMessage = "Network error.Check internet connection.";
+      } else {
+        retVal.errorMessage = "Unable to get sandwich.";
+      }
+    } catch (e) {
+      retVal.errorMessage = "Unable to make sandwich.";
     }
+
     return retVal;
   }
 }
