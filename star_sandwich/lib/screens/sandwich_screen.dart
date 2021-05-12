@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:star_sandwich/models/responses/starResponse.dart';
 import 'package:star_sandwich/services/star_service.dart';
@@ -22,10 +23,14 @@ class _SandwichScreenState extends State<SandwichScreen> {
   StarResponse _topStar;
   StarResponse _bottomStar;
   bool _loading;
+  bool _bottomConstellationShowing;
+  bool _topConstellationShowing;
 
   @override
   void initState() {
     _loading = false;
+    _bottomConstellationShowing = false;
+    _topConstellationShowing = false;
     _latitude = widget.latitude;
     _longitude = widget.longitude;
     _topStar = widget.topStar;
@@ -45,34 +50,49 @@ class _SandwichScreenState extends State<SandwichScreen> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              Padding(padding: const EdgeInsets.all(20.0)),
               Expanded(
-                child: Column(
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
-                    Text(
-                      getStarDisplay(_topStar),
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        fontSize: 35,
-                        color: Colors.white,
-                      ),
+                    Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        IconButton(
+                          onPressed: () {
+                            setState(() {
+                              _topConstellationShowing =
+                                  !_topConstellationShowing;
+                            });
+                          },
+                          icon: Icon(Icons.wb_sunny),
+                          iconSize: 35,
+                          tooltip: "Star View",
+                        ),
+                      ],
                     ),
-                    Text(
-                      "${_topStar.constellation} Constellation",
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        fontSize: 20,
-                        color: Colors.white,
-                      ),
-                    )
+                    _topConstellationShowing
+                        ? topConstellationWidget(_topStar)
+                        : topStarWidget(_topStar),
+                    Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        IconButton(
+                          onPressed: () {},
+                          icon: Icon(Icons.info_outline),
+                          iconSize: 35,
+                          alignment: Alignment.bottomCenter,
+                          tooltip: "Info",
+                        ),
+                      ],
+                    ),
                   ],
                 ),
               ),
               Hero(
                 tag: "heroKey",
                 child: Container(
-                  width: 150,
-                  height: 150,
+                  width: 135,
+                  height: 135,
                   decoration: BoxDecoration(
                     shape: BoxShape.circle,
                     image: DecorationImage(
@@ -81,26 +101,40 @@ class _SandwichScreenState extends State<SandwichScreen> {
                 ),
               ),
               Expanded(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.end,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
-                    Text(
-                      "${_bottomStar.constellation} constellation",
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        fontSize: 20,
-                        color: Colors.white,
-                      ),
+                    Column(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        IconButton(
+                          onPressed: () {
+                            setState(() {
+                              _bottomConstellationShowing =
+                                  !_bottomConstellationShowing;
+                            });
+                          },
+                          icon: Icon(Icons.wb_sunny),
+                          iconSize: 35,
+                          tooltip: "Star View",
+                        ),
+                      ],
                     ),
-                    Text(
-                      getStarDisplay(_bottomStar),
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        fontSize: 35,
-                        color: Colors.white,
-                      ),
+                    _bottomConstellationShowing
+                        ? bottomConstellationWidget(_bottomStar)
+                        : bottomStarWidget(_bottomStar),
+                    Column(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        IconButton(
+                          onPressed: () {},
+                          icon: Icon(Icons.info_outline),
+                          iconSize: 35,
+                          alignment: Alignment.bottomCenter,
+                          tooltip: "Info",
+                        ),
+                      ],
                     ),
-                    Padding(padding: const EdgeInsets.all(20.0)),
                   ],
                 ),
               ),
@@ -109,6 +143,74 @@ class _SandwichScreenState extends State<SandwichScreen> {
         ),
       ),
     );
+  }
+
+  Widget topStarWidget(StarResponse star) {
+	  return Column(
+		  mainAxisAlignment: MainAxisAlignment.start,
+		  children: [
+			  SvgPicture.asset(
+				  'assets/svgs/andromeda.svg',
+			  ),
+			  Text(
+				  "${getStarDisplay(star)}",
+				  textAlign: TextAlign.center,
+				  style: TextStyle(
+					  fontSize: 20, color: Colors.white, fontStyle: FontStyle.italic),
+			  ),
+		  ],
+	  );
+  }
+
+  Widget topConstellationWidget(StarResponse star) {
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.start,
+      children: [
+        SvgPicture.asset(
+          'assets/svgs/antila.svg',
+        ),
+        Text(
+          "${star.constellation}",
+          textAlign: TextAlign.center,
+          style: TextStyle(
+              fontSize: 20, color: Colors.white, fontStyle: FontStyle.italic),
+        ),
+      ],
+    );
+  }
+
+  Widget bottomStarWidget(StarResponse star) {
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.end,
+      children: [
+        Text(
+          "${getStarDisplay(star)}",
+          textAlign: TextAlign.center,
+          style: TextStyle(
+              fontSize: 20, color: Colors.white, fontStyle: FontStyle.italic),
+        ),
+        SvgPicture.asset(
+          'assets/svgs/aquila.svg',
+        )
+      ],
+    );
+  }
+
+  Widget bottomConstellationWidget(StarResponse star) {
+	  return Column(
+		  mainAxisAlignment: MainAxisAlignment.end,
+		  children: [
+			  Text(
+				  "${star.constellation}",
+				  textAlign: TextAlign.center,
+				  style: TextStyle(
+					  fontSize: 20, color: Colors.white, fontStyle: FontStyle.italic),
+			  ),
+			  SvgPicture.asset(
+				  'assets/svgs/andromeda.svg',
+			  )
+		  ],
+	  );
   }
 
   Future<void> getStars() async {
