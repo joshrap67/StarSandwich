@@ -146,20 +146,20 @@ class _SandwichScreenState extends State<SandwichScreen> {
   }
 
   Widget topStarWidget(StarResponse star) {
-	  return Column(
-		  mainAxisAlignment: MainAxisAlignment.start,
-		  children: [
-			  SvgPicture.asset(
-				  'assets/svgs/andromeda.svg',
-			  ),
-			  Text(
-				  "${getStarDisplay(star)}",
-				  textAlign: TextAlign.center,
-				  style: TextStyle(
-					  fontSize: 20, color: Colors.white, fontStyle: FontStyle.italic),
-			  ),
-		  ],
-	  );
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.start,
+      children: [
+        SvgPicture.asset(
+          'assets/svgs/andromeda.svg',
+        ),
+        Text(
+          "${getStarDisplay(star)}",
+          textAlign: TextAlign.center,
+          style: TextStyle(
+              fontSize: 20, color: Colors.white, fontStyle: FontStyle.italic),
+        ),
+      ],
+    );
   }
 
   Widget topConstellationWidget(StarResponse star) {
@@ -167,7 +167,7 @@ class _SandwichScreenState extends State<SandwichScreen> {
       mainAxisAlignment: MainAxisAlignment.start,
       children: [
         SvgPicture.asset(
-          'assets/svgs/antila.svg',
+          'assets/svgs/canis_major.svg',
         ),
         Text(
           "${star.constellation}",
@@ -190,27 +190,27 @@ class _SandwichScreenState extends State<SandwichScreen> {
               fontSize: 20, color: Colors.white, fontStyle: FontStyle.italic),
         ),
         SvgPicture.asset(
-          'assets/svgs/aquila.svg',
+          'assets/svgs/capricornus.svg',
         )
       ],
     );
   }
 
   Widget bottomConstellationWidget(StarResponse star) {
-	  return Column(
-		  mainAxisAlignment: MainAxisAlignment.end,
-		  children: [
-			  Text(
-				  "${star.constellation}",
-				  textAlign: TextAlign.center,
-				  style: TextStyle(
-					  fontSize: 20, color: Colors.white, fontStyle: FontStyle.italic),
-			  ),
-			  SvgPicture.asset(
-				  'assets/svgs/andromeda.svg',
-			  )
-		  ],
-	  );
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.end,
+      children: [
+        Text(
+          "${star.constellation}",
+          textAlign: TextAlign.center,
+          style: TextStyle(
+              fontSize: 20, color: Colors.white, fontStyle: FontStyle.italic),
+        ),
+        SvgPicture.asset(
+          'assets/svgs/aquarius.svg',
+        )
+      ],
+    );
   }
 
   Future<void> getStars() async {
