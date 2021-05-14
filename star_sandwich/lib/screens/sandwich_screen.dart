@@ -45,7 +45,7 @@ class _SandwichScreenState extends State<SandwichScreen> {
         body: Container(
           decoration: BoxDecoration(
               image: DecorationImage(
-                  image: AssetImage("assets/images/stars.png"),
+                  image: AssetImage("assets/images/stars.jpg"),
                   fit: BoxFit.fill)),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -190,7 +190,7 @@ class _SandwichScreenState extends State<SandwichScreen> {
               fontSize: 20, color: Colors.white, fontStyle: FontStyle.italic),
         ),
         SvgPicture.asset(
-          'assets/svgs/capricornus.svg',
+          'assets/svgs/delphinus.svg',
         )
       ],
     );

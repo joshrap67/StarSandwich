@@ -31,7 +31,7 @@ class _LandingScreenState extends State<LandingScreen> {
       body: Container(
         decoration: BoxDecoration(
           image: DecorationImage(
-              image: AssetImage("assets/images/stars.png"), fit: BoxFit.fill),
+              image: AssetImage("assets/images/stars.jpg"), fit: BoxFit.fill),
         ),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
