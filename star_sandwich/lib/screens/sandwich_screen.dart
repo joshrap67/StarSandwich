@@ -97,12 +97,8 @@ class _SandwichScreenState extends State<SandwichScreen> {
                   height: 135,
                   decoration: BoxDecoration(
                     shape: BoxShape.circle,
-                    border: Border.all(
-                        // to make it look like it has an atmosphere?
-                        color: Colors.blueAccent,
-                        width: 0.8),
                     image: DecorationImage(
-                        image: AssetImage('assets/images/8081_earthmap4k.jpg')),
+                        image: AssetImage('assets/images/MODIS_Map.jpg')),
                   ),
                 ),
               ),
