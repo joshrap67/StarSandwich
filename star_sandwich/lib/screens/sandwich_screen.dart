@@ -191,7 +191,7 @@ class _SandwichScreenState extends State<SandwichScreen> {
               fontSize: 20, color: Colors.white, fontStyle: FontStyle.italic),
         ),
         SvgPicture.asset(
-          'assets/svgs/musca.svg',
+          'assets/svgs/vulpecula.svg',
         )
       ],
     );
