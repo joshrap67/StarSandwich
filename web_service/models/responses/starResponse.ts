@@ -6,6 +6,7 @@ export interface StarResponse {
 	glId: string;
 	properName: string;
 	constellation: string;
+	iauConstellation: string;
 	bfDesignation: string;
 	rightAscension: number;
 	declination: number;

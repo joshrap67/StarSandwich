@@ -6,6 +6,7 @@ class StarResponse {
   String glId;
   String properName;
   String constellation;
+  String iauConstellation;
   String bfDesignation;
   double rightAscension;
   double declination;
@@ -23,6 +24,7 @@ class StarResponse {
     glId = json["glId"];
     properName = json["properName"];
     constellation = json["constellation"];
+	iauConstellation = json["iauConstellation"];
     bfDesignation = json["bfDesignation"];
     rightAscension = json["rightAscension"];
     declination = json["declination"];
@@ -36,7 +38,7 @@ class StarResponse {
   @override
   String toString() {
     return "Id: $id hipId: $hipId hdId: $hdId hrId: $hrId glId: $glId properName: $properName constellation: $constellation "
-        " bfDesignation: $bfDesignation rightAscension: $rightAscension declination: $declination numStars: $numStars"
+        " IAU Constellation: $iauConstellation bfDesignation: $bfDesignation rightAscension: $rightAscension declination: $declination numStars: $numStars"
         " magnitude: $magnitude distance: $distance absMagnitude: $absMagnitude luminosity: $luminosity";
   }
 }

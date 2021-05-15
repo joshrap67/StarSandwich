@@ -150,7 +150,7 @@ class _SandwichScreenState extends State<SandwichScreen> {
       mainAxisAlignment: MainAxisAlignment.start,
       children: [
         SvgPicture.asset(
-          'assets/svgs/andromeda.svg',
+          'assets/svgs/Ori.svg',
         ),
         Text(
           "${getStarDisplay(star)}",
@@ -167,7 +167,7 @@ class _SandwichScreenState extends State<SandwichScreen> {
       mainAxisAlignment: MainAxisAlignment.start,
       children: [
         SvgPicture.asset(
-          'assets/svgs/canis_major.svg',
+          'assets/svgs/${star.iauConstellation}.svg',
         ),
         Text(
           "${star.constellation}",
@@ -180,7 +180,7 @@ class _SandwichScreenState extends State<SandwichScreen> {
   }
 
   Widget bottomStarWidget(StarResponse star) {
-  	// todo different star images based on apparent magnitude?
+    // todo different star images based on apparent magnitude?
     return Column(
       mainAxisAlignment: MainAxisAlignment.end,
       children: [
@@ -191,7 +191,7 @@ class _SandwichScreenState extends State<SandwichScreen> {
               fontSize: 20, color: Colors.white, fontStyle: FontStyle.italic),
         ),
         SvgPicture.asset(
-          'assets/svgs/vulpecula.svg',
+          'assets/svgs/Vir.svg',
         )
       ],
     );
@@ -208,7 +208,7 @@ class _SandwichScreenState extends State<SandwichScreen> {
               fontSize: 20, color: Colors.white, fontStyle: FontStyle.italic),
         ),
         SvgPicture.asset(
-          'assets/svgs/aquarius.svg',
+          'assets/svgs/${star.iauConstellation}.svg',
         )
       ],
     );
