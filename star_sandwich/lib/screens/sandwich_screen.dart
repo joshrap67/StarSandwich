@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:geolocator/geolocator.dart';
@@ -95,6 +97,10 @@ class _SandwichScreenState extends State<SandwichScreen> {
                   height: 135,
                   decoration: BoxDecoration(
                     shape: BoxShape.circle,
+                    border: Border.all(
+                        // to make it look like it has an atmosphere?
+                        color: Colors.blueAccent,
+                        width: 0.8),
                     image: DecorationImage(
                         image: AssetImage('assets/images/8081_earthmap4k.jpg')),
                   ),
@@ -146,17 +152,21 @@ class _SandwichScreenState extends State<SandwichScreen> {
   }
 
   Widget topStarWidget(StarResponse star) {
+    final random = new Random();
     return Column(
       mainAxisAlignment: MainAxisAlignment.start,
       children: [
-        SvgPicture.asset(
-          'assets/svgs/Ori.svg',
+        Transform.rotate(
+          angle: random.nextInt(360).toDouble(),
+          child: Image.asset(
+            getStarImage(star),
+          ),
         ),
         Text(
           "${getStarDisplay(star)}",
           textAlign: TextAlign.center,
           style: TextStyle(
-              fontSize: 20, color: Colors.white, fontStyle: FontStyle.italic),
+              fontSize: 25, color: Colors.white, fontStyle: FontStyle.italic),
         ),
       ],
     );
@@ -180,7 +190,7 @@ class _SandwichScreenState extends State<SandwichScreen> {
   }
 
   Widget bottomStarWidget(StarResponse star) {
-    // todo different star images based on apparent magnitude?
+    final random = new Random();
     return Column(
       mainAxisAlignment: MainAxisAlignment.end,
       children: [
@@ -188,10 +198,13 @@ class _SandwichScreenState extends State<SandwichScreen> {
           "${getStarDisplay(star)}",
           textAlign: TextAlign.center,
           style: TextStyle(
-              fontSize: 20, color: Colors.white, fontStyle: FontStyle.italic),
+              fontSize: 25, color: Colors.white, fontStyle: FontStyle.italic),
         ),
-        SvgPicture.asset(
-          'assets/svgs/Vir.svg',
+        Transform.rotate(
+          angle: random.nextInt(360).toDouble(),
+          child: Image.asset(
+            getStarImage(star),
+          ),
         )
       ],
     );
@@ -276,6 +289,18 @@ class _SandwichScreenState extends State<SandwichScreen> {
     ScaffoldMessenger.of(context).removeCurrentSnackBar();
     final snackBar = SnackBar(content: Text(message));
     ScaffoldMessenger.of(context).showSnackBar(snackBar);
+  }
+
+  String getStarImage(StarResponse star) {
+    String image;
+    if (star.magnitude < 3) {
+      image = 'assets/images/very_bright.png';
+    } else if (star.magnitude < 6) {
+      image = 'assets/images/bright.png';
+    } else {
+      image = 'assets/images/dim.png';
+    }
+    return image;
   }
 
   String getStarDisplay(StarResponse star) {

@@ -172,7 +172,7 @@ class _LandingScreenState extends State<LandingScreen> {
             topStar: _topStar);
       }));
     } else {
-      final snackBar = SnackBar(content: Text('Error making sandwich.'));
+      final snackBar = SnackBar(content: Text('Error making sandwich.${result.errorMessage}'));
       ScaffoldMessenger.of(context).showSnackBar(snackBar);
     }
     setState(() {
