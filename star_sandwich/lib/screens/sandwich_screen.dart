@@ -180,6 +180,7 @@ class _SandwichScreenState extends State<SandwichScreen> {
   }
 
   Widget bottomStarWidget(StarResponse star) {
+  	// todo different star images based on apparent magnitude?
     return Column(
       mainAxisAlignment: MainAxisAlignment.end,
       children: [
@@ -190,7 +191,7 @@ class _SandwichScreenState extends State<SandwichScreen> {
               fontSize: 20, color: Colors.white, fontStyle: FontStyle.italic),
         ),
         SvgPicture.asset(
-          'assets/svgs/delphinus.svg',
+          'assets/svgs/musca.svg',
         )
       ],
     );
