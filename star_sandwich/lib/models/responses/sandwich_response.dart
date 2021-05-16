@@ -1,4 +1,4 @@
-import 'package:star_sandwich/models/responses/starResponse.dart';
+import 'package:star_sandwich/models/responses/star_response.dart';
 
 class SandwichResponse {
   StarResponse starAbove;

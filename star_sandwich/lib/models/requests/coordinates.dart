@@ -6,6 +6,11 @@ class Coordinates extends Request {
 
   Coordinates({this.longitude, this.latitude});
 
+  Coordinates.fromJson(Map<String, dynamic> rawResponse) {
+    latitude = rawResponse["latitude"];
+    longitude = rawResponse["longitude"];
+  }
+
   @override
   String toString() {
     return "Latitude: $latitude Longitude: $longitude";

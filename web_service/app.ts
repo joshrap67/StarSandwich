@@ -1,13 +1,16 @@
 import {APIGatewayProxyEvent, APIGatewayProxyResult} from "aws-lambda";
 import StarService from "./services/starService";
-import MakeStarSandwichModel from "./models/requests/makeStarSandwichModel";
+import MakeStarSandwichRequest from "./models/requests/makeStarSandwichRequest";
 import mongoose from "mongoose";
 import {ErrorResponse} from "./models/responses/errorResponse";
+import {GetGeocodedLocationRequest} from "./models/requests/getGeocodedLocationRequest";
+import LocationService from "./services/locationService";
 
 const dbURL = process.env.StarSandwichDbURL;
+export const geocodeApiKey = process.env.GeocodeApiKey;
 let mongooseConnection = null;
 
-const acceptedActions = ["makeStarSandwich"];
+const acceptedActions = ["makeStarSandwich", "getGeocodedLocation"];
 
 export const lambdaHandler = async (event: APIGatewayProxyEvent): Promise<APIGatewayProxyResult> => {
 	const route = event.path.split("/")[1];
@@ -32,8 +35,11 @@ export const lambdaHandler = async (event: APIGatewayProxyEvent): Promise<APIGat
 
 	try {
 		if (route === "makeStarSandwich") {
-			const request = JSON.parse(event.body) as MakeStarSandwichModel;
+			const request = JSON.parse(event.body) as MakeStarSandwichRequest;
 			response = await StarService.makeStarSandwich(request);
+		} else if (route === "getGeocodedLocation") {
+			const request = JSON.parse(event.body) as GetGeocodedLocationRequest;
+			response = await LocationService.getCoordinatesFromLocation(request.address);
 		}
 
 		return {

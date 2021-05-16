@@ -2,9 +2,7 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:geolocator/geolocator.dart';
-import 'package:star_sandwich/models/responses/starResponse.dart';
-import 'package:star_sandwich/services/star_service.dart';
+import 'package:star_sandwich/models/responses/star_response.dart';
 
 class SandwichScreen extends StatefulWidget {
   final double latitude;
@@ -24,13 +22,16 @@ class _SandwichScreenState extends State<SandwichScreen> {
   double _latitude;
   StarResponse _topStar;
   StarResponse _bottomStar;
-  bool _loading;
   bool _bottomConstellationShowing;
   bool _topConstellationShowing;
+  double _bottomStarRotation;
+  double _topStarRotation;
 
   @override
   void initState() {
-    _loading = false;
+    final random = new Random();
+    _topStarRotation = random.nextInt(360).toDouble();
+    _bottomStarRotation = random.nextInt(360).toDouble();
     _bottomConstellationShowing = false;
     _topConstellationShowing = false;
     _latitude = widget.latitude;
@@ -54,38 +55,46 @@ class _SandwichScreenState extends State<SandwichScreen> {
             children: [
               Expanded(
                 child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Column(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        IconButton(
-                          onPressed: () {
-                            setState(() {
-                              _topConstellationShowing =
-                                  !_topConstellationShowing;
-                            });
-                          },
-                          icon: Icon(Icons.wb_sunny),
-                          iconSize: 35,
-                          tooltip: "Star View",
-                        ),
-                      ],
+                    Expanded(
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          Padding(
+                              padding:
+                                  const EdgeInsets.only(top: 15, bottom: 15)),
+                          BackButton(),
+                        ],
+                      ),
                     ),
                     _topConstellationShowing
                         ? topConstellationWidget(_topStar)
                         : topStarWidget(_topStar),
-                    Column(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        IconButton(
-                          onPressed: () {},
-                          icon: Icon(Icons.info_outline),
-                          iconSize: 35,
-                          alignment: Alignment.bottomCenter,
-                          tooltip: "Info",
-                        ),
-                      ],
+                    Expanded(
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          Padding(
+                              padding:
+                                  const EdgeInsets.only(top: 15, bottom: 15)),
+                          IconButton(
+                            onPressed: () {
+                              setState(() {
+                                _topConstellationShowing =
+                                    !_topConstellationShowing;
+                              });
+                            },
+                            icon: _topConstellationShowing
+                                ? Icon(Icons.wb_sunny)
+                                : Icon(Icons.map),
+                            iconSize: 35,
+                            tooltip: _topConstellationShowing
+                                ? "Star View"
+                                : "View Constellation",
+                          ),
+                        ],
+                      ),
                     ),
                   ],
                 ),
@@ -104,38 +113,36 @@ class _SandwichScreenState extends State<SandwichScreen> {
               ),
               Expanded(
                 child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Column(
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      children: [
-                        IconButton(
-                          onPressed: () {
-                            setState(() {
-                              _bottomConstellationShowing =
-                                  !_bottomConstellationShowing;
-                            });
-                          },
-                          icon: Icon(Icons.wb_sunny),
-                          iconSize: 35,
-                          tooltip: "Star View",
-                        ),
-                      ],
-                    ),
+                    Spacer(),
                     _bottomConstellationShowing
                         ? bottomConstellationWidget(_bottomStar)
                         : bottomStarWidget(_bottomStar),
-                    Column(
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      children: [
-                        IconButton(
-                          onPressed: () {},
-                          icon: Icon(Icons.info_outline),
-                          iconSize: 35,
-                          alignment: Alignment.bottomCenter,
-                          tooltip: "Info",
-                        ),
-                      ],
+                    Expanded(
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: [
+                          IconButton(
+                            onPressed: () {
+                              setState(() {
+                                _bottomConstellationShowing =
+                                    !_bottomConstellationShowing;
+                              });
+                            },
+                            icon: _bottomConstellationShowing
+                                ? Icon(Icons.wb_sunny)
+                                : Icon(Icons.map),
+                            iconSize: 35,
+                            tooltip: _bottomConstellationShowing
+                                ? "Star View"
+                                : "View Constellation",
+                          ),
+                          Padding(
+                              padding:
+                                  const EdgeInsets.only(top: 15, bottom: 15)),
+                        ],
+                      ),
                     ),
                   ],
                 ),
@@ -148,21 +155,27 @@ class _SandwichScreenState extends State<SandwichScreen> {
   }
 
   Widget topStarWidget(StarResponse star) {
-    final random = new Random();
     return Column(
       mainAxisAlignment: MainAxisAlignment.start,
       children: [
-        Transform.rotate(
-          angle: random.nextInt(360).toDouble(),
-          child: Image.asset(
-            getStarImage(star),
+        Container(
+          height: 100,
+          width: 200,
+          child: Transform.rotate(
+            angle: _topStarRotation,
+            child: Image.asset(
+              getStarImage(star),
+            ),
           ),
         ),
         Text(
           "${getStarDisplay(star)}",
           textAlign: TextAlign.center,
           style: TextStyle(
-              fontSize: 25, color: Colors.white, fontStyle: FontStyle.italic),
+              decoration: TextDecoration.underline,
+              fontSize: 30,
+              color: Colors.white,
+              fontStyle: FontStyle.italic),
         ),
       ],
     );
@@ -172,11 +185,15 @@ class _SandwichScreenState extends State<SandwichScreen> {
     return Column(
       mainAxisAlignment: MainAxisAlignment.start,
       children: [
-        SvgPicture.asset(
-          'assets/svgs/${star.iauConstellation}.svg',
+        Container(
+          height: 150,
+          width: 200,
+          child: SvgPicture.asset(
+            'assets/svgs/${star.iauConstellation}.svg',
+          ),
         ),
         Text(
-          "${star.constellation}",
+          "${star.constellation} Constellation",
           textAlign: TextAlign.center,
           style: TextStyle(
               fontSize: 20, color: Colors.white, fontStyle: FontStyle.italic),
@@ -186,23 +203,34 @@ class _SandwichScreenState extends State<SandwichScreen> {
   }
 
   Widget bottomStarWidget(StarResponse star) {
-    final random = new Random();
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.end,
-      children: [
-        Text(
-          "${getStarDisplay(star)}",
-          textAlign: TextAlign.center,
-          style: TextStyle(
-              fontSize: 25, color: Colors.white, fontStyle: FontStyle.italic),
-        ),
-        Transform.rotate(
-          angle: random.nextInt(360).toDouble(),
-          child: Image.asset(
-            getStarImage(star),
+    return GestureDetector(
+      onTap: () {
+        // todo launch details page
+      },
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.end,
+        children: [
+          Text(
+            "${getStarDisplay(star)}",
+            textAlign: TextAlign.center,
+            style: TextStyle(
+              fontSize: 30,
+              color: Colors.white,
+              decoration: TextDecoration.underline,
+            ),
           ),
-        )
-      ],
+          Container(
+            height: 100,
+            width: 200,
+            child: Transform.rotate(
+              angle: _bottomStarRotation,
+              child: Image.asset(
+                getStarImage(star),
+              ),
+            ),
+          )
+        ],
+      ),
     );
   }
 
@@ -211,80 +239,20 @@ class _SandwichScreenState extends State<SandwichScreen> {
       mainAxisAlignment: MainAxisAlignment.end,
       children: [
         Text(
-          "${star.constellation}",
+          "${star.constellation} Constellation",
           textAlign: TextAlign.center,
           style: TextStyle(
               fontSize: 20, color: Colors.white, fontStyle: FontStyle.italic),
         ),
-        SvgPicture.asset(
-          'assets/svgs/${star.iauConstellation}.svg',
+        Container(
+          height: 150,
+          width: 200,
+          child: SvgPicture.asset(
+            'assets/svgs/${star.iauConstellation}.svg',
+          ),
         )
       ],
     );
-  }
-
-  Future<void> getStars() async {
-    setState(() {
-      _loading = true;
-    });
-
-    Position currentPosition = await getLocFromGPS();
-    if (currentPosition == null) {
-      setState(() {
-        _loading = false;
-      });
-      return;
-    }
-    _latitude = currentPosition.latitude;
-    _longitude = currentPosition.longitude;
-
-    var result = await StarService.makeStarSandwich(_latitude, _longitude);
-
-    if (result.success) {
-      _topStar = result.data.starAbove;
-      _bottomStar = result.data.starBelow;
-    } else {
-      final snackBar = SnackBar(content: Text('Error making sandwich.'));
-      ScaffoldMessenger.of(context).showSnackBar(snackBar);
-    }
-    setState(() {
-      _loading = false;
-    });
-  }
-
-  Future<Position> getLocFromGPS() async {
-    bool serviceEnabled;
-    LocationPermission permission;
-
-    serviceEnabled = await Geolocator.isLocationServiceEnabled();
-    if (!serviceEnabled) {
-      showSnackbar("You must turn on locational services to continue.");
-      return null;
-    }
-
-    permission = await Geolocator.checkPermission();
-    if (permission == LocationPermission.denied) {
-      permission = await Geolocator.requestPermission();
-      if (permission == LocationPermission.denied) {
-        showSnackbar("Locational services must be turned on to use GPS mode.");
-        return null;
-      }
-    }
-
-    if (permission == LocationPermission.deniedForever) {
-      showSnackbar(
-          "Location permissions are permanently denied, you cannot use GPS mode.");
-      return null;
-    }
-
-    Position currentPosition = await Geolocator.getCurrentPosition();
-    return currentPosition;
-  }
-
-  void showSnackbar(String message) {
-    ScaffoldMessenger.of(context).removeCurrentSnackBar();
-    final snackBar = SnackBar(content: Text(message));
-    ScaffoldMessenger.of(context).showSnackBar(snackBar);
   }
 
   String getStarImage(StarResponse star) {
@@ -301,7 +269,7 @@ class _SandwichScreenState extends State<SandwichScreen> {
 
   String getStarDisplay(StarResponse star) {
     if (star.properName.isNotEmpty) {
-      // todo make this a big deal
+      // todo make this a big deal?
       return star.properName;
     }
     if (star.bfDesignation.isNotEmpty) {
@@ -311,13 +279,13 @@ class _SandwichScreenState extends State<SandwichScreen> {
       return "HD ${star.hdId}";
     }
     if (star.hrId.isNotEmpty) {
-      return "HD ${star.hrId}";
+      return "HR ${star.hrId}";
     }
     if (star.hipId.isNotEmpty) {
-      return "HD ${star.hipId}";
+      return "HIP ${star.hipId}";
     }
     if (star.glId.isNotEmpty) {
-      return "HD ${star.glId}";
+      return "${star.glId}";
     }
     return "";
   }

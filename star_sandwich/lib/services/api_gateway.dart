@@ -2,8 +2,8 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:http/http.dart' as http;
-import 'package:star_sandwich/imports/RequestKeys.dart';
-import 'package:star_sandwich/models/responses/resultStatus.dart';
+import 'package:star_sandwich/imports/request_keys.dart';
+import 'package:star_sandwich/models/responses/result_status.dart';
 
 import '../config.dart';
 

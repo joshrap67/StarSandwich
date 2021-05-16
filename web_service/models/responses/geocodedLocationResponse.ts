@@ -1,5 +1,6 @@
 import CoordinateModel from "../coordinateModel";
 
-export default interface MakeStarSandwichModel {
+export interface GeocodedLocationResponse{
 	coordinates: CoordinateModel;
+	formattedAddress: string;
 }

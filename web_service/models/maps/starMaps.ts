@@ -10,7 +10,7 @@ export function starToResponse(star: IStar): StarResponse {
 		glId: star.glId,
 		properName: star.properName,
 		iauConstellation: star.constellation,
-		constellation: constellationsMap.get(star.constellation),
+		constellation: star.constellation != null ? constellationsMap.get(star.constellation) : "",
 		bfDesignation: star.bfDesignation.replace(/\s+/g, ' ').trim(),
 		rightAscension: star.rightAscension,
 		declination: star.declination,

@@ -1,11 +1,11 @@
 import {StarRepository} from "../repositories/starRepository";
-import MakeStarSandwichModel from "../models/requests/makeStarSandwichModel";
+import MakeStarSandwichRequest from "../models/requests/makeStarSandwichRequest";
 import {OptimalStarService} from "./optimalStarService";
 import {StarSandwichResponse} from "../models/responses/starSandwichResponse";
 import {starToResponse} from "../models/maps/starMaps";
 
 export default class StarService {
-	static async makeStarSandwich(model: MakeStarSandwichModel): Promise<StarSandwichResponse> {
+	static async makeStarSandwich(model: MakeStarSandwichRequest): Promise<StarSandwichResponse> {
 		let antipodeLongitude = model.coordinates.longitude;
 		if (model.coordinates.longitude > 0) {
 			antipodeLongitude -= 180;
