@@ -46,11 +46,12 @@ class _LandingScreenState extends State<LandingScreen> {
                 image: AssetImage("assets/images/stars.jpg"), fit: BoxFit.fill),
           ),
           child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+			  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
-              Padding(padding: const EdgeInsets.all(20.0)),
-              Expanded(
+              Container(
+                height: MediaQuery.of(context).size.height * .3,
                 child: Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
                   children: [
                     Text(
                       "Make Me",
@@ -103,81 +104,79 @@ class _LandingScreenState extends State<LandingScreen> {
                         onPressed: getStars,
                       ),
               ),
-              Padding(padding: const EdgeInsets.all(50.0)),
-              Expanded(
-                child: Container(
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: [
-                      Visibility(
-                        visible: _locationMode == LocationMode.manual,
-                        child: Row(
-                          children: [
-                            Padding(
-                                padding: const EdgeInsets.fromLTRB(
-                                    0.0, 20.0, 20.0, 20.0)),
-                            Expanded(
-                              child: Form(
-                                key: formKey,
-                                child: TextFormField(
-                                  autovalidateMode:
-                                      AutovalidateMode.onUserInteraction,
-                                  decoration: const InputDecoration(
-                                    icon: Icon(Icons.location_on),
-                                    hintText: 'City, zip, address, etc.',
-                                    labelText: 'Location',
-                                    border: OutlineInputBorder(),
-                                  ),
-                                  onSaved: (String value) {
-                                    _searchAddress = value.trim();
-                                  },
-                                  validator: validAddress,
+              Container(
+                height: MediaQuery.of(context).size.height * .3,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    Visibility(
+                      visible: _locationMode == LocationMode.manual,
+                      child: Row(
+                        children: [
+                          Padding(
+                              padding: const EdgeInsets.fromLTRB(
+                                  0.0, 20.0, 20.0, 20.0)),
+                          Expanded(
+                            child: Form(
+                              key: formKey,
+                              child: TextFormField(
+                                autovalidateMode:
+                                    AutovalidateMode.onUserInteraction,
+                                decoration: const InputDecoration(
+                                  icon: Icon(Icons.location_on),
+                                  hintText: 'City, zip, address, etc.',
+                                  labelText: 'Location',
+                                  border: OutlineInputBorder(),
                                 ),
+                                onSaved: (String value) {
+                                  _searchAddress = value.trim();
+                                },
+                                validator: validAddress,
                               ),
                             ),
-                            Padding(
-                                padding: const EdgeInsets.fromLTRB(
-                                    20.0, 20.0, 50.0, 20.0)),
-                          ],
-                        ),
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Expanded(
-                            child: RadioListTile<LocationMode>(
-                              value: LocationMode.gpsMode,
-                              groupValue: _locationMode,
-                              title: Text("GPS"),
-                              onChanged: (LocationMode value) {
-                                setState(() {
-                                  _locationMode = value;
-                                });
-                              },
-                            ),
                           ),
-                          Expanded(
-                            child: RadioListTile<LocationMode>(
-                              value: LocationMode.manual,
-                              groupValue: _locationMode,
-                              title: Text("Manual"),
-                              onChanged: (LocationMode value) {
-                                setState(() {
-                                  _locationMode = value;
-                                });
-                              },
-                            ),
-                          ),
-                          IconButton(
-                            onPressed: () {},
-                            icon: Icon(Icons.help_outline),
-                            iconSize: 40,
-                            tooltip: "Help",
-                          ),
+                          Padding(
+                              padding: const EdgeInsets.fromLTRB(
+                                  20.0, 20.0, 50.0, 20.0)),
                         ],
-                      )
-                    ],
-                  ),
+                      ),
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Expanded(
+                          child: RadioListTile<LocationMode>(
+                            value: LocationMode.gpsMode,
+                            groupValue: _locationMode,
+                            title: Text("GPS"),
+                            onChanged: (LocationMode value) {
+                              setState(() {
+                                _locationMode = value;
+                              });
+                            },
+                          ),
+                        ),
+                        Expanded(
+                          child: RadioListTile<LocationMode>(
+                            value: LocationMode.manual,
+                            groupValue: _locationMode,
+                            title: Text("Manual"),
+                            onChanged: (LocationMode value) {
+                              setState(() {
+                                _locationMode = value;
+                              });
+                            },
+                          ),
+                        ),
+                        IconButton(
+                          onPressed: () {},
+                          icon: Icon(Icons.help_outline),
+                          iconSize: 40,
+                          tooltip: "Help",
+                        ),
+                      ],
+                    )
+                  ],
                 ),
               )
             ],

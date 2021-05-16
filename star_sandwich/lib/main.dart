@@ -12,7 +12,9 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Star Sandwich',
       theme: ThemeData(
-          primarySwatch: Colors.deepPurple, brightness: Brightness.dark),
+          primarySwatch: Colors.deepPurple,
+		  scaffoldBackgroundColor: const Color(0xff020001),
+		  brightness: Brightness.dark),
       home: SafeArea(child: LandingScreen()),
     );
   }
