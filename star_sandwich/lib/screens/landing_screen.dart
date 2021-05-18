@@ -46,7 +46,7 @@ class _LandingScreenState extends State<LandingScreen> {
                 image: AssetImage("assets/images/stars.jpg"), fit: BoxFit.fill),
           ),
           child: Column(
-			  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
               Container(
                 height: MediaQuery.of(context).size.height * .3,
@@ -87,19 +87,16 @@ class _LandingScreenState extends State<LandingScreen> {
                         width: 150.0,
                         height: 150.0,
                         child: CircularProgressIndicator())
-                    : ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                            shape: CircleBorder(),
-                            primary: new Color(0x9503fca5)),
+                    : MaterialButton(
                         child: Container(
                           width: 150,
                           height: 150,
                           alignment: Alignment.center,
-                          decoration: BoxDecoration(shape: BoxShape.circle),
-                          child: Icon(
-                            Icons.star,
-                            size: 75,
-                          ),
+                          decoration: BoxDecoration(
+                              shape: BoxShape.circle,
+                              image: DecorationImage(
+                                  image: AssetImage(
+                                      "assets/launcher/splash_logo.png"))),
                         ),
                         onPressed: getStars,
                       ),

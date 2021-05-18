@@ -31,6 +31,16 @@ dependencies:
 dev_dependencies:
   flutter_test:
     sdk: flutter
+  flutter_native_splash: ^1.1.8+4
+
+flutter_icons:
+  ios: true
+  android: false
+  image_path_ios: "assets/launcher/star_sandwich_icon.png"
+
+flutter_native_splash:
+  color: "#4a4347"
+  image: "assets/launcher/splash_logo.png"
 
 flutter:
 
@@ -39,6 +49,7 @@ flutter:
   assets:
     - assets/images/
     - assets/svgs/
+    - assets/launcher/
 
   # To add custom fonts to your application, add a fonts section here,
   # in this "flutter" section. Each entry in this list should have a
