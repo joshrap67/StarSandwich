@@ -37,6 +37,7 @@ flutter_icons:
   ios: true
   android: false
   image_path_ios: "assets/launcher/star_sandwich_icon.png"
+  image_path_android: "assets/launcher/star_sandwich_icon.png"
 
 flutter_native_splash:
   color: "#4a4347"
