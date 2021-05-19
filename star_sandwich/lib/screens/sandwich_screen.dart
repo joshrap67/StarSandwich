@@ -3,6 +3,7 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:star_sandwich/models/responses/star_response.dart';
+import 'package:star_sandwich/screens/star_details_screen.dart';
 
 class SandwichScreen extends StatefulWidget {
   final double latitude;
@@ -65,6 +66,7 @@ class _SandwichScreenState extends State<SandwichScreen> {
                               padding:
                                   const EdgeInsets.only(top: 15, bottom: 15)),
                           BackButton(),
+                          // todo fix this not being fixed in position
                         ],
                       ),
                     ),
@@ -155,29 +157,36 @@ class _SandwichScreenState extends State<SandwichScreen> {
   }
 
   Widget topStarWidget(StarResponse star) {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.start,
-      children: [
-        Container(
-          height: 100,
-          width: 200,
-          child: Transform.rotate(
-            angle: _topStarRotation,
-            child: Image.asset(
-              getStarImage(star),
+    return InkWell(
+      onTap: () {
+        Navigator.push(context, MaterialPageRoute(builder: (_) {
+          return StarDetailsScreen(star: star, topStar: true);
+        }));
+      },
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: [
+          Container(
+            height: 100,
+            width: 200,
+            child: Transform.rotate(
+              angle: _topStarRotation,
+              child: Image.asset(
+                getStarImage(star),
+              ),
             ),
           ),
-        ),
-        Text(
-          "${getStarDisplay(star)}",
-          textAlign: TextAlign.center,
-          style: TextStyle(
-              decoration: TextDecoration.underline,
-              fontSize: 30,
-              color: Colors.white,
-              fontStyle: FontStyle.italic),
-        ),
-      ],
+          Text(
+            "${getStarDisplay(star)}",
+            textAlign: TextAlign.center,
+            style: TextStyle(
+                decoration: TextDecoration.underline,
+                fontSize: 30,
+                color: Colors.white,
+                fontStyle: FontStyle.italic),
+          ),
+        ],
+      ),
     );
   }
 
@@ -205,7 +214,9 @@ class _SandwichScreenState extends State<SandwichScreen> {
   Widget bottomStarWidget(StarResponse star) {
     return GestureDetector(
       onTap: () {
-        // todo launch details page
+        Navigator.push(context, MaterialPageRoute(builder: (_) {
+          return StarDetailsScreen(star: star, topStar: false);
+        }));
       },
       child: Column(
         mainAxisAlignment: MainAxisAlignment.end,

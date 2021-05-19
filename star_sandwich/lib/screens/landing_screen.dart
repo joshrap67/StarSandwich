@@ -1,35 +1,28 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:star_sandwich/imports/globals.dart';
 import 'package:star_sandwich/models/requests/coordinates.dart';
 import 'package:star_sandwich/models/responses/star_response.dart';
 import 'package:star_sandwich/screens/sandwich_screen.dart';
+import 'package:star_sandwich/screens/settings_screen.dart';
 import 'package:star_sandwich/services/star_service.dart';
-import 'package:star_sandwich/services/location_service.dart';
 import 'package:star_sandwich/imports/utils.dart';
-import 'package:star_sandwich/imports/validator.dart';
 
 class LandingScreen extends StatefulWidget {
   @override
   _LandingScreenState createState() => _LandingScreenState();
 }
 
-enum LocationMode { gpsMode, manual }
-
 class _LandingScreenState extends State<LandingScreen> {
-  final GlobalKey<FormState> formKey = GlobalKey<FormState>();
-
-  LocationMode _locationMode;
   bool _loading;
   StarResponse _topStar;
   StarResponse _bottomStar;
-  String _searchAddress;
 
   @override
   void initState() {
-    _locationMode = LocationMode.gpsMode;
     _loading = false;
-    _searchAddress = "";
     super.initState();
   }
 
@@ -106,70 +99,19 @@ class _LandingScreenState extends State<LandingScreen> {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
-                    Visibility(
-                      visible: _locationMode == LocationMode.manual,
-                      child: Row(
-                        children: [
-                          Padding(
-                              padding: const EdgeInsets.fromLTRB(
-                                  0.0, 20.0, 20.0, 20.0)),
-                          Expanded(
-                            child: Form(
-                              key: formKey,
-                              child: TextFormField(
-                                autovalidateMode:
-                                    AutovalidateMode.onUserInteraction,
-                                decoration: const InputDecoration(
-                                  icon: Icon(Icons.location_on),
-                                  hintText: 'City, zip, address, etc.',
-                                  labelText: 'Location',
-                                  border: OutlineInputBorder(),
-                                ),
-                                onSaved: (String value) {
-                                  _searchAddress = value.trim();
-                                },
-                                validator: validAddress,
-                              ),
-                            ),
-                          ),
-                          Padding(
-                              padding: const EdgeInsets.fromLTRB(
-                                  20.0, 20.0, 50.0, 20.0)),
-                        ],
-                      ),
-                    ),
                     Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      mainAxisAlignment: MainAxisAlignment.end,
                       children: [
-                        Expanded(
-                          child: RadioListTile<LocationMode>(
-                            value: LocationMode.gpsMode,
-                            groupValue: _locationMode,
-                            title: Text("GPS"),
-                            onChanged: (LocationMode value) {
-                              setState(() {
-                                _locationMode = value;
-                              });
-                            },
-                          ),
-                        ),
-                        Expanded(
-                          child: RadioListTile<LocationMode>(
-                            value: LocationMode.manual,
-                            groupValue: _locationMode,
-                            title: Text("Manual"),
-                            onChanged: (LocationMode value) {
-                              setState(() {
-                                _locationMode = value;
-                              });
-                            },
-                          ),
-                        ),
                         IconButton(
-                          onPressed: () {},
-                          icon: Icon(Icons.help_outline),
+                          onPressed: () {
+                            Navigator.push(context,
+                                MaterialPageRoute(builder: (_) {
+                              return SettingsScreen();
+                            }));
+                          },
+                          icon: Icon(Icons.settings),
                           iconSize: 40,
-                          tooltip: "Help",
+                          tooltip: "Settings",
                         ),
                       ],
                     )
@@ -187,13 +129,15 @@ class _LandingScreenState extends State<LandingScreen> {
     setState(() {
       _loading = true;
     });
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    bool gpsMode = prefs.getBool(Globals.gpsModeKey) ?? true;
 
     Coordinates coordinates;
     try {
-      if (_locationMode == LocationMode.manual) {
-        coordinates = await getLocFromServer();
-      } else if (_locationMode == LocationMode.gpsMode) {
+      if (gpsMode) {
         coordinates = await getLocFromGPS();
+      } else {
+        coordinates = await getLocFromSharedPrefs();
       }
     } catch (e) {
       setState(() {
@@ -226,6 +170,19 @@ class _LandingScreenState extends State<LandingScreen> {
     });
   }
 
+  Future<Coordinates> getLocFromSharedPrefs() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    double latitude = prefs.getDouble(Globals.latitudeKey);
+    double longitude = prefs.getDouble(Globals.longitudeKey);
+    if (latitude == null || longitude == null) {
+      showSnackbar(
+          "Please navigate to the settings page to set a location for manual mode.");
+      throw new Exception();
+    }
+
+    return new Coordinates(latitude: latitude, longitude: longitude);
+  }
+
   Future<Coordinates> getLocFromGPS() async {
     bool serviceEnabled;
     LocationPermission permission;
@@ -255,22 +212,6 @@ class _LandingScreenState extends State<LandingScreen> {
     return new Coordinates(
         longitude: currentPosition.longitude,
         latitude: currentPosition.latitude);
-  }
-
-  Future<Coordinates> getLocFromServer() async {
-    final form = this.formKey.currentState;
-    if (!form.validate()) {
-      throw new Exception("Error");
-    }
-
-    form.save();
-    var result = await LocationService.getGeocodedLocation(_searchAddress);
-    if (!result.success) {
-      throw new Exception("Error");
-    }
-    // todo show them the formatted address that was used
-
-    return result.data.coordinates;
   }
 
   void showSnackbar(String message) {
