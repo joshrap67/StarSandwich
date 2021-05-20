@@ -191,23 +191,30 @@ class _SandwichScreenState extends State<SandwichScreen> {
   }
 
   Widget topConstellationWidget(StarResponse star) {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.start,
-      children: [
-        Container(
-          height: 150,
-          width: 200,
-          child: SvgPicture.asset(
-            'assets/svgs/${star.iauConstellation}.svg',
+    return InkWell(
+      onTap: () {
+        Navigator.push(context, MaterialPageRoute(builder: (_) {
+          return StarDetailsScreen(star: star, topStar: true);
+        }));
+      },
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: [
+          Container(
+            height: 150,
+            width: 200,
+            child: SvgPicture.asset(
+              'assets/svgs/${star.iauConstellation}.svg',
+            ),
           ),
-        ),
-        Text(
-          "${star.constellation} Constellation",
-          textAlign: TextAlign.center,
-          style: TextStyle(
-              fontSize: 20, color: Colors.white, fontStyle: FontStyle.italic),
-        ),
-      ],
+          Text(
+            "${star.constellation} Constellation",
+            textAlign: TextAlign.center,
+            style: TextStyle(
+                fontSize: 20, color: Colors.white, fontStyle: FontStyle.italic),
+          ),
+        ],
+      ),
     );
   }
 
@@ -246,23 +253,30 @@ class _SandwichScreenState extends State<SandwichScreen> {
   }
 
   Widget bottomConstellationWidget(StarResponse star) {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.end,
-      children: [
-        Text(
-          "${star.constellation} Constellation",
-          textAlign: TextAlign.center,
-          style: TextStyle(
-              fontSize: 20, color: Colors.white, fontStyle: FontStyle.italic),
-        ),
-        Container(
-          height: 150,
-          width: 200,
-          child: SvgPicture.asset(
-            'assets/svgs/${star.iauConstellation}.svg',
+    return InkWell(
+      onTap: () {
+        Navigator.push(context, MaterialPageRoute(builder: (_) {
+          return StarDetailsScreen(star: star, topStar: true);
+        }));
+      },
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.end,
+        children: [
+          Text(
+            "${star.constellation} Constellation",
+            textAlign: TextAlign.center,
+            style: TextStyle(
+                fontSize: 20, color: Colors.white, fontStyle: FontStyle.italic),
           ),
-        )
-      ],
+          Container(
+            height: 150,
+            width: 200,
+            child: SvgPicture.asset(
+              'assets/svgs/${star.iauConstellation}.svg',
+            ),
+          )
+        ],
+      ),
     );
   }
 
