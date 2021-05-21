@@ -127,6 +127,9 @@ class _SettingsScreenState extends State<SettingsScreen> {
                               onSaved: (String value) {
                                 _searchAddress = value.trim();
                               },
+                              onFieldSubmitted: (value) {
+                                getLocFromServer();
+                              },
                               validator: validAddress,
                             ),
                           ),
@@ -205,11 +208,10 @@ class _SettingsScreenState extends State<SettingsScreen> {
   }
 
   Future<void> getLocFromServer() async {
-    // todo do this when user hits enter on keyboard?
     hideKeyboard(context);
     final form = this.formKey.currentState;
     if (!form.validate()) {
-      throw new Exception("Error");
+      return;
     }
     form.save();
 

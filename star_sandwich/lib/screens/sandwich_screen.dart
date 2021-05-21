@@ -46,6 +46,7 @@ class _SandwichScreenState extends State<SandwichScreen> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
+        backgroundColor: const Color(0xff020001),
         body: Container(
           decoration: BoxDecoration(
               image: DecorationImage(
@@ -55,52 +56,52 @@ class _SandwichScreenState extends State<SandwichScreen> {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               Expanded(
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Expanded(
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
-                          Padding(
-                              padding:
-                                  const EdgeInsets.only(top: 15, bottom: 15)),
-                          BackButton(),
-                          // todo fix this not being fixed in position
-                        ],
-                      ),
-                    ),
-                    _topConstellationShowing
-                        ? topConstellationWidget(_topStar)
-                        : topStarWidget(_topStar),
-                    Expanded(
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
-                          Padding(
-                              padding:
-                                  const EdgeInsets.only(top: 15, bottom: 15)),
-                          IconButton(
-                            onPressed: () {
-                              setState(() {
-                                _topConstellationShowing =
-                                    !_topConstellationShowing;
-                              });
-                            },
-                            icon: _topConstellationShowing
-                                ? Icon(Icons.wb_sunny)
-                                : Icon(Icons.map),
-                            iconSize: 35,
-                            tooltip: _topConstellationShowing
-                                ? "Star View"
-                                : "View Constellation",
-                          ),
-                        ],
-                      ),
-                    ),
-                  ],
-                ),
-              ),
+                  child: _topStar != null
+                      ? Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Expanded(
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                children: [
+                                  Padding(
+                                      padding: const EdgeInsets.only(
+                                          top: 15, bottom: 15)),
+                                  BackButton(),
+                                ],
+                              ),
+                            ),
+                            _topConstellationShowing
+                                ? topConstellationWidget(_topStar)
+                                : topStarWidget(_topStar),
+                            Expanded(
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                children: [
+                                  Padding(
+                                      padding: const EdgeInsets.only(
+                                          top: 15, bottom: 15)),
+                                  IconButton(
+                                    onPressed: () {
+                                      setState(() {
+                                        _topConstellationShowing =
+                                            !_topConstellationShowing;
+                                      });
+                                    },
+                                    icon: _topConstellationShowing
+                                        ? Icon(Icons.wb_sunny)
+                                        : Icon(Icons.map),
+                                    iconSize: 35,
+                                    tooltip: _topConstellationShowing
+                                        ? "Star View"
+                                        : "View Constellation",
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ],
+                        )
+                      : topStarNotFoundWidget()),
               Hero(
                 tag: "heroKey",
                 child: Container(
@@ -114,45 +115,91 @@ class _SandwichScreenState extends State<SandwichScreen> {
                 ),
               ),
               Expanded(
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Spacer(),
-                    _bottomConstellationShowing
-                        ? bottomConstellationWidget(_bottomStar)
-                        : bottomStarWidget(_bottomStar),
-                    Expanded(
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.end,
+                child: _bottomStar != null
+                    ? Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          IconButton(
-                            onPressed: () {
-                              setState(() {
-                                _bottomConstellationShowing =
-                                    !_bottomConstellationShowing;
-                              });
-                            },
-                            icon: _bottomConstellationShowing
-                                ? Icon(Icons.wb_sunny)
-                                : Icon(Icons.map),
-                            iconSize: 35,
-                            tooltip: _bottomConstellationShowing
-                                ? "Star View"
-                                : "View Constellation",
+                          Spacer(),
+                          _bottomConstellationShowing
+                              ? bottomConstellationWidget(_bottomStar)
+                              : bottomStarWidget(_bottomStar),
+                          Visibility(
+                            visible: _bottomStar != null,
+                            child: Expanded(
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.end,
+                                children: [
+                                  IconButton(
+                                    onPressed: () {
+                                      setState(() {
+                                        _bottomConstellationShowing =
+                                            !_bottomConstellationShowing;
+                                      });
+                                    },
+                                    icon: _bottomConstellationShowing
+                                        ? Icon(Icons.wb_sunny)
+                                        : Icon(Icons.map),
+                                    iconSize: 35,
+                                    tooltip: _bottomConstellationShowing
+                                        ? "Star View"
+                                        : "View Constellation",
+                                  ),
+                                  Padding(
+                                      padding: const EdgeInsets.only(
+                                          top: 15, bottom: 15)),
+                                ],
+                              ),
+                            ),
                           ),
-                          Padding(
-                              padding:
-                                  const EdgeInsets.only(top: 15, bottom: 15)),
                         ],
-                      ),
-                    ),
-                  ],
-                ),
+                      )
+                    : bottomStarNotFoundWidget(),
               ),
             ],
           ),
         ),
       ),
+    );
+  }
+
+  Widget topStarNotFoundWidget() {
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.start,
+      children: [
+        Row(
+          children: [
+            BackButton(),
+            Container(
+              child: Text(
+                "No star found.\nWho knows what could be above you...",
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  fontSize: 20,
+                  color: Colors.white,
+                ),
+              ),
+            ),
+          ],
+        )
+      ],
+    );
+  }
+
+  Widget bottomStarNotFoundWidget() {
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.end,
+      children: [
+        Container(
+          child: Text(
+            "No star found.\nWho knows what could be below you...",
+            textAlign: TextAlign.center,
+            style: TextStyle(
+              fontSize: 20,
+              color: Colors.white,
+            ),
+          ),
+        ),
+      ],
     );
   }
 
@@ -293,25 +340,20 @@ class _SandwichScreenState extends State<SandwichScreen> {
   }
 
   String getStarDisplay(StarResponse star) {
+    String response = "";
     if (star.properName.isNotEmpty) {
-      // todo make this a big deal?
-      return star.properName;
+      response = star.properName;
+    } else if (star.bfDesignation.isNotEmpty) {
+      response = star.bfDesignation;
+    } else if (star.hdId.isNotEmpty) {
+      response = "HD ${star.hdId}";
+    } else if (star.hrId.isNotEmpty) {
+      response = "HR ${star.hrId}";
+    } else if (star.hipId.isNotEmpty) {
+      response = "HIP ${star.hipId}";
+    } else if (star.glId.isNotEmpty) {
+      response = "${star.glId}";
     }
-    if (star.bfDesignation.isNotEmpty) {
-      return star.bfDesignation;
-    }
-    if (star.hdId.isNotEmpty) {
-      return "HD ${star.hdId}";
-    }
-    if (star.hrId.isNotEmpty) {
-      return "HR ${star.hrId}";
-    }
-    if (star.hipId.isNotEmpty) {
-      return "HIP ${star.hipId}";
-    }
-    if (star.glId.isNotEmpty) {
-      return "${star.glId}";
-    }
-    return "";
+    return response;
   }
 }

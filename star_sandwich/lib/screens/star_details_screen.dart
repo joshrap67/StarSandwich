@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:star_sandwich/imports/globals.dart';
+import 'package:star_sandwich/imports/help_messages.dart';
 import 'package:star_sandwich/imports/utils.dart';
 import 'package:star_sandwich/models/responses/star_response.dart';
 
@@ -55,9 +56,8 @@ class _StarDetailsScreenState extends State<StarDetailsScreen> {
               ],
             ),
             getApparentMagnitudeDisplay(),
-            getDistanceDisplay(),
-            getLuminosityDisplay(),
             getAbsoluteMagnitudeDisplay(),
+            getDistanceDisplay(),
             Padding(
               padding: const EdgeInsets.all(5.0),
               child: getConstellationWidget(),
@@ -65,6 +65,32 @@ class _StarDetailsScreenState extends State<StarDetailsScreen> {
           ],
         ),
       ),
+    );
+  }
+
+  Future<void> showHelpDialog(String title, String message) async {
+    return showDialog<void>(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text(title),
+          content: SingleChildScrollView(
+            child: ListBody(
+              children: <Widget>[
+                Text(message)
+              ],
+            ),
+          ),
+          actions: <Widget>[
+            TextButton(
+              child: const Text('Return'),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
     );
   }
 
@@ -107,7 +133,8 @@ class _StarDetailsScreenState extends State<StarDetailsScreen> {
         trailing: IconButton(
           icon: Icon(Icons.help_outline),
           onPressed: () {
-            // todo popup explaining what this is
+			  showHelpDialog(
+				  "Apparent Magnitude", HelpMessages.ApparentMagnitude);
           },
         ),
       ),
@@ -117,12 +144,14 @@ class _StarDetailsScreenState extends State<StarDetailsScreen> {
   Widget getAbsoluteMagnitudeDisplay() {
     return new Card(
       child: ListTile(
-        title: Text("${widget.star.absMagnitude}"),
+        title: Text(
+            "${widget.star.absMagnitude} (${widget.star.luminosity.toStringAsFixed(3)}x brighter than the Sun)"),
         subtitle: Text("Absolute Magnitude"),
         trailing: IconButton(
           icon: Icon(Icons.help_outline),
           onPressed: () {
-            // todo popup explaining what this is
+            showHelpDialog(
+                "Absolute Magnitude", HelpMessages.AbsoluteMagnitude);
           },
         ),
       ),
@@ -193,7 +222,6 @@ class _StarDetailsScreenState extends State<StarDetailsScreen> {
     StarResponse star = widget.star;
     String msg = "";
     if (star.properName.isNotEmpty) {
-      // todo make this a big deal?
       msg = star.properName;
     } else if (star.bfDesignation.isNotEmpty) {
       msg = star.bfDesignation;

@@ -4,6 +4,12 @@ void hideKeyboard(BuildContext context) {
   FocusScope.of(context).requestFocus(new FocusNode());
 }
 
+void showSnackbar(String message, BuildContext context) {
+	ScaffoldMessenger.of(context).removeCurrentSnackBar();
+	final snackBar = SnackBar(content: Text(message));
+	ScaffoldMessenger.of(context).showSnackBar(snackBar);
+}
+
 String getFormattedRightAscension(double rightAscension) {
   int hours = rightAscension.toInt();
   int minutes = ((rightAscension - hours) * 60).toInt();
