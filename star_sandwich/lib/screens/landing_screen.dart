@@ -1,3 +1,4 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
@@ -38,64 +39,75 @@ class _LandingScreenState extends State<LandingScreen> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
-            Container(
-              height: MediaQuery.of(context).size.height * .3,
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  Text(
-                    "Make Me",
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                      fontSize: 48,
-                      color: Colors.white,
-                    ),
+            Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                AutoSizeText(
+                  "Make Me",
+                  textAlign: TextAlign.center,
+                  minFontSize: 18,
+                  style: TextStyle(
+                    fontSize: 48,
+                    color: Colors.white,
                   ),
-                  Text(
-                    "A",
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                      fontSize: 48,
-                      color: Colors.white,
-                    ),
+                ),
+                AutoSizeText(
+                  "A",
+                  textAlign: TextAlign.center,
+                  minFontSize: 18,
+                  style: TextStyle(
+                    fontSize: 48,
+                    color: Colors.white,
                   ),
-                  Padding(
-                    padding: const EdgeInsets.all(12.0),
-                  ),
-                  Text(
-                    "Star Sandwich",
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                      fontSize: 56,
-                      color: Colors.white,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            Hero(
-              tag: "heroKey",
-              child: _loading
-                  ? SizedBox(
-                      width: 150.0,
-                      height: 150.0,
-                      child: CircularProgressIndicator(
-                        valueColor: AlwaysStoppedAnimation<Color>(
-                            new Color(0xff8d6481)),
-                      ))
-                  : MaterialButton(
-                      child: Container(
-                        width: 150,
-                        height: 150,
-                        alignment: Alignment.center,
-                        decoration: BoxDecoration(
-                            shape: BoxShape.circle,
-                            image: DecorationImage(
-                                image: AssetImage(
-                                    "assets/launcher/splash_logo.png"))),
+                ),
+                Row(
+                  children: [
+                    Expanded(
+                      child: AutoSizeText(
+                        "Star Sandwich",
+                        textAlign: TextAlign.center,
+                        minFontSize: 18,
+                        maxLines: 1,
+                        style: TextStyle(
+                          fontSize: 56,
+                          color: Colors.white,
+                        ),
                       ),
-                      onPressed: getStars,
                     ),
+                  ],
+                )
+              ],
+            ),
+            Padding(
+              padding: const EdgeInsets.fromLTRB(12.0, 20, 12.0, 12.0),
+            ),
+            Container(
+              height: MediaQuery.of(context).size.height * .25,
+              decoration: BoxDecoration(shape: BoxShape.circle),
+              child: Hero(
+                tag: "heroKey",
+                child: _loading
+                    ? SizedBox(
+                        width: MediaQuery.of(context).size.height * .25,
+                        height: MediaQuery.of(context).size.height * .25,
+                        child: CircularProgressIndicator(
+                          valueColor: AlwaysStoppedAnimation<Color>(
+                              new Color(0xff6f6fee)),
+                        ))
+                    : MaterialButton(
+                        child: Container(
+                          width: MediaQuery.of(context).size.height * .25,
+                          height: MediaQuery.of(context).size.height * .25,
+                          alignment: Alignment.center,
+                          decoration: BoxDecoration(
+                              shape: BoxShape.circle,
+                              image: DecorationImage(
+                                  image: AssetImage(
+                                      "assets/launcher/splash_logo.png"))),
+                        ),
+                        onPressed: getStars,
+                      ),
+              ),
             ),
             Container(
               height: MediaQuery.of(context).size.height * .3,
@@ -166,8 +178,7 @@ class _LandingScreenState extends State<LandingScreen> {
             topStar: _topStar);
       }));
     } else {
-      final snackBar = SnackBar(
-          content: Text('Error making sandwich.${result.errorMessage}'));
+      final snackBar = SnackBar(content: Text('${result.errorMessage}'));
       ScaffoldMessenger.of(context).showSnackBar(snackBar);
     }
     setState(() {
@@ -181,7 +192,8 @@ class _LandingScreenState extends State<LandingScreen> {
     double longitude = prefs.getDouble(Globals.longitudeKey);
     if (latitude == null || longitude == null) {
       showSnackbar(
-          "Please navigate to the settings page to set a location for manual mode.", context);
+          "Please navigate to the settings page to set a location for manual mode.",
+          context);
       throw new Exception();
     }
 
@@ -194,7 +206,8 @@ class _LandingScreenState extends State<LandingScreen> {
 
     serviceEnabled = await Geolocator.isLocationServiceEnabled();
     if (!serviceEnabled) {
-      showSnackbar("You must turn on locational services to continue.", context);
+      showSnackbar(
+          "You must turn on locational services to continue.", context);
       throw new Exception('Error');
     }
 
@@ -202,14 +215,16 @@ class _LandingScreenState extends State<LandingScreen> {
     if (permission == LocationPermission.denied) {
       permission = await Geolocator.requestPermission();
       if (permission == LocationPermission.denied) {
-        showSnackbar("Locational services must be turned on to use GPS mode.", context);
+        showSnackbar(
+            "Locational services must be turned on to use GPS mode.", context);
         throw new Exception('Error');
       }
     }
 
     if (permission == LocationPermission.deniedForever) {
       showSnackbar(
-          "Location permissions are permanently denied, you cannot use GPS mode.", context);
+          "Location permissions are permanently denied, you cannot use GPS mode.",
+          context);
       throw new Exception('Error');
     }
 

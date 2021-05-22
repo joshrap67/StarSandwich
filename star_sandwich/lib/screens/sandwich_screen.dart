@@ -1,5 +1,6 @@
 import 'dart:math';
 
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:star_sandwich/models/responses/star_response.dart';
@@ -18,15 +19,16 @@ class SandwichScreen extends StatefulWidget {
   _SandwichScreenState createState() => _SandwichScreenState();
 }
 
-class _SandwichScreenState extends State<SandwichScreen> {
-  double _longitude;
-  double _latitude;
+class _SandwichScreenState extends State<SandwichScreen>
+    with SingleTickerProviderStateMixin {
   StarResponse _topStar;
   StarResponse _bottomStar;
   bool _bottomConstellationShowing;
   bool _topConstellationShowing;
   double _bottomStarRotation;
   double _topStarRotation;
+  Animation<double> rot;
+  AnimationController control;
 
   @override
   void initState() {
@@ -35,11 +37,27 @@ class _SandwichScreenState extends State<SandwichScreen> {
     _bottomStarRotation = random.nextInt(360).toDouble();
     _bottomConstellationShowing = false;
     _topConstellationShowing = false;
-    _latitude = widget.latitude;
-    _longitude = widget.longitude;
     _topStar = widget.topStar;
     _bottomStar = widget.bottomStar;
+
+    control = AnimationController(
+      duration: Duration(seconds: 50),
+      vsync: this,
+    );
+
+    rot = Tween<double>(
+      begin: 0,
+      end: 2 * pi,
+    ).animate(control);
+    control.repeat();
+
     super.initState();
+  }
+
+  @override
+  void dispose() {
+    control.dispose();
+    super.dispose();
   }
 
   @override
@@ -105,12 +123,12 @@ class _SandwichScreenState extends State<SandwichScreen> {
               Hero(
                 tag: "heroKey",
                 child: Container(
-                  width: 135,
-                  height: 135,
+                  width: MediaQuery.of(context).size.height * .25,
+                  height: MediaQuery.of(context).size.height * .25,
                   decoration: BoxDecoration(
                     shape: BoxShape.circle,
                     image: DecorationImage(
-                        image: AssetImage('assets/images/MODIS_Map.jpg')),
+                        image: AssetImage('assets/images/middle.png')),
                   ),
                 ),
               ),
@@ -169,10 +187,13 @@ class _SandwichScreenState extends State<SandwichScreen> {
         Row(
           children: [
             BackButton(),
-            Container(
-              child: Text(
+            Expanded(
+              child: AutoSizeText(
                 "No star found.\nWho knows what could be above you...",
                 textAlign: TextAlign.center,
+                minFontSize: 12,
+                maxLines: 3,
+                overflow: TextOverflow.ellipsis,
                 style: TextStyle(
                   fontSize: 20,
                   color: Colors.white,
@@ -189,14 +210,14 @@ class _SandwichScreenState extends State<SandwichScreen> {
     return Column(
       mainAxisAlignment: MainAxisAlignment.end,
       children: [
-        Container(
-          child: Text(
-            "No star found.\nWho knows what could be below you...",
-            textAlign: TextAlign.center,
-            style: TextStyle(
-              fontSize: 20,
-              color: Colors.white,
-            ),
+        AutoSizeText(
+          "No star found.\nWho knows what could be below you...",
+          textAlign: TextAlign.center,
+          overflow: TextOverflow.ellipsis,
+          minFontSize: 14,
+          style: TextStyle(
+            fontSize: 20,
+            color: Colors.white,
           ),
         ),
       ],
@@ -216,16 +237,22 @@ class _SandwichScreenState extends State<SandwichScreen> {
           Container(
             height: 100,
             width: 200,
-            child: Transform.rotate(
-              angle: _topStarRotation,
-              child: Image.asset(
-                getStarImage(star),
+            child: AnimatedBuilder(
+              animation: control,
+              builder: (_, child) => Transform(
+                transform: Matrix4.rotationZ(rot.value),
+                alignment: Alignment.center,
+                child: Image.asset(
+                  getStarImage(star),
+                ),
               ),
             ),
           ),
-          Text(
+          AutoSizeText(
             "${getStarDisplay(star)}",
             textAlign: TextAlign.center,
+            overflow: TextOverflow.ellipsis,
+            minFontSize: 14,
             style: TextStyle(
                 decoration: TextDecoration.underline,
                 fontSize: 30,
@@ -254,9 +281,11 @@ class _SandwichScreenState extends State<SandwichScreen> {
               'assets/svgs/${star.iauConstellation}.svg',
             ),
           ),
-          Text(
+          AutoSizeText(
             "${star.constellation} Constellation",
             textAlign: TextAlign.center,
+            overflow: TextOverflow.ellipsis,
+            minFontSize: 14,
             style: TextStyle(
                 fontSize: 20, color: Colors.white, fontStyle: FontStyle.italic),
           ),
@@ -275,9 +304,11 @@ class _SandwichScreenState extends State<SandwichScreen> {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.end,
         children: [
-          Text(
+          AutoSizeText(
             "${getStarDisplay(star)}",
             textAlign: TextAlign.center,
+            overflow: TextOverflow.ellipsis,
+            minFontSize: 14,
             style: TextStyle(
               fontSize: 30,
               color: Colors.white,
@@ -287,10 +318,14 @@ class _SandwichScreenState extends State<SandwichScreen> {
           Container(
             height: 100,
             width: 200,
-            child: Transform.rotate(
-              angle: _bottomStarRotation,
-              child: Image.asset(
-                getStarImage(star),
+            child: AnimatedBuilder(
+              animation: control,
+              builder: (_, child) => Transform(
+                transform: Matrix4.rotationZ(rot.value),
+                alignment: Alignment.center,
+                child: Image.asset(
+                  getStarImage(star),
+                ),
               ),
             ),
           )
@@ -309,9 +344,11 @@ class _SandwichScreenState extends State<SandwichScreen> {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.end,
         children: [
-          Text(
+          AutoSizeText(
             "${star.constellation} Constellation",
             textAlign: TextAlign.center,
+            overflow: TextOverflow.ellipsis,
+            minFontSize: 14,
             style: TextStyle(
                 fontSize: 20, color: Colors.white, fontStyle: FontStyle.italic),
           ),

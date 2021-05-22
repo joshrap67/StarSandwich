@@ -225,7 +225,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
 
     if (!result.success) {
       showSnackbar(
-          "Cannot determine location. Try making the location more specific.");
+          "Cannot determine location. Try making the location more specific.", context);
       return;
     }
 
@@ -257,11 +257,5 @@ class _SettingsScreenState extends State<SettingsScreen> {
       _appVersion = packageInfo.version;
       _loadingSharedPrefs = false;
     });
-  }
-
-  void showSnackbar(String message) {
-    ScaffoldMessenger.of(context).removeCurrentSnackBar();
-    final snackBar = SnackBar(content: Text(message));
-    ScaffoldMessenger.of(context).showSnackBar(snackBar);
   }
 }

@@ -29,6 +29,7 @@ dependencies:
   flutter_svg: ^0.22.0
   shared_preferences: ^2.0.5
   package_info: ^2.0.0
+  auto_size_text: ^2.1.0
 
 dev_dependencies:
   flutter_test:
@@ -41,9 +42,9 @@ flutter_icons:
   image_path_ios: "assets/launcher/star_sandwich_icon.png"
   image_path_android: "assets/launcher/star_sandwich_icon.png"
 
+# flutter pub run flutter_native_splash:create
 flutter_native_splash:
-  color: "#4a4347"
-  image: "assets/launcher/splash_logo.png"
+  color: "#4c4c4c"
 
 flutter:
 

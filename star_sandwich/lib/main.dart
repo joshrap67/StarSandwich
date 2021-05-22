@@ -15,8 +15,7 @@ class MyApp extends StatelessWidget {
       title: 'Star Sandwich',
       theme: ThemeData(
           scaffoldBackgroundColor: Colors.white30,
-          // ffca8a
-          accentColor: const Color(0xff0ef3c5),
+          accentColor: const Color(0xff6f6fee),
           textSelectionTheme: TextSelectionThemeData(
             cursorColor: Colors.blue,
             selectionColor: Colors.white30,

@@ -25,7 +25,7 @@ class _StarDetailsScreenState extends State<StarDetailsScreen> {
           "This star is directly above you, try and look up if it's dark enough!";
     } else {
       _positionalMsg =
-          "This star is directly below you. If you can channel your superman, look through the Earth to see it!";
+          "This star is directly below you. If you can channel your Superman, look through Earth to see it!";
     }
     super.initState();
   }
