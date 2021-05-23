@@ -83,7 +83,7 @@ class _StarDetailsScreenState extends State<StarDetailsScreen> {
           ),
           actions: <Widget>[
             TextButton(
-              child: const Text('Return'),
+              child: const Text("RETURN"),
               onPressed: () {
                 Navigator.of(context).pop();
               },

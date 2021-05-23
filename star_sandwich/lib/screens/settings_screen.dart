@@ -6,6 +6,8 @@ import 'package:star_sandwich/imports/utils.dart';
 import 'package:star_sandwich/imports/validator.dart';
 import 'package:star_sandwich/services/location_service.dart';
 
+import 'about_screen.dart';
+
 class SettingsScreen extends StatefulWidget {
   @override
   _SettingsScreenState createState() => _SettingsScreenState();
@@ -159,7 +161,9 @@ class _SettingsScreenState extends State<SettingsScreen> {
                     style: TextStyle(fontSize: 25),
                   ),
                   onTap: () {
-                    print('todo');
+                    Navigator.push(context, MaterialPageRoute(builder: (_) {
+                      return AboutScreen();
+                    }));
                   },
                 ),
               ),
@@ -194,10 +198,10 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 child: ListTile(
                   leading: Icon(Icons.phone_android),
                   title: Text(
-                    'App Version',
+					  _appVersion,
                     style: TextStyle(fontSize: 25),
                   ),
-                  subtitle: Text(_appVersion),
+                  subtitle: Text('App Version'),
                 ),
               ),
             ],
@@ -225,7 +229,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
 
     if (!result.success) {
       showSnackbar(
-          "Cannot determine location. Try making the location more specific.", context);
+          "Cannot determine location. Try making the location more specific.",
+          context);
       return;
     }
 

@@ -94,7 +94,9 @@ class _LandingScreenState extends State<LandingScreen> {
                           valueColor: AlwaysStoppedAnimation<Color>(
                               new Color(0xff6f6fee)),
                         ))
-                    : MaterialButton(
+                    : ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                            shape: CircleBorder(), primary: Colors.transparent),
                         child: Container(
                           width: MediaQuery.of(context).size.height * .25,
                           height: MediaQuery.of(context).size.height * .25,
