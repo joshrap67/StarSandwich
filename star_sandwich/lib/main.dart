@@ -14,7 +14,6 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Star Sandwich',
       theme: ThemeData(
-          scaffoldBackgroundColor: Colors.white30,
           accentColor: const Color(0xff6f6fee),
           textSelectionTheme: TextSelectionThemeData(
             cursorColor: Colors.blue,

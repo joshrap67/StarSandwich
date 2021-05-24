@@ -41,12 +41,12 @@ class _AboutScreenState extends State<AboutScreen> {
             ],
           ),
           ExpansionTile(
-            title: Text("Disclaimers"),
+            title: Text('Disclaimers'),
             children: [
               ListTile(
                 title: Text(
-                    '\u2022 It\'s not trivial to define "directly above" or "directly below"  when determining the stars to display. '
-                    'Distance from the observer\'s zenith/nadir is prioritized, but other factors are also considered as part of the algorithm for determining the star to display.\n\n\Stars are guaranteed to be within \u00B1$declinationRange\u00B0 declination & \u00B1$rightAscensionRange hrs right ascension of the observer\'s zenith and nadir. '),
+                    '\u2022 It\'s not trivial to define "directly above" or "directly below"  when determining the stars to display. Stars are guaranteed to be within \u00B1$declinationRange\u00B0 declination & \u00B1$rightAscensionRange hrs right ascension of the observer\'s zenith and nadir.'
+                    '\n\nDistance from the observer\'s zenith/nadir is prioritized, but other factors are also considered as part of the algorithm for determining the star to display.'),
               ),
               ListTile(
                 title: Text(

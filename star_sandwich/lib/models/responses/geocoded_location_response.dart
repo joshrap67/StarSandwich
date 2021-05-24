@@ -5,7 +5,7 @@ class GeocodedLocationResponse {
   String formattedAddress;
 
   GeocodedLocationResponse.fromJson(Map<String, dynamic> rawResponse) {
-    coordinates = new Coordinates.fromJson(rawResponse["coordinates"]);
-    formattedAddress = rawResponse["formattedAddress"];
+    coordinates = new Coordinates.fromJson(rawResponse['coordinates']);
+    formattedAddress = rawResponse['formattedAddress'];
   }
 }

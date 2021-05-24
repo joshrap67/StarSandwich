@@ -34,7 +34,7 @@ class _LandingScreenState extends State<LandingScreen> {
       body: Container(
         decoration: BoxDecoration(
           image: DecorationImage(
-              image: AssetImage("assets/images/stars.jpg"), fit: BoxFit.fill),
+              image: AssetImage('assets/images/stars.jpg'), fit: BoxFit.fill),
         ),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -43,7 +43,7 @@ class _LandingScreenState extends State<LandingScreen> {
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
                 AutoSizeText(
-                  "Make Me",
+                  'Make Me',
                   textAlign: TextAlign.center,
                   minFontSize: 18,
                   style: TextStyle(
@@ -52,7 +52,7 @@ class _LandingScreenState extends State<LandingScreen> {
                   ),
                 ),
                 AutoSizeText(
-                  "A",
+                  'A',
                   textAlign: TextAlign.center,
                   minFontSize: 18,
                   style: TextStyle(
@@ -64,7 +64,7 @@ class _LandingScreenState extends State<LandingScreen> {
                   children: [
                     Expanded(
                       child: AutoSizeText(
-                        "Star Sandwich",
+                        'Star Sandwich',
                         textAlign: TextAlign.center,
                         minFontSize: 18,
                         maxLines: 1,
@@ -85,7 +85,7 @@ class _LandingScreenState extends State<LandingScreen> {
               height: MediaQuery.of(context).size.height * .25,
               decoration: BoxDecoration(shape: BoxShape.circle),
               child: Hero(
-                tag: "heroKey",
+                tag: 'heroKey',
                 child: _loading
                     ? SizedBox(
                         width: MediaQuery.of(context).size.height * .25,
@@ -105,7 +105,7 @@ class _LandingScreenState extends State<LandingScreen> {
                               shape: BoxShape.circle,
                               image: DecorationImage(
                                   image: AssetImage(
-                                      "assets/launcher/splash_logo.png"))),
+                                      'assets/launcher/splash_logo.png'))),
                         ),
                         onPressed: getStars,
                       ),
@@ -128,7 +128,7 @@ class _LandingScreenState extends State<LandingScreen> {
                         },
                         icon: Icon(Icons.settings),
                         iconSize: 40,
-                        tooltip: "Settings",
+                        tooltip: 'Settings',
                       ),
                       Padding(
                         padding: const EdgeInsets.all(12.0),
@@ -194,7 +194,7 @@ class _LandingScreenState extends State<LandingScreen> {
     double longitude = prefs.getDouble(Globals.longitudeKey);
     if (latitude == null || longitude == null) {
       showSnackbar(
-          "Please navigate to the settings page to set a location for manual mode.",
+          'Please navigate to the settings page to set a location for manual mode.',
           context);
       throw new Exception();
     }
@@ -209,7 +209,7 @@ class _LandingScreenState extends State<LandingScreen> {
     serviceEnabled = await Geolocator.isLocationServiceEnabled();
     if (!serviceEnabled) {
       showSnackbar(
-          "You must turn on locational services to continue.", context);
+          'You must turn on locational services to continue.', context);
       throw new Exception('Error');
     }
 
@@ -218,14 +218,14 @@ class _LandingScreenState extends State<LandingScreen> {
       permission = await Geolocator.requestPermission();
       if (permission == LocationPermission.denied) {
         showSnackbar(
-            "Locational services must be turned on to use GPS mode.", context);
+            'Locational services must be turned on to use GPS mode.', context);
         throw new Exception('Error');
       }
     }
 
     if (permission == LocationPermission.deniedForever) {
       showSnackbar(
-          "Location permissions are permanently denied, you cannot use GPS mode.",
+          'Location permissions are permanently denied, you cannot use GPS mode.',
           context);
       throw new Exception('Error');
     }

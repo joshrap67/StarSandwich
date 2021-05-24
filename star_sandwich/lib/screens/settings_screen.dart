@@ -30,10 +30,10 @@ class _SettingsScreenState extends State<SettingsScreen> {
   void initState() {
     _loading = false;
     _loadingSharedPrefs = true;
-    _searchAddress = "";
+    _searchAddress = '';
     _locationMode = LocationMode.gpsMode;
-    _formattedLocation = "";
-    _appVersion = "";
+    _formattedLocation = '';
+    _appVersion = '';
     getSharedPrefsData();
     super.initState();
   }
@@ -48,9 +48,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
   Widget build(BuildContext context) {
     if (_loadingSharedPrefs) {
       return Scaffold(
-        backgroundColor: Colors.white30,
         appBar: AppBar(
-          title: Text("Settings & Info"),
+          title: Text('Settings & Info'),
         ),
         body: Container(),
       );
@@ -60,9 +59,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
           hideKeyboard(context);
         },
         child: Scaffold(
-          backgroundColor: Colors.white30,
           appBar: AppBar(
-            title: Text("Settings & Info"),
+            title: Text('Settings & Info'),
           ),
           body: ListView(
             children: [
@@ -73,7 +71,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                     'Location',
                     style: TextStyle(fontSize: 25),
                   ),
-                  subtitle: Text("Method for determining current location."),
+                  subtitle: Text('Method for determining current location.'),
                 ),
               ),
               Row(
@@ -82,7 +80,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                     child: RadioListTile<LocationMode>(
                       value: LocationMode.gpsMode,
                       groupValue: _locationMode,
-                      title: Text("GPS"),
+                      title: Text('GPS'),
                       onChanged: (LocationMode value) {
                         setState(() {
                           _locationMode = value;
@@ -95,7 +93,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                     child: RadioListTile<LocationMode>(
                       value: LocationMode.manual,
                       groupValue: _locationMode,
-                      title: Text("Manual"),
+                      title: Text('Manual'),
                       onChanged: (LocationMode value) {
                         setState(() {
                           _locationMode = value;
@@ -229,7 +227,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
 
     if (!result.success) {
       showSnackbar(
-          "Cannot determine location. Try making the location more specific.",
+          'Cannot determine location. Try making the location more specific.',
           context);
       return;
     }
@@ -257,7 +255,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
     setState(() {
       bool gpsPreferred = prefs.getBool(Globals.gpsModeKey) ?? true;
       _locationMode = gpsPreferred ? LocationMode.gpsMode : LocationMode.manual;
-      _formattedLocation = prefs.getString(Globals.formattedLocationKey) ?? "";
+      _formattedLocation = prefs.getString(Globals.formattedLocationKey) ?? '';
       locationController.text = _formattedLocation;
       _appVersion = packageInfo.version;
       _loadingSharedPrefs = false;

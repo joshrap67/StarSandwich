@@ -22,10 +22,10 @@ class _StarDetailsScreenState extends State<StarDetailsScreen> {
   void initState() {
     if (widget.topStar) {
       _positionalMsg =
-          "This star is directly above you, try and look up if it's dark enough!";
+          'This star is directly above you, try and look up if it\'s dark enough!';
     } else {
       _positionalMsg =
-          "This star is directly below you. If you can channel your Superman, look through Earth to see it!";
+          'This star is directly below you. If you can channel your Superman, look through Earth to see it!';
     }
     super.initState();
   }
@@ -33,9 +33,8 @@ class _StarDetailsScreenState extends State<StarDetailsScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white30,
       appBar: AppBar(
-        title: Text("Star Details"),
+        title: Text('Star Details'),
       ),
       body: Scrollbar(
         child: ListView(
@@ -83,7 +82,7 @@ class _StarDetailsScreenState extends State<StarDetailsScreen> {
           ),
           actions: <Widget>[
             TextButton(
-              child: const Text("RETURN"),
+              child: const Text('RETURN'),
               onPressed: () {
                 Navigator.of(context).pop();
               },
@@ -98,16 +97,16 @@ class _StarDetailsScreenState extends State<StarDetailsScreen> {
     return new Container(
       decoration: BoxDecoration(
           image: DecorationImage(
-              image: AssetImage("assets/images/stars.jpg"), fit: BoxFit.fill)),
+              image: AssetImage('assets/images/stars.jpg'), fit: BoxFit.fill)),
       width: 500,
       child: Column(
         children: [
           Text(
-            "${widget.star.constellation} Constellation",
+            '${widget.star.constellation} Constellation',
             style: TextStyle(fontSize: 18),
           ),
           Text(
-            "(${Globals.constellationDescriptions[widget.star.iauConstellation]})",
+            '(${Globals.constellationDescriptions[widget.star.iauConstellation]})',
             style: TextStyle(
               fontSize: 14,
               fontStyle: FontStyle.italic,
@@ -128,13 +127,13 @@ class _StarDetailsScreenState extends State<StarDetailsScreen> {
   Widget getApparentMagnitudeDisplay() {
     return new Card(
       child: ListTile(
-        title: Text("${widget.star.magnitude}"),
-        subtitle: Text("Apparent Magnitude"),
+        title: Text('${widget.star.magnitude}'),
+        subtitle: Text('Apparent Magnitude'),
         trailing: IconButton(
           icon: Icon(Icons.help_outline),
           onPressed: () {
 			  showHelpDialog(
-				  "Apparent Magnitude", HelpMessages.ApparentMagnitude);
+				  'Apparent Magnitude', HelpMessages.ApparentMagnitude);
           },
         ),
       ),
@@ -145,13 +144,13 @@ class _StarDetailsScreenState extends State<StarDetailsScreen> {
     return new Card(
       child: ListTile(
         title: Text(
-            "${widget.star.absMagnitude} (${widget.star.luminosity.toStringAsFixed(3)}x brighter than the Sun)"),
-        subtitle: Text("Absolute Magnitude"),
+            '${widget.star.absMagnitude} (${widget.star.luminosity.toStringAsFixed(3)}x brighter than the Sun)'),
+        subtitle: Text('Absolute Magnitude'),
         trailing: IconButton(
           icon: Icon(Icons.help_outline),
           onPressed: () {
             showHelpDialog(
-                "Absolute Magnitude", HelpMessages.AbsoluteMagnitude);
+                'Absolute Magnitude', HelpMessages.AbsoluteMagnitude);
           },
         ),
       ),
@@ -162,7 +161,7 @@ class _StarDetailsScreenState extends State<StarDetailsScreen> {
     return new Card(
       child: ListTile(
           title: Text(
-              "${widget.star.luminosity.toStringAsFixed(5)} times more luminous than the Sun.")),
+              '${widget.star.luminosity.toStringAsFixed(5)} times more luminous than the Sun.')),
     );
   }
 
@@ -172,8 +171,8 @@ class _StarDetailsScreenState extends State<StarDetailsScreen> {
     return new Card(
       child: ListTile(
         title: Text(
-            "$distance parsecs (${lightYears.toStringAsFixed(4)} light years)"),
-        subtitle: Text("Distance from Earth"),
+            '$distance parsecs (${lightYears.toStringAsFixed(4)} light years)'),
+        subtitle: Text('Distance from Earth'),
       ),
     );
   }
@@ -185,7 +184,7 @@ class _StarDetailsScreenState extends State<StarDetailsScreen> {
           getFormattedRightAscension(widget.star.rightAscension),
           style: TextStyle(fontSize: 20),
         ),
-        subtitle: Text("Right Ascension"),
+        subtitle: Text('Right Ascension'),
       ),
     );
   }
@@ -197,20 +196,20 @@ class _StarDetailsScreenState extends State<StarDetailsScreen> {
           getFormattedDeclination(widget.star.declination),
           style: TextStyle(fontSize: 20),
         ),
-        subtitle: Text("Declination"),
+        subtitle: Text('Declination'),
       ),
     );
   }
 
   Widget getNumberOfStarsDisplay() {
-    String msg = "";
+    String msg = '';
     int numberOfStars = widget.star.numStars;
     if (numberOfStars == 1) {
-      msg = "Single star system";
+      msg = 'Single star system';
     } else if (numberOfStars == 2) {
-      msg = "Binary star system";
+      msg = 'Binary star system';
     } else if (numberOfStars == 3) {
-      msg = "Triple star system";
+      msg = 'Triple star system';
     }
     return new Text(
       msg,
@@ -220,19 +219,19 @@ class _StarDetailsScreenState extends State<StarDetailsScreen> {
 
   Widget getStarDisplay() {
     StarResponse star = widget.star;
-    String msg = "";
+    String msg = '';
     if (star.properName.isNotEmpty) {
       msg = star.properName;
     } else if (star.bfDesignation.isNotEmpty) {
       msg = star.bfDesignation;
     } else if (star.hdId.isNotEmpty) {
-      msg = "HD ${star.hdId}";
+      msg = 'HD ${star.hdId}';
     } else if (star.hrId.isNotEmpty) {
-      msg = "HR ${star.hrId}";
+      msg = 'HR ${star.hrId}';
     } else if (star.hipId.isNotEmpty) {
-      msg = "HIP ${star.hipId}";
+      msg = 'HIP ${star.hipId}';
     } else if (star.glId.isNotEmpty) {
-      msg = "${star.glId}";
+      msg = '${star.glId}';
     }
     return new Text(
       msg,

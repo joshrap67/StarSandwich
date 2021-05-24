@@ -8,7 +8,7 @@ import 'package:star_sandwich/models/responses/sandwich_response.dart';
 import 'api_gateway.dart';
 
 class StarService {
-  static final String makeStarSandwichRoute = "makeStarSandwich";
+  static final String makeStarSandwichRoute = 'makeStarSandwich';
 
   static Future<ResultStatus<SandwichResponse>> makeStarSandwich(
       double latitude, double longitude) async {
@@ -29,12 +29,12 @@ class StarService {
         retVal.success = true;
         retVal.data = new SandwichResponse.fromJson(rawResponse);
       } else if (response.networkError) {
-        retVal.errorMessage = "Network error.Check internet connection.";
+        retVal.errorMessage = 'Network error.Check internet connection.';
       } else {
-        retVal.errorMessage = "Unable to get sandwich.";
+        retVal.errorMessage = 'Unable to get sandwich.';
       }
     } catch (e) {
-      retVal.errorMessage = "Unable to make sandwich.";
+      retVal.errorMessage = 'Unable to make sandwich.';
     }
 
     return retVal;

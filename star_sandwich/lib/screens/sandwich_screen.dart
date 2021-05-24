@@ -41,7 +41,7 @@ class _SandwichScreenState extends State<SandwichScreen>
     _bottomStar = widget.bottomStar;
 
     control = AnimationController(
-      duration: Duration(seconds: 50),
+      duration: Duration(seconds: 40),
       vsync: this,
     );
 
@@ -68,7 +68,7 @@ class _SandwichScreenState extends State<SandwichScreen>
         body: Container(
           decoration: BoxDecoration(
               image: DecorationImage(
-                  image: AssetImage("assets/images/stars.jpg"),
+                  image: AssetImage('assets/images/stars.jpg'),
                   fit: BoxFit.fill)),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -111,8 +111,8 @@ class _SandwichScreenState extends State<SandwichScreen>
                                         : Icon(Icons.map),
                                     iconSize: 35,
                                     tooltip: _topConstellationShowing
-                                        ? "Star View"
-                                        : "View Constellation",
+                                        ? 'Star View'
+                                        : 'View Constellation',
                                   ),
                                 ],
                               ),
@@ -121,7 +121,7 @@ class _SandwichScreenState extends State<SandwichScreen>
                         )
                       : topStarNotFoundWidget()),
               Hero(
-                tag: "heroKey",
+                tag: 'heroKey',
                 child: Container(
                   width: MediaQuery.of(context).size.height * .25,
                   height: MediaQuery.of(context).size.height * .25,
@@ -159,8 +159,8 @@ class _SandwichScreenState extends State<SandwichScreen>
                                         : Icon(Icons.map),
                                     iconSize: 35,
                                     tooltip: _bottomConstellationShowing
-                                        ? "Star View"
-                                        : "View Constellation",
+                                        ? 'Star View'
+                                        : 'View Constellation',
                                   ),
                                   Padding(
                                       padding: const EdgeInsets.only(
@@ -189,7 +189,7 @@ class _SandwichScreenState extends State<SandwichScreen>
             BackButton(),
             Expanded(
               child: AutoSizeText(
-                "No star found.\nWho knows what could be above you...",
+                'No star found.\nWho knows what could be above you...',
                 textAlign: TextAlign.center,
                 minFontSize: 12,
                 maxLines: 3,
@@ -211,7 +211,7 @@ class _SandwichScreenState extends State<SandwichScreen>
       mainAxisAlignment: MainAxisAlignment.end,
       children: [
         AutoSizeText(
-          "No star found.\nWho knows what could be below you...",
+          'No star found.\nWho knows what could be below you...',
           textAlign: TextAlign.center,
           overflow: TextOverflow.ellipsis,
           minFontSize: 14,
@@ -249,7 +249,7 @@ class _SandwichScreenState extends State<SandwichScreen>
             ),
           ),
           AutoSizeText(
-            "${getStarDisplay(star)}",
+            '${getStarDisplay(star)}',
             textAlign: TextAlign.center,
             overflow: TextOverflow.ellipsis,
             minFontSize: 14,
@@ -282,7 +282,7 @@ class _SandwichScreenState extends State<SandwichScreen>
             ),
           ),
           AutoSizeText(
-            "${star.constellation} Constellation",
+            '${star.constellation} Constellation',
             textAlign: TextAlign.center,
             overflow: TextOverflow.ellipsis,
             minFontSize: 14,
@@ -305,7 +305,7 @@ class _SandwichScreenState extends State<SandwichScreen>
         mainAxisAlignment: MainAxisAlignment.end,
         children: [
           AutoSizeText(
-            "${getStarDisplay(star)}",
+            '${getStarDisplay(star)}',
             textAlign: TextAlign.center,
             overflow: TextOverflow.ellipsis,
             minFontSize: 14,
@@ -345,7 +345,7 @@ class _SandwichScreenState extends State<SandwichScreen>
         mainAxisAlignment: MainAxisAlignment.end,
         children: [
           AutoSizeText(
-            "${star.constellation} Constellation",
+            '${star.constellation} Constellation',
             textAlign: TextAlign.center,
             overflow: TextOverflow.ellipsis,
             minFontSize: 14,
@@ -377,19 +377,19 @@ class _SandwichScreenState extends State<SandwichScreen>
   }
 
   String getStarDisplay(StarResponse star) {
-    String response = "";
+    String response = '';
     if (star.properName.isNotEmpty) {
       response = star.properName;
     } else if (star.bfDesignation.isNotEmpty) {
       response = star.bfDesignation;
     } else if (star.hdId.isNotEmpty) {
-      response = "HD ${star.hdId}";
+      response = 'HD ${star.hdId}';
     } else if (star.hrId.isNotEmpty) {
-      response = "HR ${star.hrId}";
+      response = 'HR ${star.hrId}';
     } else if (star.hipId.isNotEmpty) {
-      response = "HIP ${star.hipId}";
+      response = 'HIP ${star.hipId}';
     } else if (star.glId.isNotEmpty) {
-      response = "${star.glId}";
+      response = '${star.glId}';
     }
     return response;
   }

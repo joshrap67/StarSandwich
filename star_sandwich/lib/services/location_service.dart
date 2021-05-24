@@ -7,7 +7,7 @@ import 'package:star_sandwich/models/responses/geocoded_location_response.dart';
 import 'api_gateway.dart';
 
 class LocationService {
-  static final String getGeocodedLocationRoute = "getGeocodedLocation";
+  static final String getGeocodedLocationRoute = 'getGeocodedLocation';
 
   static Future<ResultStatus<GeocodedLocationResponse>> getGeocodedLocation(
       String address) async {
@@ -26,12 +26,12 @@ class LocationService {
         retVal.success = true;
         retVal.data = new GeocodedLocationResponse.fromJson(rawResponse);
       } else if (response.networkError) {
-        retVal.errorMessage = "Network error.Check internet connection.";
+        retVal.errorMessage = 'Network error.Check internet connection.';
       } else {
-        retVal.errorMessage = "Unable to get coordinates.";
+        retVal.errorMessage = 'Unable to get coordinates.';
       }
     } catch (e) {
-      retVal.errorMessage = "Unable to get coordinates.";
+      retVal.errorMessage = 'Unable to get coordinates.';
     }
 
     return retVal;

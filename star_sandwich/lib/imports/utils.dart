@@ -19,25 +19,25 @@ String getFormattedRightAscension(double rightAscension) {
   String secondsFormatted;
 
   if (hours < 10) {
-    hoursFormatted = "0$hours";
+    hoursFormatted = '0$hours';
   } else {
-    hoursFormatted = "$hours";
+    hoursFormatted = '$hours';
   }
   if (minutes < 10) {
-    minutesFormatted = "0$minutes";
+    minutesFormatted = '0$minutes';
   } else {
-    minutesFormatted = "$minutes";
+    minutesFormatted = '$minutes';
   }
   if (seconds < 10) {
-    secondsFormatted = "0$seconds";
+    secondsFormatted = '0$seconds';
   } else {
-    secondsFormatted = "$seconds";
+    secondsFormatted = '$seconds';
   }
-  return "$hoursFormatted\u02b0 $minutesFormatted\u1d50 $secondsFormatted\u02e2";
+  return '$hoursFormatted\u02b0 $minutesFormatted\u1d50 $secondsFormatted\u02e2';
 }
 
 String getFormattedDeclination(double declination) {
-  String sign = declination > 0 ? "+" : "-";
+  String sign = declination > 0 ? '+' : '-';
   declination = declination.abs();
   int degrees = declination.toInt();
   int minutes = ((declination - degrees) * 60).toInt();
@@ -47,20 +47,20 @@ String getFormattedDeclination(double declination) {
   String secondsFormatted;
 
   if (degrees < 10) {
-    degreesFormatted = "0$degrees";
+    degreesFormatted = '0$degrees';
   } else {
-    degreesFormatted = "$degrees";
+    degreesFormatted = '$degrees';
   }
   if (minutes < 10) {
-    minutesFormatted = "0$minutes";
+    minutesFormatted = '0$minutes';
   } else {
-    minutesFormatted = "$minutes";
+    minutesFormatted = '$minutes';
   }
   if (seconds < 10) {
-    secondsFormatted = "0$seconds";
+    secondsFormatted = '0$seconds';
   } else {
-    secondsFormatted = "$seconds";
+    secondsFormatted = '$seconds';
   }
 
-  return "$sign$degreesFormatted\u00B0 $minutesFormatted' $secondsFormatted\"";
+  return '$sign$degreesFormatted\u00B0 $minutesFormatted\' $secondsFormatted"';
 }
