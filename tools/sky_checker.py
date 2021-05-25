@@ -4,13 +4,43 @@ import math
 import os
 
 FILE = 'data_ra_dec_only_all_constellations.csv'
-RIGHT_ASCENSION_RANGE = 0.25  # in hours
-DECLINATION_RANGE = 2.5  # in degrees
+# current best for 100% coverage: RA .19, DEC: 2.5
+RIGHT_ASCENSION_RANGE = 0.1  # in hours
+DECLINATION_RANGE = 1.0  # in degrees
 DECLINATION_ORIGIN = -90
 # starting from origin = 0 of course
 MAX_RIGHT_ASCENSION_INDEX = math.ceil(24.0 / RIGHT_ASCENSION_RANGE)
 # starting from origin = 0 of course
 MAX_DECLINATION_INDEX = math.ceil(180.0 / DECLINATION_RANGE)
+latitude_values = dict()
+
+
+def find_optimal_values():
+    # todo fix this?
+    ra_offset = 0.01
+
+    best_ra_offset = ra_offset
+    best_dec_offset = 0
+    emergency_break = False
+
+    while(ra_offset < 1 and not emergency_break):
+        # anything bigger than this is pointless
+        dec_offset = 0.5
+        while(dec_offset < 5):
+            RIGHT_ASCENSION_RANGE = ra_offset
+            DECLINATION_RANGE = dec_offset
+            grid = get_cartesian_grid()
+            bad_points = get_number_of_bad_points(grid)
+            if bad_points == 0:
+                best_dec_offset = dec_offset
+                best_ra_offset = ra_offset
+                emergency_break = True
+                break
+            dec_offset += 0.1
+        print('Right ascension {} done'.format(ra_offset))
+        ra_offset += 0.01
+    print("Optimal right ascension range: {}\nOptimal declination range: {}".format(
+        best_ra_offset, best_dec_offset))
 
 
 def determine_precision():
@@ -21,7 +51,7 @@ def determine_precision():
     percentage = (bad_points / total_points) * 100
     RA_to_degrees = RIGHT_ASCENSION_RANGE * 15
 
-    # os.system('cls')
+    os.system('cls')
     print("----------------Finished computing----------------")
     print("Max dec index {}".format(MAX_DECLINATION_INDEX))
     print("Max RA index {}".format(MAX_RIGHT_ASCENSION_INDEX))
@@ -32,6 +62,12 @@ def determine_precision():
         bad_points))
     print("Total rectangles the sky was split into: {}".format(total_points))
     print("Percentage of rectangles without stars: {}%".format(percentage))
+    if len(latitude_values) > 0:
+        sorted(latitude_values)  # python wtf you're amazing
+        for lat in latitude_values:
+            lower_range = lat + 1
+            print("{} rectangles without stars at latitude ranges {}° {}°".format(
+                latitude_values[lat], lat, lower_range))
 
 
 def get_cartesian_grid():
@@ -97,7 +133,9 @@ def get_number_of_bad_points(grid):
     for RA in range(0, MAX_RIGHT_ASCENSION_INDEX):
         for dec in range(0, MAX_DECLINATION_INDEX):
             if len(grid[RA][dec]) == 0:
-                print("RA coord: {} dec coord: {}".format(RA, dec))
+                latitude_lower_range = dec * DECLINATION_RANGE - 90
+                latitude_values[latitude_lower_range] = latitude_values.get(
+                    latitude_lower_range, 0) + 1
                 bad_points += 1
     return bad_points
 
@@ -135,4 +173,5 @@ def declination_lower_bound_coordinate(point):
 
 
 if __name__ == '__main__':
+    # find_optimal_values()
     determine_precision()

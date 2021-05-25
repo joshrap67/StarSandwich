@@ -25,16 +25,11 @@ class _SandwichScreenState extends State<SandwichScreen>
   StarResponse _bottomStar;
   bool _bottomConstellationShowing;
   bool _topConstellationShowing;
-  double _bottomStarRotation;
-  double _topStarRotation;
   Animation<double> rot;
   AnimationController control;
 
   @override
   void initState() {
-    final random = new Random();
-    _topStarRotation = random.nextInt(360).toDouble();
-    _bottomStarRotation = random.nextInt(360).toDouble();
     _bottomConstellationShowing = false;
     _topConstellationShowing = false;
     _topStar = widget.topStar;
@@ -122,13 +117,16 @@ class _SandwichScreenState extends State<SandwichScreen>
                       : topStarNotFoundWidget()),
               Hero(
                 tag: 'heroKey',
-                child: Container(
-                  width: MediaQuery.of(context).size.height * .25,
-                  height: MediaQuery.of(context).size.height * .25,
-                  decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                    image: DecorationImage(
-                        image: AssetImage('assets/images/middle.png')),
+                child: Tooltip(
+                  message: '${widget.latitude}°, ${widget.longitude}°',
+                  child: Container(
+                    width: MediaQuery.of(context).size.height * .25,
+                    height: MediaQuery.of(context).size.height * .25,
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      image: DecorationImage(
+                          image: AssetImage('assets/images/middle.png')),
+                    ),
                   ),
                 ),
               ),

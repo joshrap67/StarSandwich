@@ -39,50 +39,55 @@ class _LandingScreenState extends State<LandingScreen> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
-            Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                AutoSizeText(
-                  'Make Me',
-                  textAlign: TextAlign.center,
-                  minFontSize: 18,
-                  style: TextStyle(
-                    fontSize: 48,
-                    color: Colors.white,
+            Container(
+              height: MediaQuery.of(context).size.height * .3,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.fromLTRB(12.0, 20, 12.0, 12.0),
                   ),
-                ),
-                AutoSizeText(
-                  'A',
-                  textAlign: TextAlign.center,
-                  minFontSize: 18,
-                  style: TextStyle(
-                    fontSize: 48,
-                    color: Colors.white,
+                  AutoSizeText(
+                    'Make Me',
+                    textAlign: TextAlign.center,
+                    minFontSize: 18,
+                    style: TextStyle(
+                      fontSize: 48,
+                      color: Colors.white,
+                    ),
                   ),
-                ),
-                Row(
-                  children: [
-                    Expanded(
-                      child: AutoSizeText(
-                        'Star Sandwich',
-                        textAlign: TextAlign.center,
-                        minFontSize: 18,
-                        maxLines: 1,
-                        style: TextStyle(
-                          fontSize: 56,
-                          color: Colors.white,
+                  AutoSizeText(
+                    'A',
+                    textAlign: TextAlign.center,
+                    minFontSize: 18,
+                    style: TextStyle(
+                      fontSize: 48,
+                      color: Colors.white,
+                    ),
+                  ),
+                  Row(
+                    children: [
+                      Expanded(
+                        child: AutoSizeText(
+                          'Star Sandwich',
+                          textAlign: TextAlign.center,
+                          minFontSize: 18,
+                          maxLines: 1,
+                          style: TextStyle(
+                            fontSize: 56,
+                            color: Colors.white,
+                          ),
                         ),
                       ),
-                    ),
-                  ],
-                )
-              ],
+                    ],
+                  )
+                ],
+              ),
             ),
             Padding(
               padding: const EdgeInsets.fromLTRB(12.0, 20, 12.0, 12.0),
             ),
             Container(
-              height: MediaQuery.of(context).size.height * .25,
               decoration: BoxDecoration(shape: BoxShape.circle),
               child: Hero(
                 tag: 'heroKey',

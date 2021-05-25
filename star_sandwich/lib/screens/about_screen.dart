@@ -34,8 +34,8 @@ class _AboutScreenState extends State<AboutScreen> {
                 title: Text(
                     '\u2022 Right Ascension: distance, measured in hours, of a point in the sky east of the First Point of Aries.\n\n'
                     '\u2022 Declination: distance, measured in degrees, of a point in the sky north or south of the celestial equator.\n\n'
-                    '\u2022 Zenith: point directly over the observer.\n\n'
-                    '\u2022 Nadir: point directly below the observer.\n\n'
+                    '\u2022 Zenith: point in the sky directly over the observer.\n\n'
+                    '\u2022 Nadir: point in the sky directly below the observer.\n\n'
                     '\u2022 Light year: the distance light travels in one year (approximately 5.87 trillion miles or 9.46 trillion kilometers!)\n\n'),
               )
             ],
@@ -50,7 +50,7 @@ class _AboutScreenState extends State<AboutScreen> {
               ),
               ListTile(
                 title: Text(
-                    '\u2022 If you want to be cheeky, technically some stars might not be directly above or below you since the light we see is light that was emitted hundreds or even thousands of years ago, so its real position could be somewhere else. This could even warrant more relativisitc discussion involving frames of reference, but for this app\'s sake just embrace the madness.'),
+                    '\u2022 If you want to be cheeky, technically some stars might not be directly above or below you since the light we see is light that was emitted hundreds or even thousands of years ago, so its real position could be somewhere else. This could even warrant more relativisitc discussion involving reference frames, but for this app\'s sake just embrace the madness.'),
               )
             ],
           ),
