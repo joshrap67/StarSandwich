@@ -16,13 +16,23 @@ class LandingScreen extends StatefulWidget {
   _LandingScreenState createState() => _LandingScreenState();
 }
 
-class _LandingScreenState extends State<LandingScreen> {
+class _LandingScreenState extends State<LandingScreen>
+    with SingleTickerProviderStateMixin {
   bool _loading;
   StarResponse _topStar;
   StarResponse _bottomStar;
+  AnimationController _animationController;
+  Animation _animation;
 
   @override
   void initState() {
+    _animationController =
+        AnimationController(vsync: this, duration: Duration(seconds: 4));
+    _animationController.repeat(reverse: true);
+    _animation = Tween(begin: 6.5, end: 11.5).animate(_animationController)
+      ..addListener(() {
+        setState(() {});
+      });
     _loading = false;
     super.initState();
   }
@@ -40,46 +50,46 @@ class _LandingScreenState extends State<LandingScreen> {
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
             Container(
-              height: MediaQuery.of(context).size.height * .3,
+              height: MediaQuery.of(context).size.height * .25,
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
                   Padding(
                     padding: const EdgeInsets.fromLTRB(12.0, 20, 12.0, 12.0),
                   ),
-                  AutoSizeText(
-                    'Make Me',
-                    textAlign: TextAlign.center,
-                    minFontSize: 18,
-                    style: TextStyle(
-                      fontSize: 48,
-                      color: Colors.white,
-                    ),
-                  ),
-                  AutoSizeText(
-                    'A',
-                    textAlign: TextAlign.center,
-                    minFontSize: 18,
-                    style: TextStyle(
-                      fontSize: 48,
-                      color: Colors.white,
-                    ),
-                  ),
-                  Row(
-                    children: [
-                      Expanded(
-                        child: AutoSizeText(
-                          'Star Sandwich',
-                          textAlign: TextAlign.center,
-                          minFontSize: 18,
-                          maxLines: 1,
-                          style: TextStyle(
-                            fontSize: 56,
-                            color: Colors.white,
-                          ),
-                        ),
+                  Expanded(
+                    child: AutoSizeText(
+                      'Make Me',
+                      textAlign: TextAlign.center,
+                      minFontSize: 18,
+                      style: TextStyle(
+                        fontSize: 52,
+                        color: Colors.white,
                       ),
-                    ],
+                    ),
+                  ),
+                  Expanded(
+                    child: AutoSizeText(
+                      'A',
+                      textAlign: TextAlign.center,
+                      minFontSize: 18,
+                      style: TextStyle(
+                        fontSize: 52,
+                        color: Colors.white,
+                      ),
+                    ),
+                  ),
+                  Expanded(
+                    child: AutoSizeText(
+                      'Star Sandwich',
+                      textAlign: TextAlign.center,
+                      minFontSize: 18,
+                      maxLines: 1,
+                      style: TextStyle(
+                        fontSize: 52,
+                        color: Colors.white,
+                      ),
+                    ),
                   )
                 ],
               ),
@@ -89,32 +99,46 @@ class _LandingScreenState extends State<LandingScreen> {
             ),
             Container(
               decoration: BoxDecoration(shape: BoxShape.circle),
-              child: Hero(
-                tag: 'heroKey',
-                child: _loading
-                    ? SizedBox(
-                        width: MediaQuery.of(context).size.height * .25,
-                        height: MediaQuery.of(context).size.height * .25,
-                        child: CircularProgressIndicator(
-                          valueColor: AlwaysStoppedAnimation<Color>(
-                              new Color(0xff6f6fee)),
-                        ))
-                    : ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                            shape: CircleBorder(), primary: Colors.transparent),
-                        child: Container(
-                          width: MediaQuery.of(context).size.height * .25,
-                          height: MediaQuery.of(context).size.height * .25,
-                          alignment: Alignment.center,
-                          decoration: BoxDecoration(
-                              shape: BoxShape.circle,
-                              image: DecorationImage(
-                                  image: AssetImage(
-                                      'assets/launcher/splash_logo.png'))),
+              child: _loading
+                  ? SizedBox(
+                      width: MediaQuery.of(context).size.height * .25,
+                      height: MediaQuery.of(context).size.height * .25,
+                      child: CircularProgressIndicator(
+                        valueColor: AlwaysStoppedAnimation<Color>(
+                            new Color(0xff6f6fee)),
+                      ))
+                  : Stack(
+                      children: [
+                        Hero(
+							  tag: 'heroKey',
+                          child: Container(
+                            width: MediaQuery.of(context).size.height * .25,
+                            height: MediaQuery.of(context).size.height * .25,
+                            alignment: Alignment.center,
+                            decoration: BoxDecoration(
+                                boxShadow: [
+                                  BoxShadow(
+                                      color: Color(0xbcb4bfff),
+                                      blurRadius: _animation.value,
+                                      spreadRadius: _animation.value),
+                                ],
+                                shape: BoxShape.circle,
+                                image: DecorationImage(
+                                    image: AssetImage(
+                                        'assets/launcher/splash_logo.png'))),
+                          ),
                         ),
-                        onPressed: getStars,
-                      ),
-              ),
+                        Positioned.fill(
+                          child: Material(
+                            color: Colors.transparent,
+                            child: InkWell(
+                              customBorder: CircleBorder(),
+                              onTap: getStars,
+                            ),
+                          ),
+                        )
+                      ],
+                    ),
             ),
             Container(
               height: MediaQuery.of(context).size.height * .3,

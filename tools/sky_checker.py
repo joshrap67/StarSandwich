@@ -98,11 +98,11 @@ def get_cartesian_grid():
             if(isValidDeclinationCoordinate(dec_center_coord) and isValidRightAscensionCoordinate(RA_left_coord)):
                 cartesian_grid[RA_left_coord][dec_center_coord].append(row)
 
-             # bottom left
+            # bottom left
             if(isValidDeclinationCoordinate(dec_lower_coord) and isValidRightAscensionCoordinate(RA_left_coord)):
                 cartesian_grid[RA_left_coord][dec_lower_coord].append(row)
 
-             # upper middle
+            # upper middle
             if(isValidDeclinationCoordinate(dec_upper_coord) and isValidRightAscensionCoordinate(RA_center_coord)):
                 cartesian_grid[RA_center_coord][dec_upper_coord].append(row)
 
