@@ -6,10 +6,10 @@ export class StarRepository {
 		try {
 			const results = await Star.find({
 				rightAscension: {
-					$gte: coords[0] - 0.25,
-					$lte: coords[0] + 0.25
+					$gte: coords[0] - 0.1,
+					$lte: coords[0] + 0.1
 				},
-				declination: {$gte: coords[1] - 2.5, $lte: coords[1] + 2.5}
+				declination: {$gte: coords[1] - 1.0, $lte: coords[1] + 1.0}
 			});
 			results.map((result) => resultList.push(result.toObject()));
 		} catch (e) {

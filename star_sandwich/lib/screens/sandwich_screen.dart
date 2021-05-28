@@ -25,8 +25,8 @@ class _SandwichScreenState extends State<SandwichScreen>
   StarResponse _bottomStar;
   bool _bottomConstellationShowing;
   bool _topConstellationShowing;
-  Animation<double> rot;
-  AnimationController control;
+  Animation<double> _starRotation;
+  AnimationController _animationControl;
 
   @override
   void initState() {
@@ -35,23 +35,23 @@ class _SandwichScreenState extends State<SandwichScreen>
     _topStar = widget.topStar;
     _bottomStar = widget.bottomStar;
 
-    control = AnimationController(
+    _animationControl = AnimationController(
       duration: Duration(seconds: 40),
       vsync: this,
     );
 
-    rot = Tween<double>(
+    _starRotation = Tween<double>(
       begin: 0,
       end: 2 * pi,
-    ).animate(control);
-    control.repeat();
+    ).animate(_animationControl);
+    _animationControl.repeat();
 
     super.initState();
   }
 
   @override
   void dispose() {
-    control.dispose();
+    _animationControl.dispose();
     super.dispose();
   }
 
@@ -178,50 +178,6 @@ class _SandwichScreenState extends State<SandwichScreen>
     );
   }
 
-  Widget topStarNotFoundWidget() {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.start,
-      children: [
-        Row(
-          children: [
-            BackButton(),
-            Expanded(
-              child: AutoSizeText(
-                'No star found.\nWho knows what could be above you...',
-                textAlign: TextAlign.center,
-                minFontSize: 12,
-                maxLines: 3,
-                overflow: TextOverflow.ellipsis,
-                style: TextStyle(
-                  fontSize: 20,
-                  color: Colors.white,
-                ),
-              ),
-            ),
-          ],
-        )
-      ],
-    );
-  }
-
-  Widget bottomStarNotFoundWidget() {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.end,
-      children: [
-        AutoSizeText(
-          'No star found.\nWho knows what could be below you...',
-          textAlign: TextAlign.center,
-          overflow: TextOverflow.ellipsis,
-          minFontSize: 14,
-          style: TextStyle(
-            fontSize: 20,
-            color: Colors.white,
-          ),
-        ),
-      ],
-    );
-  }
-
   Widget topStarWidget(StarResponse star) {
     return InkWell(
       onTap: () {
@@ -236,9 +192,9 @@ class _SandwichScreenState extends State<SandwichScreen>
             height: 100,
             width: 200,
             child: AnimatedBuilder(
-              animation: control,
+              animation: _animationControl,
               builder: (_, child) => Transform(
-                transform: Matrix4.rotationZ(rot.value),
+                transform: Matrix4.rotationZ(_starRotation.value),
                 alignment: Alignment.center,
                 child: Image.asset(
                   getStarImage(star),
@@ -317,9 +273,9 @@ class _SandwichScreenState extends State<SandwichScreen>
             height: 100,
             width: 200,
             child: AnimatedBuilder(
-              animation: control,
+              animation: _animationControl,
               builder: (_, child) => Transform(
-                transform: Matrix4.rotationZ(rot.value),
+                transform: Matrix4.rotationZ(_starRotation.value),
                 alignment: Alignment.center,
                 child: Image.asset(
                   getStarImage(star),
@@ -359,6 +315,50 @@ class _SandwichScreenState extends State<SandwichScreen>
           )
         ],
       ),
+    );
+  }
+
+  Widget topStarNotFoundWidget() {
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.start,
+      children: [
+        Row(
+          children: [
+            BackButton(),
+            Expanded(
+              child: AutoSizeText(
+                'No star found.\nWho knows what could be above you...',
+                textAlign: TextAlign.center,
+                minFontSize: 12,
+                maxLines: 3,
+                overflow: TextOverflow.ellipsis,
+                style: TextStyle(
+                  fontSize: 20,
+                  color: Colors.white,
+                ),
+              ),
+            ),
+          ],
+        )
+      ],
+    );
+  }
+
+  Widget bottomStarNotFoundWidget() {
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.end,
+      children: [
+        AutoSizeText(
+          'No star found.\nWho knows what could be below you...',
+          textAlign: TextAlign.center,
+          overflow: TextOverflow.ellipsis,
+          minFontSize: 14,
+          style: TextStyle(
+            fontSize: 20,
+            color: Colors.white,
+          ),
+        ),
+      ],
     );
   }
 

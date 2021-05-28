@@ -3,7 +3,7 @@ from array import *
 import math
 import os
 
-FILE = 'data_ra_dec_only_all_constellations.csv'
+FILE = 'data_ra_dec.csv'
 # current best for 100% coverage: RA .19, DEC: 2.5
 RIGHT_ASCENSION_RANGE = 0.1  # in hours
 DECLINATION_RANGE = 1.0  # in degrees

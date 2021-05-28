@@ -22,14 +22,14 @@ class _LandingScreenState extends State<LandingScreen>
   StarResponse _topStar;
   StarResponse _bottomStar;
   AnimationController _animationController;
-  Animation _animation;
+  Animation _glowAnimation;
 
   @override
   void initState() {
     _animationController =
-        AnimationController(vsync: this, duration: Duration(seconds: 4));
+        AnimationController(vsync: this, duration: Duration(milliseconds: 1500));
     _animationController.repeat(reverse: true);
-    _animation = Tween(begin: 6.5, end: 11.5).animate(_animationController)
+    _glowAnimation = Tween(begin: 6.5, end: 11.5).animate(_animationController)
       ..addListener(() {
         setState(() {});
       });
@@ -44,7 +44,9 @@ class _LandingScreenState extends State<LandingScreen>
       body: Container(
         decoration: BoxDecoration(
           image: DecorationImage(
-              image: AssetImage('assets/images/stars.jpg'), fit: BoxFit.fill),
+            image: AssetImage('assets/images/stars.jpg'),
+            fit: BoxFit.fill,
+          ),
         ),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -52,7 +54,6 @@ class _LandingScreenState extends State<LandingScreen>
             Container(
               height: MediaQuery.of(context).size.height * .25,
               child: Column(
-                mainAxisAlignment: MainAxisAlignment.start,
                 children: [
                   Padding(
                     padding: const EdgeInsets.fromLTRB(12.0, 20, 12.0, 12.0),
@@ -110,7 +111,7 @@ class _LandingScreenState extends State<LandingScreen>
                   : Stack(
                       children: [
                         Hero(
-							  tag: 'heroKey',
+                          tag: 'heroKey',
                           child: Container(
                             width: MediaQuery.of(context).size.height * .25,
                             height: MediaQuery.of(context).size.height * .25,
@@ -119,8 +120,8 @@ class _LandingScreenState extends State<LandingScreen>
                                 boxShadow: [
                                   BoxShadow(
                                       color: Color(0xbcb4bfff),
-                                      blurRadius: _animation.value,
-                                      spreadRadius: _animation.value),
+                                      blurRadius: _glowAnimation.value,
+                                      spreadRadius: _glowAnimation.value),
                                 ],
                                 shape: BoxShape.circle,
                                 image: DecorationImage(

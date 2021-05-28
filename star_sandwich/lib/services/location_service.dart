@@ -25,8 +25,6 @@ class LocationService {
         Map<String, dynamic> rawResponse = jsonDecode(response.data);
         retVal.success = true;
         retVal.data = new GeocodedLocationResponse.fromJson(rawResponse);
-      } else if (response.networkError) {
-        retVal.errorMessage = 'Network error.Check internet connection.';
       } else {
         retVal.errorMessage = 'Unable to get coordinates.';
       }

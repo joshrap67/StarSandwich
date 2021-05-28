@@ -9,8 +9,7 @@ import '../config.dart';
 
 Future<ResultStatus<String>> makeApiRequest(
     Map<String, dynamic> requestContent) async {
-  ResultStatus<String> retVal =
-      new ResultStatus(success: false, networkError: false);
+  ResultStatus<String> retVal = new ResultStatus(success: false);
 
   try {
     var url = Uri.parse(Config.apiRootUrl + requestContent[RequestKeys.action]);
@@ -20,12 +19,10 @@ Future<ResultStatus<String>> makeApiRequest(
       retVal.success = true;
       retVal.data = response.body;
     } else {
-      retVal.success = false;
-      print(response.body);
       retVal.data = response.body;
     }
   } on SocketException catch (_) {
-    retVal.networkError = true;
+    retVal.data = 'Error connecting to server.';
   }
   return retVal;
 }

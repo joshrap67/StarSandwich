@@ -6,8 +6,8 @@ class AboutScreen extends StatefulWidget {
   _AboutScreenState createState() => _AboutScreenState();
 }
 
-final double rightAscensionRange = .25;
-final double declinationRange = 2.5;
+final double rightAscensionRange = 0.1;
+final double declinationRange = 1.0;
 
 class _AboutScreenState extends State<AboutScreen> {
   @override
@@ -16,104 +16,108 @@ class _AboutScreenState extends State<AboutScreen> {
       appBar: AppBar(
         title: Text('About'),
       ),
-      body: ListView(
-        children: [
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-          ),
-          ListTile(
-            title: Text(
-              'Star Sandwich determines the nearest star that is directly above you and the nearest star that is directly below you. Just click the center button on the landing screen to get started!',
-              style: TextStyle(fontSize: 20),
+      body: Scrollbar(
+        child: ListView(
+          children: [
+            Padding(
+              padding: const EdgeInsets.all(8.0),
             ),
-          ),
-          ExpansionTile(
-            title: Text('Astronomy Terms'),
-            children: [
-              ListTile(
-                title: Text(
-                    '\u2022 Right Ascension: distance, measured in hours, of a point in the sky east of the First Point of Aries.\n\n'
-                    '\u2022 Declination: distance, measured in degrees, of a point in the sky north or south of the celestial equator.\n\n'
-                    '\u2022 Zenith: point in the sky directly over the observer.\n\n'
-                    '\u2022 Nadir: point in the sky directly below the observer.\n\n'
-                    '\u2022 Light year: the distance light travels in one year (approximately 5.87 trillion miles or 9.46 trillion kilometers!)\n\n'),
-              )
-            ],
-          ),
-          ExpansionTile(
-            title: Text('Disclaimers'),
-            children: [
-              ListTile(
-                title: Text(
-                    '\u2022 It\'s not trivial to define "directly above" or "directly below"  when determining the stars to display. Stars are guaranteed to be within \u00B1$declinationRange\u00B0 declination & \u00B1$rightAscensionRange hrs right ascension of the observer\'s zenith and nadir.'
-                    '\n\nDistance from the observer\'s zenith/nadir is prioritized, but other factors are also considered as part of the algorithm for determining the star to display.'),
+            ListTile(
+              title: Text(
+                'Star Sandwich determines the nearest star that is directly above you and the nearest star that is directly below you. Just click the center button on the landing screen to get started!',
+                style: TextStyle(fontSize: 20),
               ),
-              ListTile(
-                title: Text(
-                    '\u2022 If you want to be cheeky, technically some stars might not be directly above or below you since the light we see is light that was emitted hundreds or even thousands of years ago, so its real position could be somewhere else. This could even warrant more relativisitc discussion involving reference frames, but for this app\'s sake just embrace the madness.'),
-              )
-            ],
-          ),
-          ExpansionTile(
-            title: Text('References'),
-            children: [
-              ListTile(
-                title: Text('App Logo drawn by Mike Sexton.'),
-              ),
-              ListTile(
-                title: InkWell(
-                  child: Text(
-                    'App background image source.',
-                    style: TextStyle(decoration: TextDecoration.underline),
-                  ),
-                  onTap: () async {
-                    const String url =
-                        'https://unsplash.com/photos/uhjiu8FjnsQ';
-                    if (await canLaunch(url)) {
-                      await launch(url);
-                    } else {
-                      throw 'Could not launch $url';
-                    }
-                  },
+            ),
+            ExpansionTile(
+              title: Text('Astronomy Terms'),
+              children: [
+                ListTile(
+                  title: Text(
+                      '\u2022 Right Ascension: distance, measured in hours, of a point in the sky east of the First Point of Aries.\n\n'
+                      '\u2022 Declination: distance, measured in degrees, of a point in the sky north or south of the celestial equator.\n\n'
+                      '\u2022 Zenith: point in the sky directly over the observer.\n\n'
+                      '\u2022 Nadir: point in the sky directly below the observer.\n\n'
+                      '\u2022 Apparent magnitude: measure of how bright an object is relative to Earth. The smaller the number, the brighter the object appears.\nObjects with an apparent magnitude greater than around 6 are not visible to the naked human eye.\n\n'
+                      '\u2022 Absolute magnitude: intrinsic measure of how bright an object is measured from a fixed position of 10 parsecs. Like with apparent magnitude, the smaller the number the brighter the object.\nThe scale is logarithmic. If the difference between the absolute magnitude of two stars is 5, then their brightness differs by a factor of 100.\n\n'
+                      '\u2022 Light year: distance light travels in one year (approximately 5.87 trillion miles or 9.46 trillion kilometers!)'),
+                )
+              ],
+            ),
+            ExpansionTile(
+              title: Text('Disclaimers'),
+              children: [
+                ListTile(
+                  title: Text(
+                      '\u2022 When determining "directly above" or "directly below" stars are guaranteed to be within \u00B1$declinationRange\u00B0 declination & \u00B1$rightAscensionRange hrs right ascension of the observer\'s zenith and nadir.'
+                      '\n\nAngular distance from the observer\'s zenith/nadir is prioritized, but other factors are also considered as part of the algorithm for determining the star to display.'),
                 ),
-              ),
-              ListTile(
-                title: InkWell(
-                  child: Text(
-                    'Data derived from database found here.',
-                    style: TextStyle(decoration: TextDecoration.underline),
-                  ),
-                  onTap: () async {
-                    const String url =
-                        'https://github.com/astronexus/HYG-Database';
-                    if (await canLaunch(url)) {
-                      await launch(url);
-                    } else {
-                      throw 'Could not launch $url';
-                    }
-                  },
+                ListTile(
+                  title: Text(
+                      '\u2022 If you want to be cheeky, technically some stars might not be directly above or below you since the light we see is light that was emitted hundreds or even thousands of years ago, so its real position could be somewhere else. This could even warrant more relativisitc discussion involving reference frames, but for this app\'s sake just embrace the madness.'),
+                )
+              ],
+            ),
+            ExpansionTile(
+              title: Text('References'),
+              children: [
+                ListTile(
+                  title: Text('App Logo drawn by Mike Sexton.'),
                 ),
-              ),
-              ListTile(
-                title: InkWell(
-                  child: Text(
-                    'Earth icon made by Flat Icons (image was modified in implementation).',
-                    style: TextStyle(decoration: TextDecoration.underline),
+                ListTile(
+                  title: InkWell(
+                    child: Text(
+                      'App background image source.',
+                      style: TextStyle(decoration: TextDecoration.underline),
+                    ),
+                    onTap: () async {
+                      const String url =
+                          'https://unsplash.com/photos/uhjiu8FjnsQ';
+                      if (await canLaunch(url)) {
+                        await launch(url);
+                      } else {
+                        throw 'Could not launch $url';
+                      }
+                    },
                   ),
-                  onTap: () async {
-                    const String url =
-                        'https://www.flaticon.com/free-icon/internet_174249';
-                    if (await canLaunch(url)) {
-                      await launch(url);
-                    } else {
-                      throw 'Could not launch $url';
-                    }
-                  },
                 ),
-              ),
-            ],
-          )
-        ],
+                ListTile(
+                  title: InkWell(
+                    child: Text(
+                      'Selected data from AstroNexus database.',
+                      style: TextStyle(decoration: TextDecoration.underline),
+                    ),
+                    onTap: () async {
+                      const String url =
+                          'https://github.com/astronexus/HYG-Database';
+                      if (await canLaunch(url)) {
+                        await launch(url);
+                      } else {
+                        throw 'Could not launch $url';
+                      }
+                    },
+                  ),
+                ),
+                ListTile(
+                  title: InkWell(
+                    child: Text(
+                      'Earth icon made by Flat Icons (image was modified in implementation).',
+                      style: TextStyle(decoration: TextDecoration.underline),
+                    ),
+                    onTap: () async {
+                      const String url =
+                          'https://www.flaticon.com/free-icon/internet_174249';
+                      if (await canLaunch(url)) {
+                        await launch(url);
+                      } else {
+                        throw 'Could not launch $url';
+                      }
+                    },
+                  ),
+                ),
+              ],
+            )
+          ],
+        ),
       ),
     );
   }
