@@ -16,23 +16,13 @@ class LandingScreen extends StatefulWidget {
   _LandingScreenState createState() => _LandingScreenState();
 }
 
-class _LandingScreenState extends State<LandingScreen>
-    with SingleTickerProviderStateMixin {
+class _LandingScreenState extends State<LandingScreen> {
   bool _loading;
   StarResponse _topStar;
   StarResponse _bottomStar;
-  AnimationController _animationController;
-  Animation _glowAnimation;
 
   @override
   void initState() {
-    _animationController =
-        AnimationController(vsync: this, duration: Duration(milliseconds: 1500));
-    _animationController.repeat(reverse: true);
-    _glowAnimation = Tween(begin: 6.5, end: 11.5).animate(_animationController)
-      ..addListener(() {
-        setState(() {});
-      });
     _loading = false;
     super.initState();
   }
@@ -119,9 +109,9 @@ class _LandingScreenState extends State<LandingScreen>
                             decoration: BoxDecoration(
                                 boxShadow: [
                                   BoxShadow(
-                                      color: Color(0xbcb4bfff),
-                                      blurRadius: _glowAnimation.value,
-                                      spreadRadius: _glowAnimation.value),
+                                      color: Color(0xe1ecedff),
+                                      blurRadius: 7,
+                                      spreadRadius: 2),
                                 ],
                                 shape: BoxShape.circle,
                                 image: DecorationImage(
