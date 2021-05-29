@@ -292,7 +292,7 @@ class _SandwichScreenState extends State<SandwichScreen>
     return InkWell(
       onTap: () {
         Navigator.push(context, MaterialPageRoute(builder: (_) {
-          return StarDetailsScreen(star: star, topStar: true);
+          return StarDetailsScreen(star: star, topStar: false);
         }));
       },
       child: Column(
