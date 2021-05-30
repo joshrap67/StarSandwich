@@ -5,6 +5,7 @@ import 'package:star_sandwich/imports/globals.dart';
 import 'package:star_sandwich/imports/utils.dart';
 import 'package:star_sandwich/imports/validator.dart';
 import 'package:star_sandwich/services/location_service.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import 'about_screen.dart';
 
@@ -168,26 +169,38 @@ class _SettingsScreenState extends State<SettingsScreen> {
               Padding(padding: const EdgeInsets.all(5.0)),
               Card(
                 child: ListTile(
-                  leading: Icon(Icons.article),
+                  leading: Icon(Icons.privacy_tip),
                   title: Text(
-                    'Terms of Service',
+                    'Privacy Policy',
                     style: TextStyle(fontSize: 25),
                   ),
-                  onTap: () {
-                    print('todo');
+                  onTap: () async {
+                    const String url =
+                        'https://star-sandwich-sites.s3.amazonaws.com/privacy_policy.html';
+                    if (await canLaunch(url)) {
+                      await launch(url);
+                    } else {
+                      throw 'Could not launch $url';
+                    }
                   },
                 ),
               ),
               Padding(padding: const EdgeInsets.all(5.0)),
               Card(
                 child: ListTile(
-                  leading: Icon(Icons.privacy_tip),
+                  leading: Icon(Icons.article),
                   title: Text(
-                    'Privacy Policy',
+                    'Terms of Service',
                     style: TextStyle(fontSize: 25),
                   ),
-                  onTap: () {
-                    print('todo');
+                  onTap: () async {
+                    const String url =
+                        'https://star-sandwich-sites.s3.amazonaws.com/terms_conditions.html';
+                    if (await canLaunch(url)) {
+                      await launch(url);
+                    } else {
+                      throw 'Could not launch $url';
+                    }
                   },
                 ),
               ),
@@ -196,7 +209,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 child: ListTile(
                   leading: Icon(Icons.phone_android),
                   title: Text(
-					  _appVersion,
+                    _appVersion,
                     style: TextStyle(fontSize: 25),
                   ),
                   subtitle: Text('App Version'),

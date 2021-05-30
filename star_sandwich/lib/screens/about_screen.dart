@@ -97,23 +97,6 @@ class _AboutScreenState extends State<AboutScreen> {
                     },
                   ),
                 ),
-                ListTile(
-                  title: InkWell(
-                    child: Text(
-                      'Earth icon made by Flat Icons (image was modified in implementation).',
-                      style: TextStyle(decoration: TextDecoration.underline),
-                    ),
-                    onTap: () async {
-                      const String url =
-                          'https://www.flaticon.com/free-icon/internet_174249';
-                      if (await canLaunch(url)) {
-                        await launch(url);
-                      } else {
-                        throw 'Could not launch $url';
-                      }
-                    },
-                  ),
-                ),
               ],
             )
           ],
