@@ -1,7 +1,7 @@
 {
   "name": "starsandwich",
   "version": "1.0.0",
-  "description": "Mobile app for determining what star is directy above and below you at a given time and location on Earth",
+  "description": "Mobile app for determining the nearest star that is directly above and below you at a given time and location on Earth.",
   "main": "dist/app.js",
   "scripts": {
     "start": "tsc && node dist/app.js",
