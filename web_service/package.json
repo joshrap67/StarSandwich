@@ -4,7 +4,8 @@
   "description": "Mobile app for determining what star is directy above and below you at a given time and location on Earth",
   "main": "dist/app.js",
   "scripts": {
-    "start": "tsc && node dist/app.js"
+    "start": "tsc && node dist/app.js",
+	"package": "webpack"
   },
   "repository": {
     "type": "git",

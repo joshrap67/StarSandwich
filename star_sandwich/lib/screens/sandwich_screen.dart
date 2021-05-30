@@ -84,9 +84,12 @@ class _SandwichScreenState extends State<SandwichScreen>
                                 ],
                               ),
                             ),
-                            _topConstellationShowing
-                                ? topConstellationWidget(_topStar)
-                                : topStarWidget(_topStar),
+                            Container(
+                              width: 225,
+                              child: _topConstellationShowing
+                                  ? topConstellationWidget(_topStar)
+                                  : topStarWidget(_topStar),
+                            ),
                             Expanded(
                               child: Column(
                                 mainAxisAlignment: MainAxisAlignment.start,
@@ -136,35 +139,35 @@ class _SandwichScreenState extends State<SandwichScreen>
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Spacer(),
-                          _bottomConstellationShowing
-                              ? bottomConstellationWidget(_bottomStar)
-                              : bottomStarWidget(_bottomStar),
-                          Visibility(
-                            visible: _bottomStar != null,
-                            child: Expanded(
-                              child: Column(
-                                mainAxisAlignment: MainAxisAlignment.end,
-                                children: [
-                                  IconButton(
-                                    onPressed: () {
-                                      setState(() {
-                                        _bottomConstellationShowing =
-                                            !_bottomConstellationShowing;
-                                      });
-                                    },
-                                    icon: _bottomConstellationShowing
-                                        ? Icon(Icons.wb_sunny)
-                                        : Icon(Icons.map),
-                                    iconSize: 35,
-                                    tooltip: _bottomConstellationShowing
-                                        ? 'Star View'
-                                        : 'View Constellation',
-                                  ),
-                                  Padding(
-                                      padding: const EdgeInsets.only(
-                                          top: 15, bottom: 15)),
-                                ],
-                              ),
+                          Container(
+                            width: 225,
+                            child: _bottomConstellationShowing
+                                ? bottomConstellationWidget(_bottomStar)
+                                : bottomStarWidget(_bottomStar),
+                          ),
+                          Expanded(
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.end,
+                              children: [
+                                IconButton(
+                                  onPressed: () {
+                                    setState(() {
+                                      _bottomConstellationShowing =
+                                          !_bottomConstellationShowing;
+                                    });
+                                  },
+                                  icon: _bottomConstellationShowing
+                                      ? Icon(Icons.wb_sunny)
+                                      : Icon(Icons.map),
+                                  iconSize: 35,
+                                  tooltip: _bottomConstellationShowing
+                                      ? 'Star View'
+                                      : 'View Constellation',
+                                ),
+                                Padding(
+                                    padding: const EdgeInsets.only(
+                                        top: 15, bottom: 15)),
+                              ],
                             ),
                           ),
                         ],
@@ -179,7 +182,7 @@ class _SandwichScreenState extends State<SandwichScreen>
   }
 
   Widget topStarWidget(StarResponse star) {
-    return InkWell(
+    return GestureDetector(
       onTap: () {
         Navigator.push(context, MaterialPageRoute(builder: (_) {
           return StarDetailsScreen(star: star, topStar: true);
@@ -190,7 +193,6 @@ class _SandwichScreenState extends State<SandwichScreen>
         children: [
           Container(
             height: 100,
-            width: 200,
             child: AnimatedBuilder(
               animation: _animationControl,
               builder: (_, child) => Transform(
@@ -219,7 +221,7 @@ class _SandwichScreenState extends State<SandwichScreen>
   }
 
   Widget topConstellationWidget(StarResponse star) {
-    return InkWell(
+    return GestureDetector(
       onTap: () {
         Navigator.push(context, MaterialPageRoute(builder: (_) {
           return StarDetailsScreen(star: star, topStar: true);
@@ -230,7 +232,6 @@ class _SandwichScreenState extends State<SandwichScreen>
         children: [
           Container(
             height: 150,
-            width: 200,
             child: SvgPicture.asset(
               'assets/svgs/${star.iauConstellation}.svg',
             ),
@@ -271,7 +272,6 @@ class _SandwichScreenState extends State<SandwichScreen>
           ),
           Container(
             height: 100,
-            width: 200,
             child: AnimatedBuilder(
               animation: _animationControl,
               builder: (_, child) => Transform(
@@ -289,7 +289,7 @@ class _SandwichScreenState extends State<SandwichScreen>
   }
 
   Widget bottomConstellationWidget(StarResponse star) {
-    return InkWell(
+    return GestureDetector(
       onTap: () {
         Navigator.push(context, MaterialPageRoute(builder: (_) {
           return StarDetailsScreen(star: star, topStar: false);
@@ -308,7 +308,6 @@ class _SandwichScreenState extends State<SandwichScreen>
           ),
           Container(
             height: 150,
-            width: 200,
             child: SvgPicture.asset(
               'assets/svgs/${star.iauConstellation}.svg',
             ),

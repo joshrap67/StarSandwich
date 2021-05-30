@@ -41,12 +41,12 @@ export default class StarService {
 		const now = new Date();
 		const julianDays = this.getJulianDays(now);
 
-		const T = (julianDays - 2451545.0) / 36525; // Julian centuries
+		const julianCenturies = (julianDays - 2451545.0) / 36525;
 		const greenwichSiderealAngle =
 			280.46061837 +
 			360.98564736629 * (julianDays - 2451545.0) +
-			0.000387933 * Math.pow(T, 2) -
-			(Math.pow(T, 3) * Math.pow(2.6, -8));
+			0.000387933 * Math.pow(julianCenturies, 2) -
+			(Math.pow(julianCenturies, 3) * Math.pow(2.6, -8));
 
 		return greenwichSiderealAngle % 360;
 	}

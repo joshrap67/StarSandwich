@@ -5,10 +5,10 @@ export class OptimalStarService {
 		// stars closest to the zenith/nadir at the bottom of the list (higher index, higher point)
 		stars.sort((a, b) => this.distanceFromObserverPoint(observerRightAscension, observerDeclination, a) <= this.distanceFromObserverPoint(observerRightAscension, observerDeclination, b) ? 1 : -1);
 
-		const properNameScore = stars.length + 20; // always want proper name to take precedent
-		const multipleStarsScore = stars.length + 4;
-		const observableToNakedEyeScore = stars.length + 8;
-		const hasBfDesignationScore = stars.length + 5;
+		const properNameScore = stars.length + 10; // always want proper name to take precedent
+		const multipleStarsScore = stars.length + 3;
+		const observableToNakedEyeScore = stars.length + 6;
+		const hasBfDesignationScore = stars.length + 4;
 
 		let optimalStar = stars[0]; // assume first star was best
 		let maxScore = -1;

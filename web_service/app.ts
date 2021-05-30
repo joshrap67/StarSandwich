@@ -10,16 +10,14 @@ const dbURL = process.env.StarSandwichDbURL;
 export const geocodeApiKey = process.env.GeocodeApiKey;
 let mongooseConnection = null;
 
-const acceptedActions = ["makeStarSandwich", "getGeocodedLocation"];
+const acceptedRoutes = ["makeStarSandwich", "getGeocodedLocation"];
 
 export const lambdaHandler = async (event: APIGatewayProxyEvent): Promise<APIGatewayProxyResult> => {
 	const route = event.path.split("/")[1];
-	if (!acceptedActions.includes(route)) {
+	if (!acceptedRoutes.includes(route)) {
 		return {
 			statusCode: 404,
-			body: JSON.stringify({
-				message: "Invalid route"
-			})
+			body: JSON.stringify({message: "Invalid route"} as ErrorResponse)
 		};
 	}
 	let response = null;
