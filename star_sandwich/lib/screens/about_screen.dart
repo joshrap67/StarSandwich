@@ -24,7 +24,7 @@ class _AboutScreenState extends State<AboutScreen> {
             ),
             ListTile(
               title: Text(
-                'Star Sandwich determines the nearest star that is directly above you and the nearest star that is directly below you. Just click the center button on the landing screen to get started!',
+                'Star Sandwich determines the nearest star that is directly above you and the nearest star that is directly below you.\n\nJust click the center button on the landing screen to get started!',
                 style: TextStyle(fontSize: 20),
               ),
             ),
@@ -61,7 +61,7 @@ class _AboutScreenState extends State<AboutScreen> {
               title: Text('References'),
               children: [
                 ListTile(
-                  title: Text('App Logo drawn by Mike Sexton.'),
+                  title: Text('App Logo drawn by Mike O. Sexton.'),
                 ),
                 ListTile(
                   title: InkWell(

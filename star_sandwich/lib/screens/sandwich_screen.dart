@@ -24,6 +24,7 @@ class _SandwichScreenState extends State<SandwichScreen>
   StarResponse _topStar;
   StarResponse _bottomStar;
   bool _bottomConstellationShowing;
+  double _width;
   bool _topConstellationShowing;
   Animation<double> _starRotation;
   AnimationController _animationControl;
@@ -57,7 +58,9 @@ class _SandwichScreenState extends State<SandwichScreen>
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
+	  _width = MediaQuery.of(context).size.width * 0.6;
+
+	  return SafeArea(
       child: Scaffold(
         backgroundColor: const Color(0xff020001),
         body: Container(
@@ -85,7 +88,7 @@ class _SandwichScreenState extends State<SandwichScreen>
                               ),
                             ),
                             Container(
-                              width: 225,
+                              width: _width,
                               child: _topConstellationShowing
                                   ? topConstellationWidget(_topStar)
                                   : topStarWidget(_topStar),
@@ -140,7 +143,7 @@ class _SandwichScreenState extends State<SandwichScreen>
                         children: [
                           Spacer(),
                           Container(
-                            width: 225,
+                            width: _width,
                             child: _bottomConstellationShowing
                                 ? bottomConstellationWidget(_bottomStar)
                                 : bottomStarWidget(_bottomStar),
@@ -193,6 +196,7 @@ class _SandwichScreenState extends State<SandwichScreen>
         children: [
           Container(
             height: 100,
+            width: _width,
             child: AnimatedBuilder(
               animation: _animationControl,
               builder: (_, child) => Transform(
@@ -204,16 +208,19 @@ class _SandwichScreenState extends State<SandwichScreen>
               ),
             ),
           ),
-          AutoSizeText(
-            '${getStarDisplay(star)}',
-            textAlign: TextAlign.center,
-            overflow: TextOverflow.ellipsis,
-            minFontSize: 14,
-            style: TextStyle(
-                decoration: TextDecoration.underline,
-                fontSize: 30,
-                color: Colors.white,
-                fontStyle: FontStyle.italic),
+          Expanded(
+            child: AutoSizeText(
+              '${getStarDisplay(star)}',
+              textAlign: TextAlign.center,
+              overflow: TextOverflow.ellipsis,
+              minFontSize: 14,
+              maxLines: 2,
+              style: TextStyle(
+                  decoration: TextDecoration.underline,
+                  fontSize: 30,
+                  color: Colors.white,
+                  fontStyle: FontStyle.italic),
+            ),
           ),
         ],
       ),
@@ -232,17 +239,23 @@ class _SandwichScreenState extends State<SandwichScreen>
         children: [
           Container(
             height: 150,
+            width: _width,
             child: SvgPicture.asset(
               'assets/svgs/${star.iauConstellation}.svg',
             ),
           ),
-          AutoSizeText(
-            '${star.constellation} Constellation',
-            textAlign: TextAlign.center,
-            overflow: TextOverflow.ellipsis,
-            minFontSize: 14,
-            style: TextStyle(
-                fontSize: 20, color: Colors.white, fontStyle: FontStyle.italic),
+          Expanded(
+            child: AutoSizeText(
+              '${star.constellation} Constellation',
+              maxLines: 2,
+              textAlign: TextAlign.center,
+              overflow: TextOverflow.ellipsis,
+              minFontSize: 14,
+              style: TextStyle(
+                  fontSize: 20,
+                  color: Colors.white,
+                  fontStyle: FontStyle.italic),
+            ),
           ),
         ],
       ),
@@ -264,6 +277,7 @@ class _SandwichScreenState extends State<SandwichScreen>
             textAlign: TextAlign.center,
             overflow: TextOverflow.ellipsis,
             minFontSize: 14,
+            maxLines: 2,
             style: TextStyle(
               fontSize: 30,
               color: Colors.white,
@@ -272,6 +286,7 @@ class _SandwichScreenState extends State<SandwichScreen>
           ),
           Container(
             height: 100,
+            width: _width,
             child: AnimatedBuilder(
               animation: _animationControl,
               builder: (_, child) => Transform(
@@ -302,12 +317,14 @@ class _SandwichScreenState extends State<SandwichScreen>
             '${star.constellation} Constellation',
             textAlign: TextAlign.center,
             overflow: TextOverflow.ellipsis,
+            maxLines: 2,
             minFontSize: 14,
             style: TextStyle(
                 fontSize: 20, color: Colors.white, fontStyle: FontStyle.italic),
           ),
           Container(
             height: 150,
+            width: _width,
             child: SvgPicture.asset(
               'assets/svgs/${star.iauConstellation}.svg',
             ),

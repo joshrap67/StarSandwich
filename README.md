@@ -40,7 +40,7 @@ If pulling from this repository, open the project and run it using Flutter (can 
 
 ## Acknowledgments
 
-App logo drawn by Mike Sexton.
+App logo drawn by Mike O. Sexton.
 
 [Source of background image for app and feature graphic](https://unsplash.com/photos/uhjiu8FjnsQ)
 
