@@ -4,7 +4,7 @@ Mobile app for determining what star is directy above and below you at a given t
 
 The user can either use their GPS to determine their location, or can manually enter an address (currently only supported for users in U.S. or Canada).
 
-[Demo of Star Sandwich version 1.0.0](https://www.youtube.com/watch?v=CX3EDMHIjb4)
+[Demo of Star Sandwich version 1.0.1](https://youtu.be/CAQskxgYjRo)
 
 Refer to the Wiki for details on the application logic.
 
