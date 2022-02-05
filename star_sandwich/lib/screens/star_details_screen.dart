@@ -148,8 +148,8 @@ class _StarDetailsScreenState extends State<StarDetailsScreen> {
   }
 
   Widget getNumberOfStarsDisplay() {
-    String msg = '';
-    int numberOfStars = widget.star.numStars;
+    var msg = '';
+    var numberOfStars = widget.star.numStars;
     if (numberOfStars == 1) {
       msg = 'Single star system';
     } else if (numberOfStars == 2) {
@@ -164,10 +164,8 @@ class _StarDetailsScreenState extends State<StarDetailsScreen> {
   }
 
   Widget getStarDisplay() {
-    StarResponse star = widget.star;
-    String msg = getStarDisplayTitle(star);
     return new Text(
-      msg,
+      getStarDisplayTitle(widget.star),
       style: TextStyle(fontSize: 40),
     );
   }

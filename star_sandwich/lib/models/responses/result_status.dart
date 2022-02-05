@@ -1,5 +1,5 @@
 class ResultStatus<T> {
-  bool success() => this.errorMessage != null;
+  bool success() => this.errorMessage == null;
   String? errorMessage;
   T? data;
 
@@ -8,4 +8,9 @@ class ResultStatus<T> {
   ResultStatus.success(this.data);
 
   ResultStatus.failure(this.errorMessage);
+
+  @override
+  String toString() {
+    return 'ResultStatus{data: $data, errorMessage: $errorMessage}';
+  }
 }

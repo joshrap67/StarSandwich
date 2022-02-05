@@ -31,119 +31,103 @@ class _LandingScreenState extends State<LandingScreen> {
             fit: BoxFit.fill,
           ),
         ),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        child: Stack(
           children: [
-            Container(
-              height: MediaQuery.of(context).size.height * .25,
-              child: Column(
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.fromLTRB(12.0, 20, 12.0, 12.0),
-                  ),
-                  Expanded(
-                    child: AutoSizeText(
-                      'Make Me',
-                      textAlign: TextAlign.center,
-                      minFontSize: 18,
-                      style: TextStyle(
-                        fontSize: 52,
-                        color: Colors.white,
-                      ),
-                    ),
-                  ),
-                  Expanded(
-                    child: AutoSizeText(
-                      'A',
-                      textAlign: TextAlign.center,
-                      minFontSize: 18,
-                      style: TextStyle(
-                        fontSize: 52,
-                        color: Colors.white,
-                      ),
-                    ),
-                  ),
-                  Expanded(
+            Column(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Expanded(
+                  child: Padding(
+                    padding: const EdgeInsets.fromLTRB(8.0, 40.0, 8.0, 0.0),
                     child: AutoSizeText(
                       'Star Sandwich',
                       textAlign: TextAlign.center,
                       minFontSize: 18,
                       maxLines: 1,
                       style: TextStyle(
-                        fontSize: 52,
+                        fontSize: 60,
                         color: Colors.white,
                       ),
                     ),
-                  )
-                ],
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.fromLTRB(12.0, 20, 12.0, 12.0),
-            ),
-            Container(
-              decoration: BoxDecoration(shape: BoxShape.circle),
-              child: _loading
-                  ? SizedBox(
-                      width: MediaQuery.of(context).size.height * .25,
-                      height: MediaQuery.of(context).size.height * .25,
-                      child: CircularProgressIndicator(
-                        valueColor: AlwaysStoppedAnimation<Color>(new Color(0xff6f6fee)),
-                      ))
-                  : Stack(
-                      children: [
-                        Hero(
-                          tag: 'heroKey',
-                          child: Container(
-                            width: MediaQuery.of(context).size.height * .25,
-                            height: MediaQuery.of(context).size.height * .25,
-                            alignment: Alignment.center,
-                            decoration: BoxDecoration(
-                                boxShadow: [
-                                  BoxShadow(color: Color(0xe1ecedff), blurRadius: 7, spreadRadius: 2),
-                                ],
-                                shape: BoxShape.circle,
-                                image: DecorationImage(image: AssetImage('assets/launcher/splash_logo.png'))),
-                          ),
-                        ),
-                        Positioned.fill(
-                          child: Material(
-                            color: Colors.transparent,
-                            child: InkWell(
-                              customBorder: CircleBorder(),
-                              onTap: getStars,
-                            ),
-                          ),
-                        )
-                      ],
-                    ),
-            ),
-            Container(
-              height: MediaQuery.of(context).size.height * .3,
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [
-                  Row(
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(0.0, 15.0, 8.0, 15.0),
+                  child: Row(
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
                       IconButton(
                         onPressed: () {
-                          Navigator.push(context, MaterialPageRoute(builder: (_) {
-                            return SettingsScreen();
-                          }));
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(builder: (_) {
+                              return SettingsScreen();
+                            }),
+                          );
                         },
-                        icon: Icon(Icons.settings),
+                        icon: const Icon(Icons.settings),
                         iconSize: 40,
                         tooltip: 'Settings',
                       ),
-                      Padding(
-                        padding: const EdgeInsets.all(12.0),
-                      ),
                     ],
+                  ),
+                )
+              ],
+            ),
+            Center(
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Stack(
+                    children: [
+                      Hero(
+                        tag: 'heroKey',
+                        child: Container(
+                          width: MediaQuery.of(context).size.height * .25,
+                          height: MediaQuery.of(context).size.height * .25,
+                          alignment: Alignment.center,
+                          decoration: BoxDecoration(
+                            boxShadow: [BoxShadow(color: Color(0xe1ecedff), blurRadius: 7, spreadRadius: 2)],
+                            shape: BoxShape.circle,
+                            image: DecorationImage(image: AssetImage('assets/launcher/splash_logo.png')),
+                          ),
+                        ),
+                      ),
+                      Positioned.fill(
+                        child: Material(
+                          color: Colors.transparent,
+                          child: InkWell(
+                            customBorder: CircleBorder(),
+                            onTap: _loading ? null : () => getStars(),
+                          ),
+                        ),
+                      ),
+                      if (_loading)
+                        SizedBox(
+                            width: MediaQuery.of(context).size.height * .25,
+                            height: MediaQuery.of(context).size.height * .25,
+                            child: CircularProgressIndicator(
+                              valueColor: AlwaysStoppedAnimation<Color>(new Color(0xff6f6fee)),
+                            ))
+                    ],
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Container(
+                      child: OutlinedButton(
+                        onPressed: _loading ? null : () => getStars(),
+                        style: OutlinedButton.styleFrom(
+                            shape: StadiumBorder(), backgroundColor: Color(0xff402735), primary: Colors.black),
+                        child: Text(
+                          'SANDWICH ME!',
+                          style: TextStyle(color: Colors.white, fontSize: 18),
+                        ),
+                      ),
+                    ),
                   )
                 ],
               ),
-            )
+            ),
           ],
         ),
       ),

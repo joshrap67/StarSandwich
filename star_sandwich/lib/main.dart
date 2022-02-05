@@ -13,13 +13,14 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Star Sandwich',
       theme: ThemeData(
-          accentColor: const Color(0xff6f6fee),
-          textSelectionTheme: TextSelectionThemeData(
-            cursorColor: Colors.blue,
-            selectionColor: Colors.white30,
-            selectionHandleColor: Colors.greenAccent,
-          ),
-          brightness: Brightness.dark),
+        textSelectionTheme: TextSelectionThemeData(
+          cursorColor: Colors.blue,
+          selectionColor: Colors.white30,
+          selectionHandleColor: Colors.greenAccent,
+        ),
+        appBarTheme: AppBarTheme(color: Colors.black54),
+        brightness: Brightness.dark,
+      ),
       home: SafeArea(child: LandingScreen()),
     );
   }

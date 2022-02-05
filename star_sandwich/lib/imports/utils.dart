@@ -5,23 +5,26 @@ void hideKeyboard(BuildContext context) {
   FocusScope.of(context).requestFocus(new FocusNode());
 }
 
-void showSnackbar(String message, BuildContext context) {
+void showSnackbar(String message, BuildContext context, {int secondsMs = 1500}) {
   ScaffoldMessenger.of(context).removeCurrentSnackBar();
-  final snackBar = SnackBar(content: Text(message));
+  final snackBar = SnackBar(
+    content: Text(message),
+    duration: Duration(seconds: secondsMs),
+  );
   ScaffoldMessenger.of(context).showSnackBar(snackBar);
 }
 
-bool isStringNullOrEmpty(String? value){
-	return value?.isEmpty ?? true;
+bool isStringNullOrEmpty(String? value) {
+  return value?.isEmpty ?? true;
 }
 
 String getFormattedRightAscension(double rightAscension) {
-  int hours = rightAscension.toInt();
-  int minutes = ((rightAscension - hours) * 60).toInt();
-  int seconds = ((((rightAscension - hours) * 60) - minutes) * 60).toInt();
-  String hoursFormatted;
-  String minutesFormatted;
-  String secondsFormatted;
+  var hours = rightAscension.toInt();
+  var minutes = ((rightAscension - hours) * 60).toInt();
+  var seconds = ((((rightAscension - hours) * 60) - minutes) * 60).toInt();
+  var hoursFormatted;
+  var minutesFormatted;
+  var secondsFormatted;
 
   if (hours < 10) {
     hoursFormatted = '0$hours';
@@ -42,14 +45,14 @@ String getFormattedRightAscension(double rightAscension) {
 }
 
 String getFormattedDeclination(double declination) {
-  String sign = declination > 0 ? '+' : '-';
+  var sign = declination > 0 ? '+' : '-';
   declination = declination.abs();
-  int degrees = declination.toInt();
-  int minutes = ((declination - degrees) * 60).toInt();
-  int seconds = ((((declination - degrees) * 60) - minutes) * 60).toInt();
-  String degreesFormatted;
-  String minutesFormatted;
-  String secondsFormatted;
+  var degrees = declination.toInt();
+  var minutes = ((declination - degrees) * 60).toInt();
+  var seconds = ((((declination - degrees) * 60) - minutes) * 60).toInt();
+  var degreesFormatted;
+  var minutesFormatted;
+  var secondsFormatted;
 
   if (degrees < 10) {
     degreesFormatted = '0$degrees';
@@ -70,20 +73,20 @@ String getFormattedDeclination(double declination) {
   return '$sign$degreesFormatted\u00B0 $minutesFormatted\' $secondsFormatted"';
 }
 
-String getStarDisplayTitle(StarResponse star){
-	String msg = '';
-	if (isStringNullOrEmpty(star.properName)) {
-		msg = star.properName!;
-	} else if (isStringNullOrEmpty(star.bfDesignation)) {
-		msg = star.bfDesignation!;
-	} else if (isStringNullOrEmpty(star.hdId)) {
-		msg = 'HD ${star.hdId}';
-	} else if (isStringNullOrEmpty(star.hrId)) {
-		msg = 'HR ${star.hrId}';
-	} else if (isStringNullOrEmpty(star.hipId)) {
-		msg = 'HIP ${star.hipId}';
-	} else if (isStringNullOrEmpty(star.glId)) {
-		msg = '${star.glId}';
-	}
-	return msg;
+String getStarDisplayTitle(StarResponse star) {
+  var msg = '';
+  if (!isStringNullOrEmpty(star.properName)) {
+    msg = star.properName!;
+  } else if (!isStringNullOrEmpty(star.bfDesignation)) {
+    msg = star.bfDesignation!;
+  } else if (!isStringNullOrEmpty(star.hdId)) {
+    msg = 'HD ${star.hdId}';
+  } else if (!isStringNullOrEmpty(star.hrId)) {
+    msg = 'HR ${star.hrId}';
+  } else if (!isStringNullOrEmpty(star.hipId)) {
+    msg = 'HIP ${star.hipId}';
+  } else if (!isStringNullOrEmpty(star.glId)) {
+    msg = '${star.glId}';
+  }
+  return msg;
 }
