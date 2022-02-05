@@ -9,29 +9,21 @@ import 'api_gateway.dart';
 class LocationService {
   static final String getGeocodedLocationRoute = 'getGeocodedLocation';
 
-  static Future<ResultStatus<GeocodedLocationResponse>> getGeocodedLocation(
-      String address) async {
-    ResultStatus<GeocodedLocationResponse> retVal =
-        new ResultStatus(success: false);
-
+  static Future<ResultStatus<GeocodedLocationResponse>> getGeocodedLocation(String address) async {
     Map<String, dynamic> jsonBody = new HashMap<String, dynamic>();
     jsonBody.putIfAbsent(RequestKeys.action, () => getGeocodedLocationRoute);
-    jsonBody.putIfAbsent(RequestKeys.body,
-        () => new GetGeocodedLocationRequest(address: address));
+    jsonBody.putIfAbsent(RequestKeys.body, () => new GetGeocodedLocationRequest(address: address));
 
     try {
       ResultStatus<String> response = await makeApiRequest(jsonBody);
-      if (response.success) {
-        Map<String, dynamic> rawResponse = jsonDecode(response.data);
-        retVal.success = true;
-        retVal.data = new GeocodedLocationResponse.fromJson(rawResponse);
+      if (response.success()) {
+        Map<String, dynamic> rawResponse = jsonDecode(response.data!);
+        return ResultStatus.success(new GeocodedLocationResponse.fromJson(rawResponse));
       } else {
-        retVal.errorMessage = 'Unable to get coordinates.';
+        return ResultStatus.failure('Unable to get coordinates.');
       }
     } catch (e) {
-      retVal.errorMessage = 'Unable to get coordinates.';
+      return ResultStatus.failure('Unable to get coordinates.');
     }
-
-    return retVal;
   }
 }

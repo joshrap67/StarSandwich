@@ -7,22 +7,16 @@ import 'package:star_sandwich/models/responses/result_status.dart';
 
 import '../config.dart';
 
-Future<ResultStatus<String>> makeApiRequest(
-    Map<String, dynamic> requestContent) async {
-  ResultStatus<String> retVal = new ResultStatus(success: false);
-
+Future<ResultStatus<String>> makeApiRequest(Map<String, dynamic> requestContent) async {
   try {
     var url = Uri.parse(Config.apiRootUrl + requestContent[RequestKeys.action]);
-    http.Response response = await http.post(url,
-        body: json.encode(requestContent[RequestKeys.body]));
+    http.Response response = await http.post(url, body: json.encode(requestContent[RequestKeys.body]));
     if (response.statusCode == 200) {
-      retVal.success = true;
-      retVal.data = response.body;
+      return ResultStatus.success(response.body);
     } else {
-      retVal.data = response.body;
+      return ResultStatus.failure(response.body);
     }
   } on SocketException catch (_) {
-    retVal.data = 'Error connecting to server.';
+    return ResultStatus.success('Error connecting to server.');
   }
-  return retVal;
 }

@@ -8,20 +8,19 @@ class StarDetailsScreen extends StatefulWidget {
   final StarResponse star;
   final bool topStar;
 
-  StarDetailsScreen({this.star, this.topStar});
+  StarDetailsScreen({required this.star, required this.topStar});
 
   @override
   _StarDetailsScreenState createState() => _StarDetailsScreenState();
 }
 
 class _StarDetailsScreenState extends State<StarDetailsScreen> {
-  String _positionalMsg;
+  late String _positionalMsg;
 
   @override
   void initState() {
     if (widget.topStar) {
-      _positionalMsg =
-          'This star is directly above you, try and look up if it\'s dark enough!';
+      _positionalMsg = 'This star is directly above you. Try and look up if it\'s dark enough!';
     } else {
       _positionalMsg =
           'This star is directly below you. If you can channel your Superman, look through Earth to see it!';
@@ -68,9 +67,7 @@ class _StarDetailsScreenState extends State<StarDetailsScreen> {
 
   Widget getConstellationWidget() {
     return new Container(
-      decoration: BoxDecoration(
-          image: DecorationImage(
-              image: AssetImage('assets/images/stars.jpg'), fit: BoxFit.fill)),
+      decoration: BoxDecoration(image: DecorationImage(image: AssetImage('assets/images/stars.jpg'), fit: BoxFit.fill)),
       child: Column(
         children: [
           Text(
@@ -108,8 +105,8 @@ class _StarDetailsScreenState extends State<StarDetailsScreen> {
   Widget getAbsoluteMagnitudeDisplay() {
     return new Card(
       child: ListTile(
-        title: Text(
-            '${widget.star.absMagnitude} (${widget.star.luminosity.toStringAsFixed(3)}x brighter than the Sun)'),
+        title:
+            Text('${widget.star.absMagnitude} (${widget.star.luminosity.toStringAsFixed(3)}x brighter than the Sun)'),
         subtitle: Text('Absolute Magnitude'),
       ),
     );
@@ -120,8 +117,7 @@ class _StarDetailsScreenState extends State<StarDetailsScreen> {
     double lightYears = distance * 3.262;
     return new Card(
       child: ListTile(
-        title: Text(
-            '$distance parsecs (${lightYears.toStringAsFixed(4)} light years)'),
+        title: Text('$distance parsecs (${lightYears.toStringAsFixed(4)} light years)'),
         subtitle: Text('Distance from Earth'),
       ),
     );
@@ -169,20 +165,7 @@ class _StarDetailsScreenState extends State<StarDetailsScreen> {
 
   Widget getStarDisplay() {
     StarResponse star = widget.star;
-    String msg = '';
-    if (star.properName.isNotEmpty) {
-      msg = star.properName;
-    } else if (star.bfDesignation.isNotEmpty) {
-      msg = star.bfDesignation;
-    } else if (star.hdId.isNotEmpty) {
-      msg = 'HD ${star.hdId}';
-    } else if (star.hrId.isNotEmpty) {
-      msg = 'HR ${star.hrId}';
-    } else if (star.hipId.isNotEmpty) {
-      msg = 'HIP ${star.hipId}';
-    } else if (star.glId.isNotEmpty) {
-      msg = '${star.glId}';
-    }
+    String msg = getStarDisplayTitle(star);
     return new Text(
       msg,
       style: TextStyle(fontSize: 40),

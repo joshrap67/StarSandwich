@@ -1,7 +1,7 @@
-import 'model.dart';
+import 'request.dart';
 
 class GetGeocodedLocationRequest extends Request {
-  String address;
+  String? address;
 
   GetGeocodedLocationRequest({this.address});
 

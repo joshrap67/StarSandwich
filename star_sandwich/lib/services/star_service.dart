@@ -10,31 +10,22 @@ import 'api_gateway.dart';
 class StarService {
   static final String makeStarSandwichRoute = 'makeStarSandwich';
 
-  static Future<ResultStatus<SandwichResponse>> makeStarSandwich(
-      double latitude, double longitude) async {
-    ResultStatus<SandwichResponse> retVal = new ResultStatus(success: false);
-
+  static Future<ResultStatus<SandwichResponse>> makeStarSandwich(double latitude, double longitude) async {
     Map<String, dynamic> jsonBody = new HashMap<String, dynamic>();
     jsonBody.putIfAbsent(RequestKeys.action, () => makeStarSandwichRoute);
-    jsonBody.putIfAbsent(
-        RequestKeys.body,
-        () => new MakeStarSandwichRequest(
-            coordinates:
-                new Coordinates(latitude: latitude, longitude: longitude)));
+    jsonBody.putIfAbsent(RequestKeys.body,
+        () => new MakeStarSandwichRequest(coordinates: new Coordinates(latitude: latitude, longitude: longitude)));
 
     try {
       ResultStatus<String> response = await makeApiRequest(jsonBody);
-      if (response.success) {
-        Map<String, dynamic> rawResponse = jsonDecode(response.data);
-        retVal.success = true;
-        retVal.data = new SandwichResponse.fromJson(rawResponse);
+      if (response.success()) {
+        Map<String, dynamic> rawResponse = jsonDecode(response.data!);
+        return ResultStatus.success(new SandwichResponse.fromJson(rawResponse));
       } else {
-        retVal.errorMessage = 'Unable to get sandwich.';
+        return ResultStatus.failure('Unable to get sandwich.');
       }
     } catch (e) {
-      retVal.errorMessage = 'Unable to make sandwich.';
+      return ResultStatus.failure('Unable to get sandwich.');
     }
-
-    return retVal;
   }
 }

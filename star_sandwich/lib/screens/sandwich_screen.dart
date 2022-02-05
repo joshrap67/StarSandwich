@@ -6,36 +6,32 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:star_sandwich/models/responses/star_response.dart';
 import 'package:star_sandwich/screens/star_details_screen.dart';
 
+import '../imports/utils.dart';
+
 class SandwichScreen extends StatefulWidget {
   final double latitude;
   final double longitude;
-  final StarResponse topStar;
-  final StarResponse bottomStar;
+  final StarResponse? topStar;
+  final StarResponse? bottomStar;
 
-  SandwichScreen(
-      {this.latitude, this.longitude, this.topStar, this.bottomStar});
+  SandwichScreen({required this.latitude, required this.longitude, this.topStar, this.bottomStar});
 
   @override
   _SandwichScreenState createState() => _SandwichScreenState();
 }
 
-class _SandwichScreenState extends State<SandwichScreen>
-    with SingleTickerProviderStateMixin {
-  StarResponse _topStar;
-  StarResponse _bottomStar;
-  bool _bottomConstellationShowing;
-  double _width;
-  bool _topConstellationShowing;
-  Animation<double> _starRotation;
-  AnimationController _animationControl;
+class _SandwichScreenState extends State<SandwichScreen> with SingleTickerProviderStateMixin {
+  // StarResponse _topStar;
+  // StarResponse _bottomStar;
+  bool _bottomConstellationShowing = false;
+  late double _width;
+  bool _topConstellationShowing = false;
+  late Animation<double> _starRotation;
+  late AnimationController _animationControl;
 
   @override
   void initState() {
-    _bottomConstellationShowing = false;
-    _topConstellationShowing = false;
-    _topStar = widget.topStar;
-    _bottomStar = widget.bottomStar;
-
+    super.initState();
     _animationControl = AnimationController(
       duration: Duration(seconds: 40),
       vsync: this,
@@ -46,8 +42,6 @@ class _SandwichScreenState extends State<SandwichScreen>
       end: 2 * pi,
     ).animate(_animationControl);
     _animationControl.repeat();
-
-    super.initState();
   }
 
   @override
@@ -58,21 +52,19 @@ class _SandwichScreenState extends State<SandwichScreen>
 
   @override
   Widget build(BuildContext context) {
-	  _width = MediaQuery.of(context).size.width * 0.6;
+    _width = MediaQuery.of(context).size.width * 0.6;
 
-	  return SafeArea(
+    return SafeArea(
       child: Scaffold(
         backgroundColor: const Color(0xff020001),
         body: Container(
-          decoration: BoxDecoration(
-              image: DecorationImage(
-                  image: AssetImage('assets/images/stars.jpg'),
-                  fit: BoxFit.fill)),
+          decoration:
+              BoxDecoration(image: DecorationImage(image: AssetImage('assets/images/stars.jpg'), fit: BoxFit.fill)),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               Expanded(
-                  child: _topStar != null
+                  child: widget.topStar != null
                       ? Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
@@ -80,9 +72,7 @@ class _SandwichScreenState extends State<SandwichScreen>
                               child: Column(
                                 mainAxisAlignment: MainAxisAlignment.start,
                                 children: [
-                                  Padding(
-                                      padding: const EdgeInsets.only(
-                                          top: 15, bottom: 15)),
+                                  Padding(padding: const EdgeInsets.only(top: 15, bottom: 15)),
                                   BackButton(),
                                 ],
                               ),
@@ -90,30 +80,23 @@ class _SandwichScreenState extends State<SandwichScreen>
                             Container(
                               width: _width,
                               child: _topConstellationShowing
-                                  ? topConstellationWidget(_topStar)
-                                  : topStarWidget(_topStar),
+                                  ? topConstellationWidget(widget.topStar!)
+                                  : topStarWidget(widget.topStar!),
                             ),
                             Expanded(
                               child: Column(
                                 mainAxisAlignment: MainAxisAlignment.start,
                                 children: [
-                                  Padding(
-                                      padding: const EdgeInsets.only(
-                                          top: 15, bottom: 15)),
+                                  Padding(padding: const EdgeInsets.only(top: 15, bottom: 15)),
                                   IconButton(
                                     onPressed: () {
                                       setState(() {
-                                        _topConstellationShowing =
-                                            !_topConstellationShowing;
+                                        _topConstellationShowing = !_topConstellationShowing;
                                       });
                                     },
-                                    icon: _topConstellationShowing
-                                        ? Icon(Icons.wb_sunny)
-                                        : Icon(Icons.map),
+                                    icon: _topConstellationShowing ? Icon(Icons.wb_sunny) : Icon(Icons.map),
                                     iconSize: 35,
-                                    tooltip: _topConstellationShowing
-                                        ? 'Star View'
-                                        : 'View Constellation',
+                                    tooltip: _topConstellationShowing ? 'Star View' : 'View Constellation',
                                   ),
                                 ],
                               ),
@@ -130,14 +113,13 @@ class _SandwichScreenState extends State<SandwichScreen>
                     height: MediaQuery.of(context).size.height * .25,
                     decoration: BoxDecoration(
                       shape: BoxShape.circle,
-                      image: DecorationImage(
-                          image: AssetImage('assets/images/middle.png')),
+                      image: DecorationImage(image: AssetImage('assets/images/middle.png')),
                     ),
                   ),
                 ),
               ),
               Expanded(
-                child: _bottomStar != null
+                child: widget.bottomStar != null
                     ? Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
@@ -145,8 +127,8 @@ class _SandwichScreenState extends State<SandwichScreen>
                           Container(
                             width: _width,
                             child: _bottomConstellationShowing
-                                ? bottomConstellationWidget(_bottomStar)
-                                : bottomStarWidget(_bottomStar),
+                                ? bottomConstellationWidget(widget.bottomStar!)
+                                : bottomStarWidget(widget.bottomStar!),
                           ),
                           Expanded(
                             child: Column(
@@ -155,21 +137,14 @@ class _SandwichScreenState extends State<SandwichScreen>
                                 IconButton(
                                   onPressed: () {
                                     setState(() {
-                                      _bottomConstellationShowing =
-                                          !_bottomConstellationShowing;
+                                      _bottomConstellationShowing = !_bottomConstellationShowing;
                                     });
                                   },
-                                  icon: _bottomConstellationShowing
-                                      ? Icon(Icons.wb_sunny)
-                                      : Icon(Icons.map),
+                                  icon: _bottomConstellationShowing ? Icon(Icons.wb_sunny) : Icon(Icons.map),
                                   iconSize: 35,
-                                  tooltip: _bottomConstellationShowing
-                                      ? 'Star View'
-                                      : 'View Constellation',
+                                  tooltip: _bottomConstellationShowing ? 'Star View' : 'View Constellation',
                                 ),
-                                Padding(
-                                    padding: const EdgeInsets.only(
-                                        top: 15, bottom: 15)),
+                                Padding(padding: const EdgeInsets.only(top: 15, bottom: 15)),
                               ],
                             ),
                           ),
@@ -210,16 +185,13 @@ class _SandwichScreenState extends State<SandwichScreen>
           ),
           Expanded(
             child: AutoSizeText(
-              '${getStarDisplay(star)}',
+              '${getStarDisplayTitle(star)}',
               textAlign: TextAlign.center,
               overflow: TextOverflow.ellipsis,
               minFontSize: 14,
               maxLines: 2,
               style: TextStyle(
-                  decoration: TextDecoration.underline,
-                  fontSize: 30,
-                  color: Colors.white,
-                  fontStyle: FontStyle.italic),
+                  decoration: TextDecoration.underline, fontSize: 30, color: Colors.white, fontStyle: FontStyle.italic),
             ),
           ),
         ],
@@ -251,10 +223,7 @@ class _SandwichScreenState extends State<SandwichScreen>
               textAlign: TextAlign.center,
               overflow: TextOverflow.ellipsis,
               minFontSize: 14,
-              style: TextStyle(
-                  fontSize: 20,
-                  color: Colors.white,
-                  fontStyle: FontStyle.italic),
+              style: TextStyle(fontSize: 20, color: Colors.white, fontStyle: FontStyle.italic),
             ),
           ),
         ],
@@ -273,7 +242,7 @@ class _SandwichScreenState extends State<SandwichScreen>
         mainAxisAlignment: MainAxisAlignment.end,
         children: [
           AutoSizeText(
-            '${getStarDisplay(star)}',
+            '${getStarDisplayTitle(star)}',
             textAlign: TextAlign.center,
             overflow: TextOverflow.ellipsis,
             minFontSize: 14,
@@ -319,8 +288,7 @@ class _SandwichScreenState extends State<SandwichScreen>
             overflow: TextOverflow.ellipsis,
             maxLines: 2,
             minFontSize: 14,
-            style: TextStyle(
-                fontSize: 20, color: Colors.white, fontStyle: FontStyle.italic),
+            style: TextStyle(fontSize: 20, color: Colors.white, fontStyle: FontStyle.italic),
           ),
           Container(
             height: 150,
@@ -388,23 +356,5 @@ class _SandwichScreenState extends State<SandwichScreen>
       image = 'assets/images/dim.png';
     }
     return image;
-  }
-
-  String getStarDisplay(StarResponse star) {
-    String response = '';
-    if (star.properName.isNotEmpty) {
-      response = star.properName;
-    } else if (star.bfDesignation.isNotEmpty) {
-      response = star.bfDesignation;
-    } else if (star.hdId.isNotEmpty) {
-      response = 'HD ${star.hdId}';
-    } else if (star.hrId.isNotEmpty) {
-      response = 'HR ${star.hrId}';
-    } else if (star.hipId.isNotEmpty) {
-      response = 'HIP ${star.hipId}';
-    } else if (star.glId.isNotEmpty) {
-      response = '${star.glId}';
-    }
-    return response;
   }
 }

@@ -1,13 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:star_sandwich/models/responses/star_response.dart';
 
 void hideKeyboard(BuildContext context) {
   FocusScope.of(context).requestFocus(new FocusNode());
 }
 
 void showSnackbar(String message, BuildContext context) {
-	ScaffoldMessenger.of(context).removeCurrentSnackBar();
-	final snackBar = SnackBar(content: Text(message));
-	ScaffoldMessenger.of(context).showSnackBar(snackBar);
+  ScaffoldMessenger.of(context).removeCurrentSnackBar();
+  final snackBar = SnackBar(content: Text(message));
+  ScaffoldMessenger.of(context).showSnackBar(snackBar);
+}
+
+bool isStringNullOrEmpty(String? value){
+	return value?.isEmpty ?? true;
 }
 
 String getFormattedRightAscension(double rightAscension) {
@@ -63,4 +68,22 @@ String getFormattedDeclination(double declination) {
   }
 
   return '$sign$degreesFormatted\u00B0 $minutesFormatted\' $secondsFormatted"';
+}
+
+String getStarDisplayTitle(StarResponse star){
+	String msg = '';
+	if (isStringNullOrEmpty(star.properName)) {
+		msg = star.properName!;
+	} else if (isStringNullOrEmpty(star.bfDesignation)) {
+		msg = star.bfDesignation!;
+	} else if (isStringNullOrEmpty(star.hdId)) {
+		msg = 'HD ${star.hdId}';
+	} else if (isStringNullOrEmpty(star.hrId)) {
+		msg = 'HR ${star.hrId}';
+	} else if (isStringNullOrEmpty(star.hipId)) {
+		msg = 'HIP ${star.hipId}';
+	} else if (isStringNullOrEmpty(star.glId)) {
+		msg = '${star.glId}';
+	}
+	return msg;
 }

@@ -17,31 +17,25 @@ class SettingsScreen extends StatefulWidget {
 enum LocationMode { gpsMode, manual }
 
 class _SettingsScreenState extends State<SettingsScreen> {
-  final GlobalKey<FormState> formKey = GlobalKey<FormState>();
-  final TextEditingController locationController = new TextEditingController();
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  final TextEditingController _locationController = new TextEditingController();
 
-  String _formattedLocation;
-  LocationMode _locationMode;
-  bool _loading;
-  bool _loadingSharedPrefs;
-  String _searchAddress;
-  String _appVersion;
+  String _formattedLocation = '';
+  LocationMode _locationMode = LocationMode.gpsMode;
+  bool _loading = false;
+  bool _loadingSharedPrefs = true;
+  String _searchAddress = '';
+  String _appVersion = '';
 
   @override
   void initState() {
-    _loading = false;
-    _loadingSharedPrefs = true;
-    _searchAddress = '';
-    _locationMode = LocationMode.gpsMode;
-    _formattedLocation = '';
-    _appVersion = '';
-    getSharedPrefsData();
     super.initState();
+    getSharedPrefsData();
   }
 
   @override
   void dispose() {
-    locationController.dispose();
+    _locationController.dispose();
     super.dispose();
   }
 
@@ -82,9 +76,9 @@ class _SettingsScreenState extends State<SettingsScreen> {
                       value: LocationMode.gpsMode,
                       groupValue: _locationMode,
                       title: Text('GPS'),
-                      onChanged: (LocationMode value) {
+                      onChanged: (LocationMode? value) {
                         setState(() {
-                          _locationMode = value;
+                          _locationMode = value!;
                           saveGpsStatusSharedPrefs();
                         });
                       },
@@ -95,9 +89,9 @@ class _SettingsScreenState extends State<SettingsScreen> {
                       value: LocationMode.manual,
                       groupValue: _locationMode,
                       title: Text('Manual'),
-                      onChanged: (LocationMode value) {
+                      onChanged: (LocationMode? value) {
                         setState(() {
-                          _locationMode = value;
+                          _locationMode = value!;
                           saveGpsStatusSharedPrefs();
                         });
                       },
@@ -115,18 +109,17 @@ class _SettingsScreenState extends State<SettingsScreen> {
                         Padding(padding: const EdgeInsets.all(5.0)),
                         Expanded(
                           child: Form(
-                            key: formKey,
+                            key: _formKey,
                             child: TextFormField(
-                              autovalidateMode:
-                                  AutovalidateMode.onUserInteraction,
+                              autovalidateMode: AutovalidateMode.onUserInteraction,
                               decoration: const InputDecoration(
                                 hintText: 'City, zip, address, etc.',
                                 labelText: 'Location (US/Canada only)',
                                 border: OutlineInputBorder(),
                               ),
-                              controller: locationController,
-                              onSaved: (String value) {
-                                _searchAddress = value.trim();
+                              controller: _locationController,
+                              onSaved: (String? value) {
+                                _searchAddress = value!.trim();
                               },
                               onFieldSubmitted: (value) {
                                 getLocFromServer();
@@ -175,8 +168,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                     style: TextStyle(fontSize: 25),
                   ),
                   onTap: () async {
-                    const String url =
-                        'https://star-sandwich-sites.s3.amazonaws.com/privacy_policy.html';
+                    const String url = 'https://star-sandwich-sites.s3.amazonaws.com/privacy_policy.html';
                     if (await canLaunch(url)) {
                       await launch(url);
                     } else {
@@ -194,8 +186,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                     style: TextStyle(fontSize: 25),
                   ),
                   onTap: () async {
-                    const String url =
-                        'https://star-sandwich-sites.s3.amazonaws.com/terms_conditions.html';
+                    const String url = 'https://star-sandwich-sites.s3.amazonaws.com/terms_conditions.html';
                     if (await canLaunch(url)) {
                       await launch(url);
                     } else {
@@ -224,8 +215,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
 
   Future<void> getLocFromServer() async {
     hideKeyboard(context);
-    final form = this.formKey.currentState;
-    if (!form.validate()) {
+    final form = this._formKey.currentState;
+    if (form == null || !form.validate()) {
       return;
     }
     form.save();
@@ -238,28 +229,23 @@ class _SettingsScreenState extends State<SettingsScreen> {
       _loading = false;
     });
 
-    if (!result.success) {
-      showSnackbar(
-          'Cannot determine location. Try making the location more specific.',
-          context);
+    if (!result.success()) {
+      showSnackbar('Cannot determine location. Try making the location more specific.', context);
       return;
     }
 
-    _formattedLocation = result.data.formattedAddress;
-    locationController.text = _formattedLocation;
+    _formattedLocation = result.data!.formattedAddress!;
+    _locationController.text = _formattedLocation;
 
     SharedPreferences prefs = await SharedPreferences.getInstance();
     await prefs.setString(Globals.formattedLocationKey, _formattedLocation);
-    await prefs.setDouble(
-        Globals.latitudeKey, result.data.coordinates.latitude);
-    await prefs.setDouble(
-        Globals.longitudeKey, result.data.coordinates.longitude);
+    await prefs.setDouble(Globals.latitudeKey, result.data!.coordinates!.latitude!);
+    await prefs.setDouble(Globals.longitudeKey, result.data!.coordinates!.longitude!);
   }
 
   Future<void> saveGpsStatusSharedPrefs() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    await prefs.setBool(
-        Globals.gpsModeKey, _locationMode == LocationMode.gpsMode);
+    await prefs.setBool(Globals.gpsModeKey, _locationMode == LocationMode.gpsMode);
   }
 
   Future<void> getSharedPrefsData() async {
@@ -269,7 +255,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
       bool gpsPreferred = prefs.getBool(Globals.gpsModeKey) ?? true;
       _locationMode = gpsPreferred ? LocationMode.gpsMode : LocationMode.manual;
       _formattedLocation = prefs.getString(Globals.formattedLocationKey) ?? '';
-      locationController.text = _formattedLocation;
+      _locationController.text = _formattedLocation;
       _appVersion = packageInfo.version;
       _loadingSharedPrefs = false;
     });

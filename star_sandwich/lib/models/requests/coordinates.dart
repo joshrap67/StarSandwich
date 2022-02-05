@@ -1,10 +1,10 @@
-import 'package:star_sandwich/models/requests/model.dart';
+import 'package:star_sandwich/models/requests/request.dart';
 
 class Coordinates extends Request {
-  double latitude;
-  double longitude;
+  double? latitude;
+  double? longitude;
 
-  Coordinates({this.longitude, this.latitude});
+  Coordinates({required this.longitude, required this.latitude});
 
   Coordinates.fromJson(Map<String, dynamic> rawResponse) {
     latitude = rawResponse['latitude'];
@@ -13,7 +13,7 @@ class Coordinates extends Request {
 
   @override
   String toString() {
-    return 'Latitude: $latitude Longitude: $longitude';
+    return 'Coordinates{Latitude: $latitude Longitude: $longitude}';
   }
 
   @override

@@ -70,8 +70,7 @@ class _AboutScreenState extends State<AboutScreen> {
                       style: TextStyle(decoration: TextDecoration.underline),
                     ),
                     onTap: () async {
-                      const String url =
-                          'https://unsplash.com/photos/uhjiu8FjnsQ';
+                      const String url = 'https://unsplash.com/photos/uhjiu8FjnsQ';
                       if (await canLaunch(url)) {
                         await launch(url);
                       } else {
@@ -87,8 +86,7 @@ class _AboutScreenState extends State<AboutScreen> {
                       style: TextStyle(decoration: TextDecoration.underline),
                     ),
                     onTap: () async {
-                      const String url =
-                          'https://github.com/astronexus/HYG-Database';
+                      const String url = 'https://github.com/astronexus/HYG-Database';
                       if (await canLaunch(url)) {
                         await launch(url);
                       } else {

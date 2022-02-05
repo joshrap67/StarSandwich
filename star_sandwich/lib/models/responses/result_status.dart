@@ -1,7 +1,11 @@
 class ResultStatus<T> {
-	bool success;
-	String errorMessage;
-	T data;
+  bool success() => this.errorMessage != null;
+  String? errorMessage;
+  T? data;
 
-	ResultStatus({this.success, this.errorMessage, this.data});
+  ResultStatus({this.errorMessage, this.data});
+
+  ResultStatus.success(this.data);
+
+  ResultStatus.failure(this.errorMessage);
 }

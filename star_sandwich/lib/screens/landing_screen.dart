@@ -1,5 +1,4 @@
 import 'package:auto_size_text/auto_size_text.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -17,15 +16,9 @@ class LandingScreen extends StatefulWidget {
 }
 
 class _LandingScreenState extends State<LandingScreen> {
-  bool _loading;
-  StarResponse _topStar;
-  StarResponse _bottomStar;
-
-  @override
-  void initState() {
-    _loading = false;
-    super.initState();
-  }
+  bool _loading = false;
+  StarResponse? _topStar;
+  StarResponse? _bottomStar;
 
   @override
   Widget build(BuildContext context) {
@@ -95,8 +88,7 @@ class _LandingScreenState extends State<LandingScreen> {
                       width: MediaQuery.of(context).size.height * .25,
                       height: MediaQuery.of(context).size.height * .25,
                       child: CircularProgressIndicator(
-                        valueColor: AlwaysStoppedAnimation<Color>(
-                            new Color(0xff6f6fee)),
+                        valueColor: AlwaysStoppedAnimation<Color>(new Color(0xff6f6fee)),
                       ))
                   : Stack(
                       children: [
@@ -108,15 +100,10 @@ class _LandingScreenState extends State<LandingScreen> {
                             alignment: Alignment.center,
                             decoration: BoxDecoration(
                                 boxShadow: [
-                                  BoxShadow(
-                                      color: Color(0xe1ecedff),
-                                      blurRadius: 7,
-                                      spreadRadius: 2),
+                                  BoxShadow(color: Color(0xe1ecedff), blurRadius: 7, spreadRadius: 2),
                                 ],
                                 shape: BoxShape.circle,
-                                image: DecorationImage(
-                                    image: AssetImage(
-                                        'assets/launcher/splash_logo.png'))),
+                                image: DecorationImage(image: AssetImage('assets/launcher/splash_logo.png'))),
                           ),
                         ),
                         Positioned.fill(
@@ -141,8 +128,7 @@ class _LandingScreenState extends State<LandingScreen> {
                     children: [
                       IconButton(
                         onPressed: () {
-                          Navigator.push(context,
-                              MaterialPageRoute(builder: (_) {
+                          Navigator.push(context, MaterialPageRoute(builder: (_) {
                             return SettingsScreen();
                           }));
                         },
@@ -185,17 +171,16 @@ class _LandingScreenState extends State<LandingScreen> {
       return;
     }
 
-    var result = await StarService.makeStarSandwich(
-        coordinates.latitude, coordinates.longitude);
+    var result = await StarService.makeStarSandwich(coordinates.latitude!, coordinates.longitude!);
 
-    if (result.success) {
-      _topStar = result.data.starAbove;
-      _bottomStar = result.data.starBelow;
+    if (result.success()) {
+      _topStar = result.data!.starAbove;
+      _bottomStar = result.data!.starBelow;
 
       Navigator.push(context, MaterialPageRoute(builder: (_) {
         return SandwichScreen(
-            latitude: coordinates.latitude,
-            longitude: coordinates.longitude,
+            latitude: coordinates.latitude!,
+            longitude: coordinates.longitude!,
             bottomStar: _bottomStar,
             topStar: _topStar);
       }));
@@ -210,12 +195,10 @@ class _LandingScreenState extends State<LandingScreen> {
 
   Future<Coordinates> getLocFromSharedPrefs() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    double latitude = prefs.getDouble(Globals.latitudeKey);
-    double longitude = prefs.getDouble(Globals.longitudeKey);
+    double? latitude = prefs.getDouble(Globals.latitudeKey);
+    double? longitude = prefs.getDouble(Globals.longitudeKey);
     if (latitude == null || longitude == null) {
-      showSnackbar(
-          'Please navigate to the settings page to set a location for manual mode.',
-          context);
+      showSnackbar('Please navigate to the settings page to set a location for manual mode.', context);
       throw new Exception();
     }
 
@@ -228,8 +211,7 @@ class _LandingScreenState extends State<LandingScreen> {
 
     serviceEnabled = await Geolocator.isLocationServiceEnabled();
     if (!serviceEnabled) {
-      showSnackbar(
-          'You must turn on locational services to continue.', context);
+      showSnackbar('You must turn on locational services to continue.', context);
       throw new Exception('Error');
     }
 
@@ -237,22 +219,17 @@ class _LandingScreenState extends State<LandingScreen> {
     if (permission == LocationPermission.denied) {
       permission = await Geolocator.requestPermission();
       if (permission == LocationPermission.denied) {
-        showSnackbar(
-            'Locational services must be turned on to use GPS mode.', context);
+        showSnackbar('Locational services must be turned on to use GPS mode.', context);
         throw new Exception('Error');
       }
     }
 
     if (permission == LocationPermission.deniedForever) {
-      showSnackbar(
-          'Location permissions are permanently denied, you cannot use GPS mode.',
-          context);
+      showSnackbar('Location permissions are permanently denied, you cannot use GPS mode.', context);
       throw new Exception('Error');
     }
 
     Position currentPosition = await Geolocator.getCurrentPosition();
-    return new Coordinates(
-        longitude: currentPosition.longitude,
-        latitude: currentPosition.latitude);
+    return new Coordinates(longitude: currentPosition.longitude, latitude: currentPosition.latitude);
   }
 }
