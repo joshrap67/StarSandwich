@@ -51,23 +51,48 @@ class _LandingScreenState extends State<LandingScreen> {
                     ),
                   ),
                 ),
-                Padding(
-                  padding: const EdgeInsets.fromLTRB(0.0, 15.0, 8.0, 15.0),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
+                Expanded(
+                  child: Stack(
                     children: [
-                      IconButton(
-                        onPressed: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(builder: (_) {
-                              return SettingsScreen();
-                            }),
-                          );
-                        },
-                        icon: const Icon(Icons.settings),
-                        iconSize: 40,
-                        tooltip: 'Settings',
+                      Align(
+                        alignment: Alignment.bottomCenter,
+                        child: Padding(
+                          padding: const EdgeInsets.fromLTRB(0.0, 0.0, 0.0, 15.0),
+                          child: Container(
+                            height: 50,
+                            width: MediaQuery.of(context).size.height * .25,
+                            child: OutlinedButton(
+                              onPressed: _loading ? null : () => getStars(),
+                              style: OutlinedButton.styleFrom(
+                                  shape: StadiumBorder(),
+                                  backgroundColor: const Color(0xff06613F),
+                                  primary: Colors.black),
+                              child: Text(
+                                'SANDWICH ME',
+                                style: TextStyle(color: Colors.white, fontSize: 18),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                      Align(
+                        alignment: Alignment.bottomRight,
+                        child: Padding(
+                          padding: const EdgeInsets.fromLTRB(0.0, 0.0, 8.0, 15.0),
+                          child: IconButton(
+                            onPressed: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(builder: (_) {
+                                  return SettingsScreen();
+                                }),
+                              );
+                            },
+                            icon: const Icon(Icons.settings),
+                            iconSize: 40,
+                            tooltip: 'Settings',
+                          ),
+                        ),
                       ),
                     ],
                   ),
@@ -87,9 +112,9 @@ class _LandingScreenState extends State<LandingScreen> {
                           height: MediaQuery.of(context).size.height * .25,
                           alignment: Alignment.center,
                           decoration: BoxDecoration(
-                            boxShadow: [BoxShadow(color: Color(0xe1ecedff), blurRadius: 7, spreadRadius: 2)],
+                            boxShadow: [BoxShadow(color: Color(0xe1a6fac3), blurRadius: 3, spreadRadius: 1)],
                             shape: BoxShape.circle,
-                            image: DecorationImage(image: AssetImage('assets/launcher/splash_logo.png')),
+                            image: DecorationImage(image: AssetImage('assets/launcher/ic_launcher-playstore.png')),
                           ),
                         ),
                       ),
@@ -107,24 +132,10 @@ class _LandingScreenState extends State<LandingScreen> {
                             width: MediaQuery.of(context).size.height * .25,
                             height: MediaQuery.of(context).size.height * .25,
                             child: CircularProgressIndicator(
-                              valueColor: AlwaysStoppedAnimation<Color>(new Color(0xff6f6fee)),
+                              valueColor: const AlwaysStoppedAnimation<Color>(Color(0xff00ffa5)),
                             ))
                     ],
                   ),
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Container(
-                      child: OutlinedButton(
-                        onPressed: _loading ? null : () => getStars(),
-                        style: OutlinedButton.styleFrom(
-                            shape: StadiumBorder(), backgroundColor: Color(0xff402735), primary: Colors.black),
-                        child: Text(
-                          'SANDWICH ME!',
-                          style: TextStyle(color: Colors.white, fontSize: 18),
-                        ),
-                      ),
-                    ),
-                  )
                 ],
               ),
             ),

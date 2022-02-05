@@ -19,6 +19,16 @@ class MyApp extends StatelessWidget {
           selectionHandleColor: Colors.greenAccent,
         ),
         appBarTheme: AppBarTheme(color: Colors.black54),
+        inputDecorationTheme: InputDecorationTheme(
+          labelStyle: TextStyle(color: Color(0xff29d49e)),
+          focusedBorder: OutlineInputBorder(
+            borderSide: BorderSide(
+              style: BorderStyle.solid,
+              color: const Color(0xff00ffa5),
+              width: 2,
+            ),
+          ),
+        ),
         brightness: Brightness.dark,
       ),
       home: SafeArea(child: LandingScreen()),

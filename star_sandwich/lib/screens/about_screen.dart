@@ -24,7 +24,8 @@ class _AboutScreenState extends State<AboutScreen> {
             ),
             ListTile(
               title: Text(
-                'Star Sandwich determines the nearest star that is directly above you and the nearest star that is directly below you.\n\nJust click the center button on the landing screen to get started!',
+                'Star Sandwich determines the nearest star that is directly above you and the nearest star that is directly below you.\n\n'
+					'Just click the button on the landing screen to get started!',
                 style: TextStyle(fontSize: 20),
               ),
             ),

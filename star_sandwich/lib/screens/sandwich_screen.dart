@@ -58,8 +58,12 @@ class _SandwichScreenState extends State<SandwichScreen> with SingleTickerProvid
       child: Scaffold(
         backgroundColor: const Color(0xff020001),
         body: Container(
-          decoration:
-              BoxDecoration(image: DecorationImage(image: AssetImage('assets/images/stars.jpg'), fit: BoxFit.fill)),
+          decoration: BoxDecoration(
+            image: DecorationImage(
+              image: AssetImage('assets/images/stars.jpg'),
+              fit: BoxFit.fill,
+            ),
+          ),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [

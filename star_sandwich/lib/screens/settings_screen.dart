@@ -44,7 +44,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
     if (_loadingSharedPrefs) {
       return Scaffold(
         appBar: AppBar(
-          title: Text('Settings & Info'),
+          title: const Text('Settings & Info'),
         ),
         body: Container(),
       );
@@ -55,18 +55,18 @@ class _SettingsScreenState extends State<SettingsScreen> {
         },
         child: Scaffold(
           appBar: AppBar(
-            title: Text('Settings & Info'),
+            title: const Text('Settings & Info'),
           ),
           body: ListView(
             children: [
               Card(
                 child: ListTile(
-                  leading: Icon(Icons.location_on),
-                  title: Text(
+                  leading: const Icon(Icons.location_on),
+                  title: const Text(
                     'Location',
                     style: TextStyle(fontSize: 25),
                   ),
-                  subtitle: Text('Method for determining current location.'),
+                  subtitle: const Text('Method for determining current location.'),
                 ),
               ),
               Row(
@@ -75,7 +75,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
                     child: RadioListTile<LocationMode>(
                       value: LocationMode.gpsMode,
                       groupValue: _locationMode,
-                      title: Text('GPS'),
+                      activeColor: const Color(0xe17beaa1),
+                      title: const Text('GPS'),
                       onChanged: (LocationMode? value) {
                         setState(() {
                           _locationMode = value!;
@@ -88,7 +89,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
                     child: RadioListTile<LocationMode>(
                       value: LocationMode.manual,
                       groupValue: _locationMode,
-                      title: Text('Manual'),
+                      activeColor: const Color(0xe17beaa1),
+                      title: const Text('Manual'),
                       onChanged: (LocationMode? value) {
                         setState(() {
                           _locationMode = value!;
@@ -115,7 +117,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                               decoration: const InputDecoration(
                                 hintText: 'City, zip, address, etc.',
                                 labelText: 'Location (US/Canada only)',
-                                border: OutlineInputBorder(),
+                                border: const OutlineInputBorder(),
                               ),
                               controller: _locationController,
                               onSaved: (String? value) {
@@ -132,9 +134,17 @@ class _SettingsScreenState extends State<SettingsScreen> {
                           width: 50,
                           height: 50,
                           child: _loading
-                              ? CircularProgressIndicator()
+                              ? SizedBox(
+                                  height: 10,
+                                  width: 10,
+                                  child: Center(
+                                    child: CircularProgressIndicator(
+                                      color: const Color(0xff00ffa5),
+                                    ),
+                                  ),
+                                )
                               : IconButton(
-                                  icon: Icon(Icons.search),
+                                  icon: const Icon(Icons.search),
                                   onPressed: getLocFromServer,
                                 ),
                         ),
@@ -148,7 +158,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
               Card(
                 child: ListTile(
                   leading: Icon(Icons.info),
-                  title: Text(
+                  title: const Text(
                     'About',
                     style: TextStyle(fontSize: 25),
                   ),
@@ -163,7 +173,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
               Card(
                 child: ListTile(
                   leading: Icon(Icons.privacy_tip),
-                  title: Text(
+                  title: const Text(
                     'Privacy Policy',
                     style: TextStyle(fontSize: 25),
                   ),
@@ -181,7 +191,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
               Card(
                 child: ListTile(
                   leading: Icon(Icons.article),
-                  title: Text(
+                  title: const Text(
                     'Terms of Service',
                     style: TextStyle(fontSize: 25),
                   ),
@@ -203,7 +213,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                     _appVersion,
                     style: TextStyle(fontSize: 25),
                   ),
-                  subtitle: Text('App Version'),
+                  subtitle: const Text('App Version'),
                 ),
               ),
             ],
@@ -251,6 +261,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
   Future<void> getSharedPrefsData() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     PackageInfo packageInfo = await PackageInfo.fromPlatform();
+
     setState(() {
       bool gpsPreferred = prefs.getBool(Globals.gpsModeKey) ?? true;
       _locationMode = gpsPreferred ? LocationMode.gpsMode : LocationMode.manual;
