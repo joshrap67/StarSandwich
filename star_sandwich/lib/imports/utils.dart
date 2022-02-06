@@ -9,7 +9,7 @@ void showSnackbar(String message, BuildContext context, {int secondsMs = 1500}) 
   ScaffoldMessenger.of(context).removeCurrentSnackBar();
   final snackBar = SnackBar(
     content: Text(message),
-    duration: Duration(seconds: secondsMs),
+    duration: Duration(milliseconds: secondsMs),
   );
   ScaffoldMessenger.of(context).showSnackBar(snackBar);
 }

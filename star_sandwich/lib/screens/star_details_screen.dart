@@ -117,7 +117,7 @@ class _StarDetailsScreenState extends State<StarDetailsScreen> {
     double lightYears = distance * 3.262;
     return new Card(
       child: ListTile(
-        title: Text('$distance parsecs (${lightYears.toStringAsFixed(4)} light years)'),
+        title: Text('$distance parsecs (${lightYears.toStringAsFixed(3)} light years)'),
         subtitle: Text('Distance from Earth'),
       ),
     );
