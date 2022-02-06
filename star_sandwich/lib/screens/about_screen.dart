@@ -14,7 +14,7 @@ class _AboutScreenState extends State<AboutScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('About'),
+        title: const Text('About'),
       ),
       body: Scrollbar(
         child: ListView(
@@ -23,17 +23,17 @@ class _AboutScreenState extends State<AboutScreen> {
               padding: const EdgeInsets.all(8.0),
             ),
             ListTile(
-              title: Text(
+              title: const Text(
                 'Star Sandwich determines the nearest star that is directly above you and the nearest star that is directly below you.\n\n'
 					'Just click the button on the landing screen to get started!',
                 style: TextStyle(fontSize: 20),
               ),
             ),
             ExpansionTile(
-              title: Text('Astronomy Terms'),
+              title: const Text('Astronomy Terms'),
               children: [
                 ListTile(
-                  title: Text(
+                  title: const Text(
                       '\u2022 Right Ascension: distance, measured in hours, of a point in the sky east of the First Point of Aries.\n\n'
                       '\u2022 Declination: distance, measured in degrees, of a point in the sky north or south of the celestial equator.\n\n'
                       '\u2022 Zenith: point in the sky directly over the observer.\n\n'
@@ -45,7 +45,7 @@ class _AboutScreenState extends State<AboutScreen> {
               ],
             ),
             ExpansionTile(
-              title: Text('Disclaimers'),
+              title: const Text('Disclaimers'),
               children: [
                 ListTile(
                   title: Text(
@@ -53,20 +53,20 @@ class _AboutScreenState extends State<AboutScreen> {
                       '\n\nAngular distance from the observer\'s zenith/nadir is prioritized, but other factors are also considered as part of the algorithm for determining the star to display.'),
                 ),
                 ListTile(
-                  title: Text(
+                  title: const Text(
                       '\u2022 If you want to be cheeky, technically some stars might not be directly above or below you since the light we see is light that was emitted hundreds or even thousands of years ago, so its real position could be somewhere else. This could even warrant more relativisitc discussion involving reference frames, but for this app\'s sake just embrace the madness.'),
                 )
               ],
             ),
             ExpansionTile(
-              title: Text('References'),
+              title: const Text('References'),
               children: [
                 ListTile(
-                  title: Text('App Logo drawn by Mike O. Sexton.'),
+                  title: const Text('App Logo drawn by Mike O. Sexton.'),
                 ),
                 ListTile(
                   title: InkWell(
-                    child: Text(
+                    child: const Text(
                       'App background image source.',
                       style: TextStyle(decoration: TextDecoration.underline),
                     ),
@@ -82,7 +82,7 @@ class _AboutScreenState extends State<AboutScreen> {
                 ),
                 ListTile(
                   title: InkWell(
-                    child: Text(
+                    child: const Text(
                       'Selected data from AstroNexus database.',
                       style: TextStyle(decoration: TextDecoration.underline),
                     ),

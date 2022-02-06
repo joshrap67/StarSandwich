@@ -5,11 +5,11 @@ void hideKeyboard(BuildContext context) {
   FocusScope.of(context).requestFocus(new FocusNode());
 }
 
-void showSnackbar(String message, BuildContext context, {int secondsMs = 1500}) {
+void showSnackbar(String message, BuildContext context, {int milliseconds = 1500}) {
   ScaffoldMessenger.of(context).removeCurrentSnackBar();
   final snackBar = SnackBar(
     content: Text(message),
-    duration: Duration(milliseconds: secondsMs),
+    duration: Duration(milliseconds: milliseconds),
   );
   ScaffoldMessenger.of(context).showSnackBar(snackBar);
 }

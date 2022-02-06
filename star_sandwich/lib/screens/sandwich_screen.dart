@@ -21,8 +21,6 @@ class SandwichScreen extends StatefulWidget {
 }
 
 class _SandwichScreenState extends State<SandwichScreen> with SingleTickerProviderStateMixin {
-  // StarResponse _topStar;
-  // StarResponse _bottomStar;
   bool _bottomConstellationShowing = false;
   late double _width;
   bool _topConstellationShowing = false;
@@ -98,7 +96,7 @@ class _SandwichScreenState extends State<SandwichScreen> with SingleTickerProvid
                                         _topConstellationShowing = !_topConstellationShowing;
                                       });
                                     },
-                                    icon: _topConstellationShowing ? Icon(Icons.wb_sunny) : Icon(Icons.map),
+                                    icon: _topConstellationShowing ? const Icon(Icons.wb_sunny) : const Icon(Icons.map),
                                     iconSize: 35,
                                     tooltip: _topConstellationShowing ? 'Star View' : 'View Constellation',
                                   ),
@@ -113,8 +111,8 @@ class _SandwichScreenState extends State<SandwichScreen> with SingleTickerProvid
                 child: Tooltip(
                   message: '${widget.latitude}°, ${widget.longitude}°',
                   child: Container(
-                    width: MediaQuery.of(context).size.height * .25,
-                    height: MediaQuery.of(context).size.height * .25,
+                    width: MediaQuery.of(context).size.height * .3,
+                    height: MediaQuery.of(context).size.height * .3,
                     decoration: BoxDecoration(
                       shape: BoxShape.circle,
                       image: DecorationImage(image: AssetImage('assets/images/middle.png')),
@@ -144,7 +142,8 @@ class _SandwichScreenState extends State<SandwichScreen> with SingleTickerProvid
                                       _bottomConstellationShowing = !_bottomConstellationShowing;
                                     });
                                   },
-                                  icon: _bottomConstellationShowing ? Icon(Icons.wb_sunny) : Icon(Icons.map),
+                                  icon:
+                                      _bottomConstellationShowing ? const Icon(Icons.wb_sunny) : const Icon(Icons.map),
                                   iconSize: 35,
                                   tooltip: _bottomConstellationShowing ? 'Star View' : 'View Constellation',
                                 ),

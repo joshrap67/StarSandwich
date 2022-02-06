@@ -5,7 +5,6 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:star_sandwich/imports/globals.dart';
 import 'package:star_sandwich/imports/utils.dart';
 import 'package:star_sandwich/models/requests/coordinates.dart';
-import 'package:star_sandwich/models/responses/star_response.dart';
 import 'package:star_sandwich/screens/sandwich_screen.dart';
 import 'package:star_sandwich/screens/settings_screen.dart';
 import 'package:star_sandwich/services/star_service.dart';
@@ -17,8 +16,6 @@ class LandingScreen extends StatefulWidget {
 
 class _LandingScreenState extends State<LandingScreen> {
   bool _loading = false;
-  StarResponse? _topStar;
-  StarResponse? _bottomStar;
 
   @override
   Widget build(BuildContext context) {
@@ -27,7 +24,7 @@ class _LandingScreenState extends State<LandingScreen> {
       body: Container(
         decoration: BoxDecoration(
           image: DecorationImage(
-            image: AssetImage('assets/images/stars.jpg'),
+            image: const AssetImage('assets/images/stars.jpg'),
             fit: BoxFit.fill,
           ),
         ),
@@ -64,7 +61,7 @@ class _LandingScreenState extends State<LandingScreen> {
                             child: OutlinedButton(
                               onPressed: _loading ? null : () => getStars(),
                               style: OutlinedButton.styleFrom(
-                                  shape: StadiumBorder(),
+                                  shape: const StadiumBorder(),
                                   backgroundColor: const Color(0xff14cb89),
                                   primary: Colors.black),
                               child: Text(
@@ -100,42 +97,37 @@ class _LandingScreenState extends State<LandingScreen> {
               ],
             ),
             Center(
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
+              child: Stack(
                 children: [
-                  Stack(
-                    children: [
-                      Hero(
-                        tag: 'heroKey',
-                        child: Container(
-                          width: MediaQuery.of(context).size.height * .25,
-                          height: MediaQuery.of(context).size.height * .25,
-                          alignment: Alignment.center,
-                          decoration: BoxDecoration(
-                            boxShadow: [BoxShadow(color: Color(0xe1a6fac3), blurRadius: 3, spreadRadius: 1)],
-                            shape: BoxShape.circle,
-                            image: DecorationImage(image: AssetImage('assets/launcher/ic_launcher-playstore.png')),
-                          ),
+                  Hero(
+                    tag: 'heroKey',
+                    child: Container(
+                      width: MediaQuery.of(context).size.height * .25,
+                      height: MediaQuery.of(context).size.height * .25,
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        image: DecorationImage(
+                          image: const AssetImage('assets/images/earth.png'),
                         ),
                       ),
-                      Positioned.fill(
-                        child: Material(
-                          color: Colors.transparent,
-                          child: InkWell(
-                            customBorder: CircleBorder(),
-                            onTap: _loading ? null : () => getStars(),
-                          ),
-                        ),
-                      ),
-                      if (_loading)
-                        SizedBox(
-                            width: MediaQuery.of(context).size.height * .25,
-                            height: MediaQuery.of(context).size.height * .25,
-                            child: CircularProgressIndicator(
-                              valueColor: const AlwaysStoppedAnimation<Color>(Color(0xff00ffa5)),
-                            ))
-                    ],
+                    ),
                   ),
+                  Positioned.fill(
+                    child: Material(
+                      color: Colors.transparent,
+                      child: InkWell(
+                        customBorder: const CircleBorder(),
+                        onTap: _loading ? null : () => getStars(),
+                      ),
+                    ),
+                  ),
+                  if (_loading)
+                    SizedBox(
+                        width: MediaQuery.of(context).size.height * .25,
+                        height: MediaQuery.of(context).size.height * .25,
+                        child: CircularProgressIndicator(
+                          valueColor: const AlwaysStoppedAnimation<Color>(Color(0xff00ffa5)),
+                        ))
                 ],
               ),
             ),
@@ -149,10 +141,10 @@ class _LandingScreenState extends State<LandingScreen> {
     setState(() {
       _loading = true;
     });
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    bool gpsMode = prefs.getBool(Globals.gpsModeKey) ?? true;
+    var prefs = await SharedPreferences.getInstance();
+    var gpsMode = prefs.getBool(Globals.gpsModeKey) ?? true;
 
-    Coordinates coordinates;
+    var coordinates;
     try {
       if (gpsMode) {
         coordinates = await getLocFromGPS();
@@ -169,15 +161,15 @@ class _LandingScreenState extends State<LandingScreen> {
     var result = await StarService.makeStarSandwich(coordinates.latitude!, coordinates.longitude!);
 
     if (result.success()) {
-      _topStar = result.data!.starAbove;
-      _bottomStar = result.data!.starBelow;
+      var topStar = result.data!.starAbove;
+      var bottomStar = result.data!.starBelow;
 
       Navigator.push(context, MaterialPageRoute(builder: (_) {
         return SandwichScreen(
             latitude: coordinates.latitude!,
             longitude: coordinates.longitude!,
-            bottomStar: _bottomStar,
-            topStar: _topStar);
+            bottomStar: bottomStar,
+            topStar: topStar);
       }));
     } else {
       final snackBar = SnackBar(content: Text('${result.errorMessage}'));
@@ -190,8 +182,8 @@ class _LandingScreenState extends State<LandingScreen> {
 
   Future<Coordinates> getLocFromSharedPrefs() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    double? latitude = prefs.getDouble(Globals.latitudeKey);
-    double? longitude = prefs.getDouble(Globals.longitudeKey);
+    var latitude = prefs.getDouble(Globals.latitudeKey);
+    var longitude = prefs.getDouble(Globals.longitudeKey);
     if (latitude == null || longitude == null) {
       showSnackbar('Please navigate to the settings page to set a location for manual mode.', context);
       throw new Exception();
@@ -201,8 +193,8 @@ class _LandingScreenState extends State<LandingScreen> {
   }
 
   Future<Coordinates> getLocFromGPS() async {
-    bool serviceEnabled;
-    LocationPermission permission;
+    var serviceEnabled;
+    var permission;
 
     serviceEnabled = await Geolocator.isLocationServiceEnabled();
     if (!serviceEnabled) {
@@ -224,7 +216,7 @@ class _LandingScreenState extends State<LandingScreen> {
       throw new Exception('Error');
     }
 
-    Position currentPosition = await Geolocator.getCurrentPosition();
+    var currentPosition = await Geolocator.getCurrentPosition();
     return new Coordinates(longitude: currentPosition.longitude, latitude: currentPosition.latitude);
   }
 }

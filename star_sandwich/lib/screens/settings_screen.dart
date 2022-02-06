@@ -64,7 +64,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                   leading: const Icon(Icons.location_on),
                   title: const Text(
                     'Location',
-                    style: TextStyle(fontSize: 25),
+                    style: const TextStyle(fontSize: 25),
                   ),
                   subtitle: const Text('Method for determining current location.'),
                 ),
@@ -157,7 +157,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
               Padding(padding: const EdgeInsets.all(5.0)),
               Card(
                 child: ListTile(
-                  leading: Icon(Icons.info),
+                  leading: const Icon(Icons.info),
                   title: const Text(
                     'About',
                     style: TextStyle(fontSize: 25),
@@ -172,10 +172,10 @@ class _SettingsScreenState extends State<SettingsScreen> {
               Padding(padding: const EdgeInsets.all(5.0)),
               Card(
                 child: ListTile(
-                  leading: Icon(Icons.privacy_tip),
+                  leading: const Icon(Icons.privacy_tip),
                   title: const Text(
                     'Privacy Policy',
-                    style: TextStyle(fontSize: 25),
+                    style: const TextStyle(fontSize: 25),
                   ),
                   onTap: () async {
                     const String url = 'https://star-sandwich-sites.s3.amazonaws.com/privacy_policy.html';
@@ -190,10 +190,10 @@ class _SettingsScreenState extends State<SettingsScreen> {
               Padding(padding: const EdgeInsets.all(5.0)),
               Card(
                 child: ListTile(
-                  leading: Icon(Icons.article),
+                  leading: const Icon(Icons.article),
                   title: const Text(
                     'Terms of Service',
-                    style: TextStyle(fontSize: 25),
+                    style: const TextStyle(fontSize: 25),
                   ),
                   onTap: () async {
                     const String url = 'https://star-sandwich-sites.s3.amazonaws.com/terms_conditions.html';
@@ -208,10 +208,10 @@ class _SettingsScreenState extends State<SettingsScreen> {
               Padding(padding: const EdgeInsets.all(5.0)),
               Card(
                 child: ListTile(
-                  leading: Icon(Icons.phone_android),
+                  leading: const Icon(Icons.phone_android),
                   title: Text(
                     _appVersion,
-                    style: TextStyle(fontSize: 25),
+                    style: const TextStyle(fontSize: 25),
                   ),
                   subtitle: const Text('App Version'),
                 ),

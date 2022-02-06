@@ -5,7 +5,7 @@ import 'package:http/http.dart' as http;
 import 'package:star_sandwich/imports/request_keys.dart';
 import 'package:star_sandwich/models/responses/result_status.dart';
 
-import '../config.dart';
+import '../imports/config.dart';
 
 Future<ResultStatus<String>> makeApiRequest(Map<String, dynamic> requestContent) async {
   try {
