@@ -15,7 +15,7 @@ publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 # In iOS, build-name is used as CFBundleShortVersionString while build-number used as CFBundleVersion.
 # Read more about iOS versioning at
 # https://developer.apple.com/library/archive/documentation/General/Reference/InfoPlistKeyReference/Articles/CoreFoundationKeys.html
-version: 1.0.1+2
+version: 1.1.0+3
 
 environment:
   sdk: ">=2.14.0 <3.0.0"
@@ -36,18 +36,18 @@ dev_dependencies:
   flutter_test:
     sdk: flutter
   flutter_native_splash: ^1.1.8+4
-#  flutter_launcher_icons: ^0.8.0
+  flutter_launcher_icons: "^0.9.2"
 
 # flutter pub run flutter_launcher_icons:main
 flutter_icons:
   ios: true
   android: false
-  image_path_ios: "assets/launcher/star_sandwich_icon.png"
-  image_path_android: "assets/launcher/star_sandwich_icon.png"
+  remove_alpha_ios: true
+  image_path: "assets/launcher/star_sandwich_icon.png"
 
 # flutter pub run flutter_native_splash:create
 flutter_native_splash:
-  color: "#2e2e2e"
+  color: "#292929"
 
 flutter:
 
