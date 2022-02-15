@@ -62,9 +62,6 @@ class _AboutScreenState extends State<AboutScreen> {
               title: const Text('References'),
               children: [
                 ListTile(
-                  title: const Text('App Logo drawn by Mike O. Sexton.'),
-                ),
-                ListTile(
                   title: InkWell(
                     child: const Text(
                       'App background image source.',
