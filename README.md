@@ -34,6 +34,8 @@ If pulling from this repository, open the project and run it using Flutter (can 
 
 - [WebStorm](https://www.jetbrains.com/webstorm/) - IDE that was used to build the backend.
 
+- [Inkscape](https://inkscape.org/) - Vector graphics software used to create the logo and constellations.
+
 ## Authors
 
 - Joshua Rapoport - _Creator and Lead Software Developer_
