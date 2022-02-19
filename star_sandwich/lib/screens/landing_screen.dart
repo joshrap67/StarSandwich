@@ -22,8 +22,8 @@ class _LandingScreenState extends State<LandingScreen> {
     return Scaffold(
       backgroundColor: const Color(0xff020001),
       body: Container(
-        decoration: BoxDecoration(
-          image: DecorationImage(
+        decoration: const BoxDecoration(
+          image: const DecorationImage(
             image: const AssetImage('assets/images/stars.jpg'),
             fit: BoxFit.fill,
           ),
@@ -36,12 +36,12 @@ class _LandingScreenState extends State<LandingScreen> {
                 Expanded(
                   child: Padding(
                     padding: const EdgeInsets.fromLTRB(8.0, 40.0, 8.0, 0.0),
-                    child: AutoSizeText(
+                    child: const AutoSizeText(
                       'Star Sandwich',
                       textAlign: TextAlign.center,
                       minFontSize: 18,
                       maxLines: 1,
-                      style: TextStyle(
+                      style: const TextStyle(
                         fontSize: 60,
                         color: Colors.white,
                       ),
@@ -62,11 +62,11 @@ class _LandingScreenState extends State<LandingScreen> {
                               onPressed: _loading ? null : () => getStars(),
                               style: OutlinedButton.styleFrom(
                                   shape: const StadiumBorder(),
-                                  backgroundColor: const Color(0xff14cb89),
+                                  backgroundColor: const Color(0xff2d6280),
                                   primary: Colors.black),
-                              child: Text(
+                              child: const Text(
                                 'SANDWICH ME!',
-                                style: TextStyle(color: Colors.white, fontSize: 18),
+                                style: const TextStyle(color: Colors.white, fontSize: 18),
                               ),
                             ),
                           ),
@@ -106,7 +106,7 @@ class _LandingScreenState extends State<LandingScreen> {
                       height: MediaQuery.of(context).size.height * .25,
                       decoration: BoxDecoration(
                         shape: BoxShape.circle,
-                        image: DecorationImage(
+                        image: const DecorationImage(
                           image: const AssetImage('assets/images/earth.png'),
                         ),
                       ),
@@ -123,11 +123,12 @@ class _LandingScreenState extends State<LandingScreen> {
                   ),
                   if (_loading)
                     SizedBox(
-                        width: MediaQuery.of(context).size.height * .25,
-                        height: MediaQuery.of(context).size.height * .25,
-                        child: CircularProgressIndicator(
-                          valueColor: const AlwaysStoppedAnimation<Color>(Color(0xff00ffa5)),
-                        ))
+                      width: MediaQuery.of(context).size.height * .25,
+                      height: MediaQuery.of(context).size.height * .25,
+                      child: const CircularProgressIndicator(
+                        valueColor: const AlwaysStoppedAnimation<Color>(Color(0xff00ffa5)),
+                      ),
+                    )
                 ],
               ),
             ),

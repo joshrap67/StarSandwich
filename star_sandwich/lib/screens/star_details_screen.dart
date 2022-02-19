@@ -22,10 +22,10 @@ class _StarDetailsScreenState extends State<StarDetailsScreen> {
     super.initState();
 
     if (widget.topStar) {
-      _positionalMsg = 'This star is directly above you. Try and look up if it\'s dark enough!';
+      _positionalMsg = 'This star is directly above you. Look up and try to find it!';
     } else {
       _positionalMsg =
-          'This star is directly below you. If you can channel your Superman, look through Earth to see it!';
+          'This star is directly below you. Too bad Earth is in the way!';
     }
   }
 
@@ -41,7 +41,7 @@ class _StarDetailsScreenState extends State<StarDetailsScreen> {
             Center(child: getStarDisplay()),
             Center(child: getNumberOfStarsDisplay()),
             Container(
-              padding: EdgeInsets.fromLTRB(20, 20, 20, 20),
+              padding: const EdgeInsets.fromLTRB(20, 20, 20, 20),
               child: Text(
                 _positionalMsg,
                 style: const TextStyle(fontSize: 16),

@@ -8,4 +8,9 @@ class GeocodedLocationResponse {
     coordinates = new Coordinates.fromJson(rawResponse['coordinates']);
     formattedAddress = rawResponse['formattedAddress'];
   }
+
+  @override
+  String toString() {
+    return 'GeocodedLocationResponse{coordinates: $coordinates, formattedAddress: $formattedAddress}';
+  }
 }

@@ -13,7 +13,7 @@ class Coordinates extends Request {
 
   @override
   String toString() {
-    return 'Coordinates{Latitude: $latitude Longitude: $longitude}';
+    return 'Coordinates{latitude: $latitude, longitude: $longitude}';
   }
 
   @override

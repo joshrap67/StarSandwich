@@ -25,7 +25,7 @@ class _AboutScreenState extends State<AboutScreen> {
             ListTile(
               title: const Text(
                 'Star Sandwich determines the nearest star that is directly above you and the nearest star that is directly below you.\n\n'
-					'Just click the button on the landing screen to get started!',
+                'Just click the button on the landing screen to get started!',
                 style: TextStyle(fontSize: 20),
               ),
             ),
@@ -40,7 +40,7 @@ class _AboutScreenState extends State<AboutScreen> {
                       '\u2022 Nadir: point in the sky directly below the observer.\n\n'
                       '\u2022 Apparent magnitude: measure of how bright an object is relative to Earth. The smaller the number, the brighter the object appears.\nObjects with an apparent magnitude greater than around 6 are not visible to the naked human eye.\n\n'
                       '\u2022 Absolute magnitude: intrinsic measure of how bright an object is measured from a fixed position of 10 parsecs. Like with apparent magnitude, the smaller the number the brighter the object.\nThe scale is logarithmic. If the difference between the absolute magnitude of two stars is 5, then their brightness differs by a factor of 100.\n\n'
-                      '\u2022 Light year: distance light travels in one year (approximately 5.87 trillion miles or 9.46 trillion kilometers!)'),
+                      '\u2022 Light year: distance light travels in one year (approximately 5.87 trillion miles or 9.46 trillion kilometers!).'),
                 )
               ],
             ),
@@ -54,7 +54,7 @@ class _AboutScreenState extends State<AboutScreen> {
                 ),
                 ListTile(
                   title: const Text(
-                      '\u2022 If you want to be cheeky, technically some stars might not be directly above or below you since the light we see is light that was emitted hundreds or even thousands of years ago, so its real position could be somewhere else. This could even warrant more relativisitc discussion involving reference frames, but for this app\'s sake just embrace the madness.'),
+                      '\u2022 If you want to be cheeky, technically some stars might not be directly above or below you since the light we see is light that was emitted hundreds or even thousands of years ago, so its real position could be somewhere else. The star could even be dead. This could even warrant more relativistic discussion involving reference frames, but for this app\'s sake just embrace the madness.'),
                 )
               ],
             ),

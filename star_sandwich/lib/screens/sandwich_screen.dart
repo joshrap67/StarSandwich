@@ -57,8 +57,8 @@ class _SandwichScreenState extends State<SandwichScreen> with SingleTickerProvid
         backgroundColor: const Color(0xff020001),
         body: Container(
           decoration: BoxDecoration(
-            image: DecorationImage(
-              image: AssetImage('assets/images/stars.jpg'),
+            image: const DecorationImage(
+              image: const AssetImage('assets/images/stars.jpg'),
               fit: BoxFit.fill,
             ),
           ),
@@ -74,8 +74,8 @@ class _SandwichScreenState extends State<SandwichScreen> with SingleTickerProvid
                               child: Column(
                                 mainAxisAlignment: MainAxisAlignment.start,
                                 children: [
-                                  Padding(padding: const EdgeInsets.only(top: 15, bottom: 15)),
-                                  BackButton(),
+                                  const Padding(padding: const EdgeInsets.only(top: 15, bottom: 15)),
+                                  const BackButton(),
                                 ],
                               ),
                             ),
@@ -89,7 +89,7 @@ class _SandwichScreenState extends State<SandwichScreen> with SingleTickerProvid
                               child: Column(
                                 mainAxisAlignment: MainAxisAlignment.start,
                                 children: [
-                                  Padding(padding: const EdgeInsets.only(top: 15, bottom: 15)),
+                                  const Padding(padding: const EdgeInsets.only(top: 15, bottom: 15)),
                                   IconButton(
                                     onPressed: () {
                                       setState(() {
@@ -113,9 +113,9 @@ class _SandwichScreenState extends State<SandwichScreen> with SingleTickerProvid
                   child: Container(
                     width: MediaQuery.of(context).size.height * .3,
                     height: MediaQuery.of(context).size.height * .3,
-                    decoration: BoxDecoration(
+                    decoration: const BoxDecoration(
                       shape: BoxShape.circle,
-                      image: DecorationImage(image: AssetImage('assets/images/middle.png')),
+                      image: const DecorationImage(image: AssetImage('assets/images/middle.png')),
                     ),
                   ),
                 ),
@@ -125,7 +125,7 @@ class _SandwichScreenState extends State<SandwichScreen> with SingleTickerProvid
                     ? Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          Spacer(),
+                          const Spacer(),
                           Container(
                             width: _width,
                             child: _bottomConstellationShowing
@@ -147,7 +147,7 @@ class _SandwichScreenState extends State<SandwichScreen> with SingleTickerProvid
                                   iconSize: 35,
                                   tooltip: _bottomConstellationShowing ? 'Star View' : 'View Constellation',
                                 ),
-                                Padding(padding: const EdgeInsets.only(top: 15, bottom: 15)),
+                                const Padding(padding: const EdgeInsets.only(top: 15, bottom: 15)),
                               ],
                             ),
                           ),
@@ -193,7 +193,7 @@ class _SandwichScreenState extends State<SandwichScreen> with SingleTickerProvid
               overflow: TextOverflow.ellipsis,
               minFontSize: 14,
               maxLines: 2,
-              style: TextStyle(
+              style: const TextStyle(
                   decoration: TextDecoration.underline, fontSize: 30, color: Colors.white, fontStyle: FontStyle.italic),
             ),
           ),
@@ -226,7 +226,7 @@ class _SandwichScreenState extends State<SandwichScreen> with SingleTickerProvid
               textAlign: TextAlign.center,
               overflow: TextOverflow.ellipsis,
               minFontSize: 14,
-              style: TextStyle(fontSize: 20, color: Colors.white, fontStyle: FontStyle.italic),
+              style: const TextStyle(fontSize: 20, color: Colors.white, fontStyle: FontStyle.italic),
             ),
           ),
         ],
@@ -250,7 +250,7 @@ class _SandwichScreenState extends State<SandwichScreen> with SingleTickerProvid
             overflow: TextOverflow.ellipsis,
             minFontSize: 14,
             maxLines: 2,
-            style: TextStyle(
+            style: const TextStyle(
               fontSize: 30,
               color: Colors.white,
               decoration: TextDecoration.underline,
@@ -291,7 +291,7 @@ class _SandwichScreenState extends State<SandwichScreen> with SingleTickerProvid
             overflow: TextOverflow.ellipsis,
             maxLines: 2,
             minFontSize: 14,
-            style: TextStyle(fontSize: 20, color: Colors.white, fontStyle: FontStyle.italic),
+            style: const TextStyle(fontSize: 20, color: Colors.white, fontStyle: FontStyle.italic),
           ),
           Container(
             height: 150,
@@ -319,7 +319,7 @@ class _SandwichScreenState extends State<SandwichScreen> with SingleTickerProvid
                 minFontSize: 12,
                 maxLines: 3,
                 overflow: TextOverflow.ellipsis,
-                style: TextStyle(
+                style: const TextStyle(
                   fontSize: 20,
                   color: Colors.white,
                 ),
@@ -340,7 +340,7 @@ class _SandwichScreenState extends State<SandwichScreen> with SingleTickerProvid
           textAlign: TextAlign.center,
           overflow: TextOverflow.ellipsis,
           minFontSize: 14,
-          style: TextStyle(
+          style: const TextStyle(
             fontSize: 20,
             color: Colors.white,
           ),
