@@ -46,9 +46,9 @@ export default class StarService {
 			280.46061837 +
 			360.98564736629 * (julianDays - 2451545.0) +
 			0.000387933 * Math.pow(julianCenturies, 2) -
-			(Math.pow(julianCenturies, 3) * Math.pow(2.6, -8));
+			(Math.pow(julianCenturies, 3) / 38710000);
 
-		return greenwichSiderealAngle % 360;
+		return greenwichSiderealAngle;
 	}
 
 	private static getJulianDays(timestamp: Date) {
