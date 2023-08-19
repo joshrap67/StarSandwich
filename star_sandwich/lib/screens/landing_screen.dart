@@ -61,9 +61,8 @@ class _LandingScreenState extends State<LandingScreen> {
                             child: OutlinedButton(
                               onPressed: _loading ? null : () => getStars(),
                               style: OutlinedButton.styleFrom(
-                                  shape: const StadiumBorder(),
-                                  backgroundColor: const Color(0xff2d6280),
-                                  primary: Colors.black),
+                                  foregroundColor: Colors.black, shape: const StadiumBorder(),
+                                  backgroundColor: const Color(0xff2d6280)),
                               child: const Text(
                                 'SANDWICH ME!',
                                 style: const TextStyle(color: Colors.white, fontSize: 18),
