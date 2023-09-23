@@ -18,6 +18,14 @@ class _LandingScreenState extends State<LandingScreen> {
   bool _loading = false;
 
   @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      precacheImage(AssetImage('assets/images/middle.png'), context);
+    });
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: const Color(0xff020001),
@@ -58,10 +66,11 @@ class _LandingScreenState extends State<LandingScreen> {
                           child: Container(
                             height: 50,
                             width: MediaQuery.of(context).size.height * .25,
-                            child: OutlinedButton(
-                              onPressed: _loading ? null : () => getStars(),
-                              style: OutlinedButton.styleFrom(
-                                  foregroundColor: Colors.black, shape: const StadiumBorder(),
+                            child: ElevatedButton(
+                              onPressed: getStars,
+                              style: ElevatedButton.styleFrom(
+                                  foregroundColor: Colors.black,
+                                  shape: const StadiumBorder(),
                                   backgroundColor: const Color(0xff2d6280)),
                               child: const Text(
                                 'SANDWICH ME!',
@@ -98,16 +107,13 @@ class _LandingScreenState extends State<LandingScreen> {
             Center(
               child: Stack(
                 children: [
-                  Hero(
-                    tag: 'heroKey',
-                    child: Container(
-                      width: MediaQuery.of(context).size.height * .25,
-                      height: MediaQuery.of(context).size.height * .25,
-                      decoration: BoxDecoration(
-                        shape: BoxShape.circle,
-                        image: const DecorationImage(
-                          image: const AssetImage('assets/images/earth.png'),
-                        ),
+                  Container(
+                    width: MediaQuery.of(context).size.height * .25,
+                    height: MediaQuery.of(context).size.height * .25,
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      image: const DecorationImage(
+                        image: const AssetImage('assets/images/earth.png'),
                       ),
                     ),
                   ),
@@ -138,6 +144,10 @@ class _LandingScreenState extends State<LandingScreen> {
   }
 
   Future<void> getStars() async {
+    if (_loading) {
+      return;
+    }
+
     setState(() {
       _loading = true;
     });

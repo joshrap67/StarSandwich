@@ -24,8 +24,7 @@ class _StarDetailsScreenState extends State<StarDetailsScreen> {
     if (widget.topStar) {
       _positionalMsg = 'This star is directly above you. Look up and try to find it!';
     } else {
-      _positionalMsg =
-          'This star is directly below you. Too bad Earth is in the way!';
+      _positionalMsg = 'This star is directly below you. Too bad Earth is in the way!';
     }
   }
 
@@ -34,33 +33,37 @@ class _StarDetailsScreenState extends State<StarDetailsScreen> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Star Details'),
+        scrolledUnderElevation: 0.0,
       ),
       body: Scrollbar(
-        child: ListView(
-          children: [
-            Center(child: getStarDisplay()),
-            Center(child: getNumberOfStarsDisplay()),
-            Container(
-              padding: const EdgeInsets.fromLTRB(20, 20, 20, 20),
-              child: Text(
-                _positionalMsg,
-                style: const TextStyle(fontSize: 16),
+        child: SingleChildScrollView(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Center(child: getStarDisplay()),
+              Center(child: getNumberOfStarsDisplay()),
+              Container(
+                padding: const EdgeInsets.fromLTRB(20, 20, 20, 20),
+                child: Text(
+                  _positionalMsg,
+                  style: const TextStyle(fontSize: 14),
+                ),
               ),
-            ),
-            Row(
-              children: [
-                Expanded(child: getRightAscensionDisplay()),
-                Expanded(child: getDeclinationDisplay()),
-              ],
-            ),
-            getApparentMagnitudeDisplay(),
-            getAbsoluteMagnitudeDisplay(),
-            getDistanceDisplay(),
-            Padding(
-              padding: const EdgeInsets.all(5.0),
-              child: getConstellationWidget(),
-            )
-          ],
+              Row(
+                children: [
+                  Expanded(child: getRightAscensionDisplay()),
+                  Expanded(child: getDeclinationDisplay()),
+                ],
+              ),
+              getApparentMagnitudeDisplay(),
+              getAbsoluteMagnitudeDisplay(),
+              getDistanceDisplay(),
+              Padding(
+                padding: const EdgeInsets.all(5.0),
+                child: getConstellationWidget(),
+              )
+            ],
+          ),
         ),
       ),
     );
@@ -84,7 +87,7 @@ class _StarDetailsScreenState extends State<StarDetailsScreen> {
           ),
           Container(
             height: 150,
-            width: 250,
+            width: double.infinity,
             child: SvgPicture.asset(
               'assets/svgs/${widget.star.iauConstellation}.svg',
             ),
@@ -98,7 +101,10 @@ class _StarDetailsScreenState extends State<StarDetailsScreen> {
     return new Card(
       child: ListTile(
         title: Text('${widget.star.magnitude}'),
-        subtitle: const Text('Apparent Magnitude'),
+        subtitle: const Text(
+          'Apparent Magnitude',
+          style: TextStyle(fontSize: 12),
+        ),
       ),
     );
   }
@@ -108,7 +114,10 @@ class _StarDetailsScreenState extends State<StarDetailsScreen> {
       child: ListTile(
         title:
             Text('${widget.star.absMagnitude} (${widget.star.luminosity.toStringAsFixed(3)}x brighter than the Sun)'),
-        subtitle: const Text('Absolute Magnitude'),
+        subtitle: const Text(
+          'Absolute Magnitude',
+          style: TextStyle(fontSize: 12),
+        ),
       ),
     );
   }
@@ -119,7 +128,10 @@ class _StarDetailsScreenState extends State<StarDetailsScreen> {
     return new Card(
       child: ListTile(
         title: Text('$distance parsecs (${lightYears.toStringAsFixed(3)} light years)'),
-        subtitle: const Text('Distance from Earth'),
+        subtitle: const Text(
+          'Distance from Earth',
+          style: TextStyle(fontSize: 12),
+        ),
       ),
     );
   }
@@ -131,7 +143,10 @@ class _StarDetailsScreenState extends State<StarDetailsScreen> {
           getFormattedRightAscension(widget.star.rightAscension),
           style: const TextStyle(fontSize: 20),
         ),
-        subtitle: const Text('Right Ascension'),
+        subtitle: const Text(
+          'Right Ascension',
+          style: TextStyle(fontSize: 12),
+        ),
       ),
     );
   }
@@ -143,7 +158,10 @@ class _StarDetailsScreenState extends State<StarDetailsScreen> {
           getFormattedDeclination(widget.star.declination),
           style: const TextStyle(fontSize: 20),
         ),
-        subtitle: const Text('Declination'),
+        subtitle: const Text(
+          'Declination',
+          style: TextStyle(fontSize: 12),
+        ),
       ),
     );
   }
