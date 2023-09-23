@@ -106,17 +106,14 @@ class _SandwichScreenState extends State<SandwichScreen> with SingleTickerProvid
                           ],
                         )
                       : topStarNotFoundWidget()),
-              Hero(
-                tag: 'heroKey',
-                child: Tooltip(
-                  message: '${widget.latitude}°, ${widget.longitude}°',
-                  child: Container(
-                    width: MediaQuery.of(context).size.height * .3,
-                    height: MediaQuery.of(context).size.height * .3,
-                    decoration: const BoxDecoration(
-                      shape: BoxShape.circle,
-                      image: const DecorationImage(image: AssetImage('assets/images/middle.png')),
-                    ),
+              Tooltip(
+                message: '${widget.latitude}°, ${widget.longitude}°',
+                child: Container(
+                  width: MediaQuery.of(context).size.height * .3,
+                  height: MediaQuery.of(context).size.height * .3,
+                  decoration: const BoxDecoration(
+                    shape: BoxShape.circle,
+                    image: const DecorationImage(image: AssetImage('assets/images/middle.png')),
                   ),
                 ),
               ),

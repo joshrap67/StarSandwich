@@ -45,6 +45,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
       return Scaffold(
         appBar: AppBar(
           title: const Text('Settings & Info'),
+          scrolledUnderElevation: 0.0,
         ),
         body: Container(),
       );
@@ -56,6 +57,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
         child: Scaffold(
           appBar: AppBar(
             title: const Text('Settings & Info'),
+            scrolledUnderElevation: 0.0,
           ),
           body: ListView(
             children: [
@@ -179,8 +181,9 @@ class _SettingsScreenState extends State<SettingsScreen> {
                   ),
                   onTap: () async {
                     const String url = 'https://star-sandwich-sites.s3.amazonaws.com/privacy_policy.html';
-                    if (await canLaunch(url)) {
-                      await launch(url);
+                    var uri = Uri.parse(url);
+                    if (await canLaunchUrl(uri)) {
+                      await launchUrl(uri, mode: LaunchMode.externalApplication);
                     } else {
                       throw 'Could not launch $url';
                     }
@@ -197,8 +200,9 @@ class _SettingsScreenState extends State<SettingsScreen> {
                   ),
                   onTap: () async {
                     const String url = 'https://star-sandwich-sites.s3.amazonaws.com/terms_conditions.html';
-                    if (await canLaunch(url)) {
-                      await launch(url);
+                    var uri = Uri.parse(url);
+                    if (await canLaunchUrl(uri)) {
+                      await launchUrl(uri, mode: LaunchMode.externalApplication);
                     } else {
                       throw 'Could not launch $url';
                     }

@@ -15,6 +15,7 @@ class _AboutScreenState extends State<AboutScreen> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('About'),
+        scrolledUnderElevation: 0.0,
       ),
       body: Scrollbar(
         child: ListView(
@@ -29,71 +30,88 @@ class _AboutScreenState extends State<AboutScreen> {
                 style: TextStyle(fontSize: 20),
               ),
             ),
-            ExpansionTile(
-              title: const Text('Astronomy Terms'),
-              children: [
-                ListTile(
-                  title: const Text(
-                      '\u2022 Right Ascension: distance, measured in hours, of a point in the sky east of the First Point of Aries.\n\n'
-                      '\u2022 Declination: distance, measured in degrees, of a point in the sky north or south of the celestial equator.\n\n'
-                      '\u2022 Zenith: point in the sky directly over the observer.\n\n'
-                      '\u2022 Nadir: point in the sky directly below the observer.\n\n'
-                      '\u2022 Apparent magnitude: measure of how bright an object is relative to Earth. The smaller the number, the brighter the object appears.\nObjects with an apparent magnitude greater than around 6 are not visible to the naked human eye.\n\n'
-                      '\u2022 Absolute magnitude: intrinsic measure of how bright an object is measured from a fixed position of 10 parsecs. Like with apparent magnitude, the smaller the number the brighter the object.\nThe scale is logarithmic. If the difference between the absolute magnitude of two stars is 5, then their brightness differs by a factor of 100.\n\n'
-                      '\u2022 Light year: distance light travels in one year (approximately 5.87 trillion miles or 9.46 trillion kilometers!).'),
-                )
-              ],
+            Theme(
+              // removes weird borders that are enabled by default on expansion tile
+              data: Theme.of(context).copyWith(dividerColor: Colors.transparent),
+              child: ExpansionTile(
+                title: const Text('Astronomy Terms'),
+                textColor: Theme.of(context).colorScheme.primary,
+                children: [
+                  ListTile(
+                    title: const Text(
+                        '\u2022 Right Ascension: distance, measured in hours, of a point in the sky east of the First Point of Aries.\n\n'
+                        '\u2022 Declination: distance, measured in degrees, of a point in the sky north or south of the celestial equator.\n\n'
+                        '\u2022 Zenith: point in the sky directly over the observer.\n\n'
+                        '\u2022 Nadir: point in the sky directly below the observer.\n\n'
+                        '\u2022 Apparent magnitude: measure of how bright an object is relative to Earth. The smaller the number, the brighter the object appears.\nObjects with an apparent magnitude greater than around 6 are not visible to the naked human eye.\n\n'
+                        '\u2022 Absolute magnitude: intrinsic measure of how bright an object is measured from a fixed position of 10 parsecs. Like with apparent magnitude, the smaller the number the brighter the object.\nThe scale is logarithmic. If the difference between the absolute magnitude of two stars is 5, then their brightness differs by a factor of 100.\n\n'
+                        '\u2022 Light year: distance light travels in one year (approximately 5.87 trillion miles or 9.46 trillion kilometers!).'),
+                  )
+                ],
+              ),
             ),
-            ExpansionTile(
-              title: const Text('Disclaimers'),
-              children: [
-                ListTile(
-                  title: Text(
-                      '\u2022 When determining "directly above" or "directly below" stars are guaranteed to be within \u00B1$declinationRange\u00B0 declination & \u00B1$rightAscensionRange hrs right ascension of the observer\'s zenith and nadir.'
-                      '\n\nAngular distance from the observer\'s zenith/nadir is prioritized, but other factors are also considered as part of the algorithm for determining the star to display.'),
-                ),
-                ListTile(
-                  title: const Text(
-                      '\u2022 If you want to be cheeky, technically some stars might not be directly above or below you since the light we see is light that was emitted hundreds or even thousands of years ago, so its real position could be somewhere else. The star could even be dead. This could even warrant more relativistic discussion involving reference frames, but for this app\'s sake just embrace the madness.'),
-                )
-              ],
+            Theme(
+              // removes weird borders that are enabled by default on expansion tile
+              data: Theme.of(context).copyWith(dividerColor: Colors.transparent),
+              child: ExpansionTile(
+                title: const Text('Disclaimers'),
+                textColor: Theme.of(context).colorScheme.primary,
+                children: [
+                  ListTile(
+                    title: Text(
+                        '\u2022 When determining "directly above" or "directly below" stars are guaranteed to be within \u00B1$declinationRange\u00B0 declination & \u00B1$rightAscensionRange hrs right ascension of the observer\'s zenith and nadir.'
+                        '\n\nAngular distance from the observer\'s zenith/nadir is prioritized, but other factors are also considered as part of the algorithm for determining the star to display.'),
+                  ),
+                  ListTile(
+                    title: const Text(
+                        '\u2022 If you want to be cheeky, technically some stars might not be directly above or below you since the light we see is light that was emitted hundreds or even thousands of years ago, so its real position could be somewhere else. The star could even be dead. This could even warrant more relativistic discussion involving reference frames, but for this app\'s sake just embrace the madness.'),
+                  )
+                ],
+              ),
             ),
-            ExpansionTile(
-              title: const Text('References'),
-              children: [
-                ListTile(
-                  title: InkWell(
-                    child: const Text(
-                      'App background image source.',
-                      style: TextStyle(decoration: TextDecoration.underline),
+            Theme(
+              // removes weird borders that are enabled by default on expansion tile
+              data: Theme.of(context).copyWith(dividerColor: Colors.transparent),
+              child: ExpansionTile(
+                title: const Text('References'),
+                textColor: Theme.of(context).colorScheme.primary,
+                children: [
+                  ListTile(
+                    title: InkWell(
+                      child: const Text(
+                        'App background image source.',
+                        style: TextStyle(decoration: TextDecoration.underline),
+                      ),
+                      onTap: () async {
+                        const String url = 'https://unsplash.com/photos/uhjiu8FjnsQ';
+                        var uri = Uri.parse(url);
+                        if (await canLaunchUrl(uri)) {
+                          await launchUrl(uri, mode: LaunchMode.externalApplication);
+                        } else {
+                          throw 'Could not launch $url';
+                        }
+                      },
                     ),
-                    onTap: () async {
-                      const String url = 'https://unsplash.com/photos/uhjiu8FjnsQ';
-                      if (await canLaunch(url)) {
-                        await launch(url);
-                      } else {
-                        throw 'Could not launch $url';
-                      }
-                    },
                   ),
-                ),
-                ListTile(
-                  title: InkWell(
-                    child: const Text(
-                      'Selected data from AstroNexus database.',
-                      style: TextStyle(decoration: TextDecoration.underline),
+                  ListTile(
+                    title: InkWell(
+                      child: const Text(
+                        'Selected data from AstroNexus database.',
+                        style: TextStyle(decoration: TextDecoration.underline),
+                      ),
+                      onTap: () async {
+                        const String url = 'https://github.com/astronexus/HYG-Database';
+                        var uri = Uri.parse(url);
+                        if (await canLaunchUrl(uri)) {
+                          await launchUrl(uri, mode: LaunchMode.externalApplication);
+                        } else {
+                          throw 'Could not launch $url';
+                        }
+                      },
                     ),
-                    onTap: () async {
-                      const String url = 'https://github.com/astronexus/HYG-Database';
-                      if (await canLaunch(url)) {
-                        await launch(url);
-                      } else {
-                        throw 'Could not launch $url';
-                      }
-                    },
                   ),
-                ),
-              ],
+                ],
+              ),
             )
           ],
         ),

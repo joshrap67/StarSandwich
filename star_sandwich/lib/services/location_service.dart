@@ -1,9 +1,11 @@
 import 'dart:collection';
 import 'dart:convert';
+
 import 'package:star_sandwich/imports/request_keys.dart';
 import 'package:star_sandwich/models/requests/get_geocoded_location_request.dart';
-import 'package:star_sandwich/models/responses/result_status.dart';
 import 'package:star_sandwich/models/responses/geocoded_location_response.dart';
+import 'package:star_sandwich/models/responses/result_status.dart';
+
 import 'api_gateway.dart';
 
 class LocationService {
