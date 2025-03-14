@@ -17,13 +17,13 @@ export default class StarService {
 		const rightAscensionBottom = this.getRightAscensionInHours(antipodeLongitude);
 
 		const topStarCandidates = await StarRepository.findStars([rightAscensionTop, model.coordinates.latitude]);
-		const bottomStarCandidates = await StarRepository.findStars([rightAscensionBottom, -model.coordinates.latitude]);
+		const bottomStarCandidates = await StarRepository.findStars([rightAscensionBottom, -model.coordinates.latitude]);		
 
 		const starAbove = topStarCandidates.length > 0
 			? OptimalStarService.findOptimalStar(rightAscensionTop, model.coordinates.latitude, topStarCandidates)
 			: null;
 		const starBelow = bottomStarCandidates.length > 0
-			? OptimalStarService.findOptimalStar(rightAscensionTop, model.coordinates.latitude, bottomStarCandidates)
+			? OptimalStarService.findOptimalStar(rightAscensionBottom, -model.coordinates.latitude, bottomStarCandidates)
 			: null;
 
 		return {

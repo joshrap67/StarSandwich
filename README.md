@@ -24,6 +24,8 @@ If downloading from the [Google Play Store](https://play.google.com/store/apps/d
 
 If pulling from this repository, open the project and run it using Flutter (can be done via CLI). If doing it this way, you may need to ensure that you have developer options enabled on your device.
 
+To deploy the web service, run the lambda package batch script and upload that zip file to AWS Lambda.
+
 ## Built With
 
 - [Flutter](https://flutter.dev/) - Framework that the frontend was built with.
@@ -46,6 +48,6 @@ If pulling from this repository, open the project and run it using Flutter (can 
 
 [Selected data found from AstroNexus repository](https://github.com/astronexus/HYG-Database)
 
-[Source for formula used to obtain Greenwich mean sidereal time](https://www2.mps.mpg.de/homes/fraenz/systems/systems3art/node10.html)
+[Source for formula used to obtain Greenwich mean sidereal time](https://www.omnicalculator.com/everyday-life/sidereal-time)
 
 [API used to determine lat/long for a given address in the U.S. and Canada](https://www.geocod.io/)

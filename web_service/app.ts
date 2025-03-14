@@ -22,13 +22,7 @@ export const lambdaHandler = async (event: APIGatewayProxyEvent): Promise<APIGat
 	}
 	let response = null;
 	if (mongooseConnection == null) {
-		mongooseConnection = mongoose.connect(dbURL, {
-			bufferCommands: false,
-			bufferMaxEntries: 0,
-			useNewUrlParser: true,
-			useUnifiedTopology: true
-		});
-		await mongooseConnection;
+		mongooseConnection = await mongoose.connect(dbURL);
 	}
 
 	try {

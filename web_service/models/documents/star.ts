@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 
-export interface IStar extends mongoose.Document {
+export interface IStar extends mongoose.Document<string> {
 	hipId: string,
 	hdId: string,
 	hrId: string,
