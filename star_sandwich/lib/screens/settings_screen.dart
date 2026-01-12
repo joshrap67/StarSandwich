@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:package_info/package_info.dart';
+import 'package:package_info_plus/package_info_plus.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:star_sandwich/imports/globals.dart';
 import 'package:star_sandwich/imports/utils.dart';
@@ -43,10 +43,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
   Widget build(BuildContext context) {
     if (_loadingSharedPrefs) {
       return Scaffold(
-        appBar: AppBar(
-          title: const Text('Settings & Info'),
-          scrolledUnderElevation: 0.0,
-        ),
+        appBar: AppBar(title: const Text('Settings & Info'), scrolledUnderElevation: 0.0),
         body: Container(),
       );
     } else {
@@ -55,53 +52,42 @@ class _SettingsScreenState extends State<SettingsScreen> {
           hideKeyboard(context);
         },
         child: Scaffold(
-          appBar: AppBar(
-            title: const Text('Settings & Info'),
-            scrolledUnderElevation: 0.0,
-          ),
+          appBar: AppBar(title: const Text('Settings & Info'), scrolledUnderElevation: 0.0),
           body: ListView(
             children: [
               Card(
                 child: ListTile(
                   leading: const Icon(Icons.location_on),
-                  title: const Text(
-                    'Location',
-                    style: const TextStyle(fontSize: 25),
-                  ),
+                  title: const Text('Location', style: const TextStyle(fontSize: 25)),
                   subtitle: const Text('Method for determining current location.'),
                 ),
               ),
-              Row(
-                children: [
-                  Expanded(
-                    child: RadioListTile<LocationMode>(
-                      value: LocationMode.gpsMode,
-                      groupValue: _locationMode,
-                      activeColor: const Color(0xe17beaa1),
-                      title: const Text('GPS'),
-                      onChanged: (LocationMode? value) {
-                        setState(() {
-                          _locationMode = value!;
-                          saveGpsStatusSharedPrefs();
-                        });
-                      },
+              RadioGroup<LocationMode>(
+                groupValue: _locationMode,
+                onChanged: (LocationMode? value) {
+                  setState(() {
+                    _locationMode = value!;
+                    saveGpsStatusSharedPrefs();
+                  });
+                },
+                child: Row(
+                  children: [
+                    Expanded(
+                      child: RadioListTile<LocationMode>(
+                        value: LocationMode.gpsMode,
+                        activeColor: const Color(0xe17beaa1),
+                        title: const Text('GPS'),
+                      ),
                     ),
-                  ),
-                  Expanded(
-                    child: RadioListTile<LocationMode>(
-                      value: LocationMode.manual,
-                      groupValue: _locationMode,
-                      activeColor: const Color(0xe17beaa1),
-                      title: const Text('Manual'),
-                      onChanged: (LocationMode? value) {
-                        setState(() {
-                          _locationMode = value!;
-                          saveGpsStatusSharedPrefs();
-                        });
-                      },
+                    Expanded(
+                      child: RadioListTile<LocationMode>(
+                        value: LocationMode.manual,
+                        activeColor: const Color(0xe17beaa1),
+                        title: const Text('Manual'),
+                      ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
               Visibility(
                 visible: _locationMode == LocationMode.manual,
@@ -139,16 +125,9 @@ class _SettingsScreenState extends State<SettingsScreen> {
                               ? SizedBox(
                                   height: 10,
                                   width: 10,
-                                  child: Center(
-                                    child: CircularProgressIndicator(
-                                      color: const Color(0xff00ffa5),
-                                    ),
-                                  ),
+                                  child: Center(child: CircularProgressIndicator(color: const Color(0xff00ffa5))),
                                 )
-                              : IconButton(
-                                  icon: const Icon(Icons.search),
-                                  onPressed: getLocFromServer,
-                                ),
+                              : IconButton(icon: const Icon(Icons.search), onPressed: getLocFromServer),
                         ),
                       ],
                     ),
@@ -160,14 +139,16 @@ class _SettingsScreenState extends State<SettingsScreen> {
               Card(
                 child: ListTile(
                   leading: const Icon(Icons.info),
-                  title: const Text(
-                    'About',
-                    style: TextStyle(fontSize: 25),
-                  ),
+                  title: const Text('About', style: TextStyle(fontSize: 25)),
                   onTap: () {
-                    Navigator.push(context, MaterialPageRoute(builder: (_) {
-                      return AboutScreen();
-                    }));
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (_) {
+                          return AboutScreen();
+                        },
+                      ),
+                    );
                   },
                 ),
               ),
@@ -175,10 +156,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
               Card(
                 child: ListTile(
                   leading: const Icon(Icons.privacy_tip),
-                  title: const Text(
-                    'Privacy Policy',
-                    style: const TextStyle(fontSize: 25),
-                  ),
+                  title: const Text('Privacy Policy', style: const TextStyle(fontSize: 25)),
                   onTap: () async {
                     const String url = 'https://star-sandwich-sites.s3.amazonaws.com/privacy_policy.html';
                     var uri = Uri.parse(url);
@@ -194,10 +172,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
               Card(
                 child: ListTile(
                   leading: const Icon(Icons.article),
-                  title: const Text(
-                    'Terms of Service',
-                    style: const TextStyle(fontSize: 25),
-                  ),
+                  title: const Text('Terms of Service', style: const TextStyle(fontSize: 25)),
                   onTap: () async {
                     const String url = 'https://star-sandwich-sites.s3.amazonaws.com/terms_conditions.html';
                     var uri = Uri.parse(url);
@@ -213,10 +188,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
               Card(
                 child: ListTile(
                   leading: const Icon(Icons.phone_android),
-                  title: Text(
-                    _appVersion,
-                    style: const TextStyle(fontSize: 25),
-                  ),
+                  title: Text(_appVersion, style: const TextStyle(fontSize: 25)),
                   subtitle: const Text('App Version'),
                 ),
               ),

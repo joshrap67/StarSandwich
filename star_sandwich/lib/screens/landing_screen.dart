@@ -31,10 +31,7 @@ class _LandingScreenState extends State<LandingScreen> {
       backgroundColor: const Color(0xff020001),
       body: Container(
         decoration: const BoxDecoration(
-          image: const DecorationImage(
-            image: const AssetImage('assets/images/stars.jpg'),
-            fit: BoxFit.fill,
-          ),
+          image: const DecorationImage(image: const AssetImage('assets/images/stars.jpg'), fit: BoxFit.fill),
         ),
         child: Stack(
           children: [
@@ -49,10 +46,7 @@ class _LandingScreenState extends State<LandingScreen> {
                       textAlign: TextAlign.center,
                       minFontSize: 18,
                       maxLines: 1,
-                      style: const TextStyle(
-                        fontSize: 60,
-                        color: Colors.white,
-                      ),
+                      style: const TextStyle(fontSize: 60, color: Colors.white),
                     ),
                   ),
                 ),
@@ -69,9 +63,10 @@ class _LandingScreenState extends State<LandingScreen> {
                             child: ElevatedButton(
                               onPressed: getStars,
                               style: ElevatedButton.styleFrom(
-                                  foregroundColor: Colors.black,
-                                  shape: const StadiumBorder(),
-                                  backgroundColor: const Color(0xff2d6280)),
+                                foregroundColor: Colors.black,
+                                shape: const StadiumBorder(),
+                                backgroundColor: const Color(0xff2d6280),
+                              ),
                               child: const Text(
                                 'SANDWICH ME!',
                                 style: const TextStyle(color: Colors.white, fontSize: 18),
@@ -88,9 +83,11 @@ class _LandingScreenState extends State<LandingScreen> {
                             onPressed: () {
                               Navigator.push(
                                 context,
-                                MaterialPageRoute(builder: (_) {
-                                  return SettingsScreen();
-                                }),
+                                MaterialPageRoute(
+                                  builder: (_) {
+                                    return SettingsScreen();
+                                  },
+                                ),
                               );
                             },
                             icon: const Icon(Icons.settings),
@@ -101,7 +98,7 @@ class _LandingScreenState extends State<LandingScreen> {
                       ),
                     ],
                   ),
-                )
+                ),
               ],
             ),
             Center(
@@ -112,18 +109,13 @@ class _LandingScreenState extends State<LandingScreen> {
                     height: MediaQuery.of(context).size.height * .25,
                     decoration: BoxDecoration(
                       shape: BoxShape.circle,
-                      image: const DecorationImage(
-                        image: const AssetImage('assets/images/earth.png'),
-                      ),
+                      image: const DecorationImage(image: const AssetImage('assets/images/earth.png')),
                     ),
                   ),
                   Positioned.fill(
                     child: Material(
                       color: Colors.transparent,
-                      child: InkWell(
-                        customBorder: const CircleBorder(),
-                        onTap: _loading ? null : () => getStars(),
-                      ),
+                      child: InkWell(customBorder: const CircleBorder(), onTap: _loading ? null : () => getStars()),
                     ),
                   ),
                   if (_loading)
@@ -133,7 +125,7 @@ class _LandingScreenState extends State<LandingScreen> {
                       child: const CircularProgressIndicator(
                         valueColor: const AlwaysStoppedAnimation<Color>(Color(0xff00ffa5)),
                       ),
-                    )
+                    ),
                 ],
               ),
             ),
@@ -174,13 +166,19 @@ class _LandingScreenState extends State<LandingScreen> {
       var topStar = result.data!.starAbove;
       var bottomStar = result.data!.starBelow;
 
-      Navigator.push(context, MaterialPageRoute(builder: (_) {
-        return SandwichScreen(
-            latitude: coordinates.latitude!,
-            longitude: coordinates.longitude!,
-            bottomStar: bottomStar,
-            topStar: topStar);
-      }));
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (_) {
+            return SandwichScreen(
+              latitude: coordinates.latitude!,
+              longitude: coordinates.longitude!,
+              bottomStar: bottomStar,
+              topStar: topStar,
+            );
+          },
+        ),
+      );
     } else {
       final snackBar = SnackBar(content: Text('${result.errorMessage}'));
       ScaffoldMessenger.of(context).showSnackBar(snackBar);

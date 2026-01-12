@@ -10,7 +10,7 @@ Refer to the Wiki for details on the application logic.
 
 ## Prerequisites
 
-This application is currently only published for Android devices. The minimum SDK version that this application can run on is: 16. The targeted SDK for this application is: 30.
+This application is currently only published for Android devices. The minimum SDK version that this application can run on is: 24. The targeted SDK for this application is: 36.
 
 An internet connection is required to run this application.
 
@@ -20,9 +20,11 @@ If pulling from this repository, Flutter is required in order to run the applica
 
 ## Deployment
 
-If downloading from the [Google Play Store](https://play.google.com/store/apps/details?id=com.joshrap.star_sandwich), simply download it and ensure enough space is available on the device.
-
 If pulling from this repository, open the project and run it using Flutter (can be done via CLI). If doing it this way, you may need to ensure that you have developer options enabled on your device.
+
+To run a production build:
+
+`flutter run --release`
 
 To deploy the web service, run the lambda package batch script and upload that zip file to AWS Lambda.
 

@@ -17,8 +17,5 @@ class Coordinates extends Request {
   }
 
   @override
-  Map<String, dynamic> toJson() => {
-        'latitude': latitude,
-        'longitude': longitude,
-      };
+  Map<String, dynamic> toJson() => {'latitude': latitude, 'longitude': longitude};
 }

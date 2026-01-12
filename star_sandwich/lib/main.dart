@@ -16,7 +16,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
           useMaterial3: true,
           colorScheme: darkColorScheme,
-          appBarTheme: AppBarTheme(color: Colors.black54),
+          appBarTheme: AppBarTheme(backgroundColor: Colors.black54),
           pageTransitionsTheme: const PageTransitionsTheme(
             builders: <TargetPlatform, PageTransitionsBuilder>{
               TargetPlatform.android: ZoomPageTransitionsBuilder(

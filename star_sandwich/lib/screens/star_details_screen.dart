@@ -31,10 +31,7 @@ class _StarDetailsScreenState extends State<StarDetailsScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Star Details'),
-        scrolledUnderElevation: 0.0,
-      ),
+      appBar: AppBar(title: const Text('Star Details'), scrolledUnderElevation: 0.0),
       body: Scrollbar(
         child: SingleChildScrollView(
           child: Column(
@@ -44,10 +41,7 @@ class _StarDetailsScreenState extends State<StarDetailsScreen> {
               Center(child: getNumberOfStarsDisplay()),
               Container(
                 padding: const EdgeInsets.fromLTRB(20, 20, 20, 20),
-                child: Text(
-                  _positionalMsg,
-                  style: const TextStyle(fontSize: 14),
-                ),
+                child: Text(_positionalMsg, style: const TextStyle(fontSize: 14)),
               ),
               Row(
                 children: [
@@ -58,10 +52,7 @@ class _StarDetailsScreenState extends State<StarDetailsScreen> {
               getApparentMagnitudeDisplay(),
               getAbsoluteMagnitudeDisplay(),
               getDistanceDisplay(),
-              Padding(
-                padding: const EdgeInsets.all(5.0),
-                child: getConstellationWidget(),
-              )
+              Padding(padding: const EdgeInsets.all(5.0), child: getConstellationWidget()),
             ],
           ),
         ),
@@ -71,26 +62,20 @@ class _StarDetailsScreenState extends State<StarDetailsScreen> {
 
   Widget getConstellationWidget() {
     return new Container(
-      decoration: BoxDecoration(image: DecorationImage(image: AssetImage('assets/images/stars.jpg'), fit: BoxFit.fill)),
+      decoration: BoxDecoration(
+        image: DecorationImage(image: AssetImage('assets/images/stars.jpg'), fit: BoxFit.fill),
+      ),
       child: Column(
         children: [
-          Text(
-            '${widget.star.constellation} Constellation',
-            style: const TextStyle(fontSize: 18),
-          ),
+          Text('${widget.star.constellation} Constellation', style: const TextStyle(fontSize: 18)),
           Text(
             '(${Globals.constellationDescriptions[widget.star.iauConstellation]})',
-            style: const TextStyle(
-              fontSize: 14,
-              fontStyle: FontStyle.italic,
-            ),
+            style: const TextStyle(fontSize: 14, fontStyle: FontStyle.italic),
           ),
           Container(
             height: 150,
             width: double.infinity,
-            child: SvgPicture.asset(
-              'assets/svgs/${widget.star.iauConstellation}.svg',
-            ),
+            child: SvgPicture.asset('assets/svgs/${widget.star.iauConstellation}.svg'),
           ),
         ],
       ),
@@ -101,10 +86,7 @@ class _StarDetailsScreenState extends State<StarDetailsScreen> {
     return new Card(
       child: ListTile(
         title: Text('${widget.star.magnitude}'),
-        subtitle: const Text(
-          'Apparent Magnitude',
-          style: TextStyle(fontSize: 12),
-        ),
+        subtitle: const Text('Apparent Magnitude', style: TextStyle(fontSize: 12)),
       ),
     );
   }
@@ -112,12 +94,10 @@ class _StarDetailsScreenState extends State<StarDetailsScreen> {
   Widget getAbsoluteMagnitudeDisplay() {
     return new Card(
       child: ListTile(
-        title:
-            Text('${widget.star.absMagnitude} (${widget.star.luminosity.toStringAsFixed(3)}x brighter than the Sun)'),
-        subtitle: const Text(
-          'Absolute Magnitude',
-          style: TextStyle(fontSize: 12),
+        title: Text(
+          '${widget.star.absMagnitude} (${widget.star.luminosity.toStringAsFixed(3)}x brighter than the Sun)',
         ),
+        subtitle: const Text('Absolute Magnitude', style: TextStyle(fontSize: 12)),
       ),
     );
   }
@@ -128,10 +108,7 @@ class _StarDetailsScreenState extends State<StarDetailsScreen> {
     return new Card(
       child: ListTile(
         title: Text('$distance parsecs (${lightYears.toStringAsFixed(3)} light years)'),
-        subtitle: const Text(
-          'Distance from Earth',
-          style: TextStyle(fontSize: 12),
-        ),
+        subtitle: const Text('Distance from Earth', style: TextStyle(fontSize: 12)),
       ),
     );
   }
@@ -139,14 +116,8 @@ class _StarDetailsScreenState extends State<StarDetailsScreen> {
   Widget getRightAscensionDisplay() {
     return new Card(
       child: ListTile(
-        title: Text(
-          getFormattedRightAscension(widget.star.rightAscension),
-          style: const TextStyle(fontSize: 20),
-        ),
-        subtitle: const Text(
-          'Right Ascension',
-          style: TextStyle(fontSize: 12),
-        ),
+        title: Text(getFormattedRightAscension(widget.star.rightAscension), style: const TextStyle(fontSize: 20)),
+        subtitle: const Text('Right Ascension', style: TextStyle(fontSize: 12)),
       ),
     );
   }
@@ -154,14 +125,8 @@ class _StarDetailsScreenState extends State<StarDetailsScreen> {
   Widget getDeclinationDisplay() {
     return new Card(
       child: ListTile(
-        title: Text(
-          getFormattedDeclination(widget.star.declination),
-          style: const TextStyle(fontSize: 20),
-        ),
-        subtitle: const Text(
-          'Declination',
-          style: TextStyle(fontSize: 12),
-        ),
+        title: Text(getFormattedDeclination(widget.star.declination), style: const TextStyle(fontSize: 20)),
+        subtitle: const Text('Declination', style: TextStyle(fontSize: 12)),
       ),
     );
   }
@@ -176,16 +141,10 @@ class _StarDetailsScreenState extends State<StarDetailsScreen> {
     } else if (numberOfStars == 3) {
       msg = 'Triple star system';
     }
-    return new Text(
-      msg,
-      style: const TextStyle(fontSize: 26),
-    );
+    return new Text(msg, style: const TextStyle(fontSize: 26));
   }
 
   Widget getStarDisplay() {
-    return new Text(
-      getStarDisplayTitle(widget.star),
-      style: const TextStyle(fontSize: 40),
-    );
+    return new Text(getStarDisplayTitle(widget.star), style: const TextStyle(fontSize: 40));
   }
 }

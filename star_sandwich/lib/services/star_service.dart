@@ -15,8 +15,12 @@ class StarService {
   static Future<ResultStatus<SandwichResponse>> makeStarSandwich(double latitude, double longitude) async {
     var jsonBody = new HashMap<String, dynamic>();
     jsonBody.putIfAbsent(RequestKeys.action, () => makeStarSandwichRoute);
-    jsonBody.putIfAbsent(RequestKeys.body,
-        () => new MakeStarSandwichRequest(coordinates: new Coordinates(latitude: latitude, longitude: longitude)));
+    jsonBody.putIfAbsent(
+      RequestKeys.body,
+      () => new MakeStarSandwichRequest(
+        coordinates: new Coordinates(latitude: latitude, longitude: longitude),
+      ),
+    );
 
     try {
       ResultStatus<String> response = await makeApiRequest(jsonBody);

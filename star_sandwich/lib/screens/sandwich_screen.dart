@@ -30,15 +30,9 @@ class _SandwichScreenState extends State<SandwichScreen> with SingleTickerProvid
   @override
   void initState() {
     super.initState();
-    _animationControl = AnimationController(
-      duration: Duration(seconds: 40),
-      vsync: this,
-    );
+    _animationControl = AnimationController(duration: Duration(seconds: 40), vsync: this);
 
-    _starRotation = Tween<double>(
-      begin: 0,
-      end: 2 * pi,
-    ).animate(_animationControl);
+    _starRotation = Tween<double>(begin: 0, end: 2 * pi).animate(_animationControl);
     _animationControl.repeat();
   }
 
@@ -57,55 +51,53 @@ class _SandwichScreenState extends State<SandwichScreen> with SingleTickerProvid
         backgroundColor: const Color(0xff020001),
         body: Container(
           decoration: BoxDecoration(
-            image: const DecorationImage(
-              image: const AssetImage('assets/images/stars.jpg'),
-              fit: BoxFit.fill,
-            ),
+            image: const DecorationImage(image: const AssetImage('assets/images/stars.jpg'), fit: BoxFit.fill),
           ),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               Expanded(
-                  child: widget.topStar != null
-                      ? Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Expanded(
-                              child: Column(
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                children: [
-                                  const Padding(padding: const EdgeInsets.only(top: 15, bottom: 15)),
-                                  const BackButton(),
-                                ],
-                              ),
+                child: widget.topStar != null
+                    ? Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Expanded(
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: [
+                                const Padding(padding: const EdgeInsets.only(top: 15, bottom: 15)),
+                                const BackButton(),
+                              ],
                             ),
-                            Container(
-                              width: _width,
-                              child: _topConstellationShowing
-                                  ? topConstellationWidget(widget.topStar!)
-                                  : topStarWidget(widget.topStar!),
+                          ),
+                          Container(
+                            width: _width,
+                            child: _topConstellationShowing
+                                ? topConstellationWidget(widget.topStar!)
+                                : topStarWidget(widget.topStar!),
+                          ),
+                          Expanded(
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: [
+                                const Padding(padding: const EdgeInsets.only(top: 15, bottom: 15)),
+                                IconButton(
+                                  onPressed: () {
+                                    setState(() {
+                                      _topConstellationShowing = !_topConstellationShowing;
+                                    });
+                                  },
+                                  icon: _topConstellationShowing ? const Icon(Icons.wb_sunny) : const Icon(Icons.map),
+                                  iconSize: 35,
+                                  tooltip: _topConstellationShowing ? 'Star View' : 'View Constellation',
+                                ),
+                              ],
                             ),
-                            Expanded(
-                              child: Column(
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                children: [
-                                  const Padding(padding: const EdgeInsets.only(top: 15, bottom: 15)),
-                                  IconButton(
-                                    onPressed: () {
-                                      setState(() {
-                                        _topConstellationShowing = !_topConstellationShowing;
-                                      });
-                                    },
-                                    icon: _topConstellationShowing ? const Icon(Icons.wb_sunny) : const Icon(Icons.map),
-                                    iconSize: 35,
-                                    tooltip: _topConstellationShowing ? 'Star View' : 'View Constellation',
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ],
-                        )
-                      : topStarNotFoundWidget()),
+                          ),
+                        ],
+                      )
+                    : topStarNotFoundWidget(),
+              ),
               Tooltip(
                 message: '${widget.latitude}°, ${widget.longitude}°',
                 child: Container(
@@ -139,8 +131,9 @@ class _SandwichScreenState extends State<SandwichScreen> with SingleTickerProvid
                                       _bottomConstellationShowing = !_bottomConstellationShowing;
                                     });
                                   },
-                                  icon:
-                                      _bottomConstellationShowing ? const Icon(Icons.wb_sunny) : const Icon(Icons.map),
+                                  icon: _bottomConstellationShowing
+                                      ? const Icon(Icons.wb_sunny)
+                                      : const Icon(Icons.map),
                                   iconSize: 35,
                                   tooltip: _bottomConstellationShowing ? 'Star View' : 'View Constellation',
                                 ),
@@ -162,9 +155,14 @@ class _SandwichScreenState extends State<SandwichScreen> with SingleTickerProvid
   Widget topStarWidget(StarResponse star) {
     return GestureDetector(
       onTap: () {
-        Navigator.push(context, MaterialPageRoute(builder: (_) {
-          return StarDetailsScreen(star: star, topStar: true);
-        }));
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (_) {
+              return StarDetailsScreen(star: star, topStar: true);
+            },
+          ),
+        );
       },
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
@@ -177,9 +175,7 @@ class _SandwichScreenState extends State<SandwichScreen> with SingleTickerProvid
               builder: (_, child) => Transform(
                 transform: Matrix4.rotationZ(_starRotation.value),
                 alignment: Alignment.center,
-                child: Image.asset(
-                  getStarImage(star),
-                ),
+                child: Image.asset(getStarImage(star)),
               ),
             ),
           ),
@@ -191,7 +187,11 @@ class _SandwichScreenState extends State<SandwichScreen> with SingleTickerProvid
               minFontSize: 14,
               maxLines: 2,
               style: const TextStyle(
-                  decoration: TextDecoration.underline, fontSize: 30, color: Colors.white, fontStyle: FontStyle.italic),
+                decoration: TextDecoration.underline,
+                fontSize: 30,
+                color: Colors.white,
+                fontStyle: FontStyle.italic,
+              ),
             ),
           ),
         ],
@@ -202,20 +202,19 @@ class _SandwichScreenState extends State<SandwichScreen> with SingleTickerProvid
   Widget topConstellationWidget(StarResponse star) {
     return GestureDetector(
       onTap: () {
-        Navigator.push(context, MaterialPageRoute(builder: (_) {
-          return StarDetailsScreen(star: star, topStar: true);
-        }));
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (_) {
+              return StarDetailsScreen(star: star, topStar: true);
+            },
+          ),
+        );
       },
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
-          Container(
-            height: 150,
-            width: _width,
-            child: SvgPicture.asset(
-              'assets/svgs/${star.iauConstellation}.svg',
-            ),
-          ),
+          Container(height: 150, width: _width, child: SvgPicture.asset('assets/svgs/${star.iauConstellation}.svg')),
           Expanded(
             child: AutoSizeText(
               '${star.constellation} Constellation',
@@ -234,9 +233,14 @@ class _SandwichScreenState extends State<SandwichScreen> with SingleTickerProvid
   Widget bottomStarWidget(StarResponse star) {
     return GestureDetector(
       onTap: () {
-        Navigator.push(context, MaterialPageRoute(builder: (_) {
-          return StarDetailsScreen(star: star, topStar: false);
-        }));
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (_) {
+              return StarDetailsScreen(star: star, topStar: false);
+            },
+          ),
+        );
       },
       child: Column(
         mainAxisAlignment: MainAxisAlignment.end,
@@ -247,11 +251,7 @@ class _SandwichScreenState extends State<SandwichScreen> with SingleTickerProvid
             overflow: TextOverflow.ellipsis,
             minFontSize: 14,
             maxLines: 2,
-            style: const TextStyle(
-              fontSize: 30,
-              color: Colors.white,
-              decoration: TextDecoration.underline,
-            ),
+            style: const TextStyle(fontSize: 30, color: Colors.white, decoration: TextDecoration.underline),
           ),
           Container(
             height: 100,
@@ -261,12 +261,10 @@ class _SandwichScreenState extends State<SandwichScreen> with SingleTickerProvid
               builder: (_, child) => Transform(
                 transform: Matrix4.rotationZ(_starRotation.value),
                 alignment: Alignment.center,
-                child: Image.asset(
-                  getStarImage(star),
-                ),
+                child: Image.asset(getStarImage(star)),
               ),
             ),
-          )
+          ),
         ],
       ),
     );
@@ -275,9 +273,14 @@ class _SandwichScreenState extends State<SandwichScreen> with SingleTickerProvid
   Widget bottomConstellationWidget(StarResponse star) {
     return GestureDetector(
       onTap: () {
-        Navigator.push(context, MaterialPageRoute(builder: (_) {
-          return StarDetailsScreen(star: star, topStar: false);
-        }));
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (_) {
+              return StarDetailsScreen(star: star, topStar: false);
+            },
+          ),
+        );
       },
       child: Column(
         mainAxisAlignment: MainAxisAlignment.end,
@@ -290,13 +293,7 @@ class _SandwichScreenState extends State<SandwichScreen> with SingleTickerProvid
             minFontSize: 14,
             style: const TextStyle(fontSize: 20, color: Colors.white, fontStyle: FontStyle.italic),
           ),
-          Container(
-            height: 150,
-            width: _width,
-            child: SvgPicture.asset(
-              'assets/svgs/${star.iauConstellation}.svg',
-            ),
-          )
+          Container(height: 150, width: _width, child: SvgPicture.asset('assets/svgs/${star.iauConstellation}.svg')),
         ],
       ),
     );
@@ -316,14 +313,11 @@ class _SandwichScreenState extends State<SandwichScreen> with SingleTickerProvid
                 minFontSize: 12,
                 maxLines: 3,
                 overflow: TextOverflow.ellipsis,
-                style: const TextStyle(
-                  fontSize: 20,
-                  color: Colors.white,
-                ),
+                style: const TextStyle(fontSize: 20, color: Colors.white),
               ),
             ),
           ],
-        )
+        ),
       ],
     );
   }
@@ -337,10 +331,7 @@ class _SandwichScreenState extends State<SandwichScreen> with SingleTickerProvid
           textAlign: TextAlign.center,
           overflow: TextOverflow.ellipsis,
           minFontSize: 14,
-          style: const TextStyle(
-            fontSize: 20,
-            color: Colors.white,
-          ),
+          style: const TextStyle(fontSize: 20, color: Colors.white),
         ),
       ],
     );
