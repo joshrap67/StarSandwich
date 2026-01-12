@@ -5,7 +5,7 @@ description: Mobile application that determines the nearest star at the observer
 # pub.dev using `pub publish`. This is preferred for private packages.
 publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 
-version: 1.1.4+7
+version: 1.1.5+8
 
 # Built with flutter 3.38.6 • channel stable
 
