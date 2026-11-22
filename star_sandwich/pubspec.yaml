@@ -5,9 +5,9 @@ description: Mobile application that determines the nearest star at the observer
 # pub.dev using `pub publish`. This is preferred for private packages.
 publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 
-version: 1.1.5+8
+version: 1.1.6+9
 
-# Built with flutter 3.38.6 • channel stable
+# Built with flutter 3.50.1 • channel stable
 
 environment:
   sdk: '>=3.10.0 <4.0.0'
@@ -16,18 +16,19 @@ dependencies:
   flutter:
     sdk: flutter
   http: ^1.6.0
-  geolocator: ^14.0.2
+  geolocator: ^14.1.2
   flutter_svg: ^2.2.3
   shared_preferences: ^2.5.4
-  package_info_plus: ^9.0.0
+  package_info_plus: ^10.2.2
   auto_size_text: ^3.0.0
   url_launcher: ^6.3.2
 
+  material_ui: any
 dev_dependencies:
   flutter_test:
     sdk: flutter
   flutter_native_splash: ^2.3.2
-  flutter_launcher_icons: ^0.13.1
+  flutter_launcher_icons: ^0.14.4
 
 # flutter pub run flutter_launcher_icons:main
 flutter_icons:
